@@ -6,9 +6,10 @@ import { Button } from '../ui/button';
 type Props = {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
+    phone: string;
 };
 
-export default function Cart({ isOpen, setIsOpen }: Props) {
+export default function Cart({ isOpen, setIsOpen, phone }: Props) {
     const { state, dispatch } = useAppContext();
     const removeCart = (productId: number) => {
         dispatch({ type: 'REMOVE_FROM_CART', productId });
@@ -19,7 +20,7 @@ export default function Cart({ isOpen, setIsOpen }: Props) {
     };
 
     const handleSendOrder = () => {
-        const phoneNumber = '573158957774';
+        const phoneNumber = phone;
         let message = '¡Hola! Quisiera hacer el siguiente pedido:\n\n';
         state.forEach((product) => {
             message += `*Producto:* ${product.nombre}\n*Cantidad:* ${product.cantidad}\n*Talla:* ${product.tallas}\n*Color:* ${product.colores}\n_____________________________\n`;
@@ -43,8 +44,8 @@ export default function Cart({ isOpen, setIsOpen }: Props) {
                 {state.length === 0 ? (
                     <p className="text-center text-gray-500">Tu carrito está vacío.</p>
                 ) : (
-                    state.map((product) => (
-                        <div key={product.id} className="mb-4 flex items-center justify-between border-b-2 border-b-black pb-2">
+                    state.map((product, index) => (
+                        <div key={index} className="mb-4 flex items-center justify-between border-b-2 border-b-black pb-2">
                             <div className="flex w-full items-center">
                                 <img
                                     src={`http://localhost:8000/${product.imagen as string}`}

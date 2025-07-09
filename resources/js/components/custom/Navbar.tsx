@@ -4,7 +4,11 @@ import { useAppContext } from '@/context/AppContext';
 import { ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Navbar() {
+type Props = {
+    phone: string;
+}
+
+export default function Navbar({phone}: Props) {
     const { state } = useAppContext();
     const [openCart, setOpenCart] = useState(false);
     return (
@@ -19,7 +23,7 @@ export default function Navbar() {
                         <ShoppingCart className="h-6 w-6" />
                     </button>
                 </div>
-                <Cart isOpen={openCart} setIsOpen={setOpenCart} />
+                <Cart isOpen={openCart} setIsOpen={setOpenCart} phone={phone}/>
             </NavigationMenuList>
         </NavigationMenu>
     );

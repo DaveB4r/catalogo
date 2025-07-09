@@ -12,6 +12,7 @@ import AppLayout from '@/layouts/app-layout';
 type RegisterForm = {
     name: string;
     email: string;
+    phone: string;
     password: string;
     password_confirmation: string;
 };
@@ -21,6 +22,7 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
+        phone: '',
         password_confirmation: '',
     });
 
@@ -77,12 +79,28 @@ export default function Register() {
                     </div>
 
                     <div className="grid gap-2">
+                        <Label htmlFor="phone">Celular</Label>
+                        <Input
+                            id="phone"
+                            type="text"
+                            required
+                            tabIndex={3}
+                            autoComplete="phone"
+                            value={data.phone}
+                            onChange={(e) => setData('phone', e.target.value)}
+                            disabled={processing}
+                            placeholder="573129774545"
+                        />
+                        <InputError message={errors.email} />
+                    </div>
+
+                    <div className="grid gap-2">
                         <Label htmlFor="password">Contraseña</Label>
                         <Input
                             id="password"
                             type="password"
                             required
-                            tabIndex={3}
+                            tabIndex={4}
                             autoComplete="new-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
@@ -98,7 +116,7 @@ export default function Register() {
                             id="password_confirmation"
                             type="password"
                             required
-                            tabIndex={4}
+                            tabIndex={5}
                             autoComplete="new-password"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}

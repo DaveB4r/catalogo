@@ -15,15 +15,14 @@ class CatalogoController extends Controller
      */
     public function index(string $id)
     {
-        $decodeStr = base64_decode($id);
-        $userData = explode(":",$decodeStr);
-        $user = User::find($userData[0]);
-        if(!isset($user) || $user-> name !== $userData[1]) {
+        $user = User::where("name", str_replace("_"," ",$id))->first();
+        if(!isset($user) || $user-> name !== str_replace("_"," ",$id)) {
             return redirect()->route("login");
         }
-        $productos = Productos::where("productos.user_id", $userData[0])->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.tallas", "productos.colores", "productos.categoria_id", "categorias.nombre as categoria")->get();
+        $productos = Productos::where("productos.user_id", $user->id)->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.tallas", "productos.colores", "productos.categoria_id", "categorias.nombre as categoria")->get();
         return Inertia::render("Catalogo/Index", [
-            "productos" => $productos
+            "productos" => $productos,
+            "phone" => $user->phone
         ]);
     }
 }

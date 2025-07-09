@@ -5,13 +5,14 @@ import { IProducto } from '@/interfaces/IProducto';
 
 type Props = {
     productos: IProducto[];
+    phone: string;
 };
 
-export default function CatalogoIndex({ productos }: Props) {
+export default function CatalogoIndex({ productos, phone }: Props) {
     
     return (
         <div className="flex h-full w-full flex-1 flex-col rounded-xl justify-center items-center">
-            <Navbar />
+            <Navbar phone={phone}/>
             <div className="md:mx-10 mb-10 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 {productos.map((producto) => (
                     <CustomCard

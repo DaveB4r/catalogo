@@ -34,7 +34,6 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     const [toastType, setToastType] = useState<'success' | 'error'>('success');
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState('');
-    const catalogoRoute = btoa(`${user.id}:${user.name}`)
 
 
     useEffect(() => {
@@ -210,7 +209,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-between">
                         <h1 className="mr-4 text-2xl font-bold">Productos</h1>
-                        <a href={`/catalogo/${catalogoRoute}`} target="_blank" rel="noopener noreferrer" className="hover:bg-accent/50 p-2 rounded-lg border border-gray-300">
+                        <a href={`/catalogo/${String(user.name).replaceAll(" ", "_")}`} target="_blank" rel="noopener noreferrer" className="hover:bg-accent/50 p-2 rounded-lg border border-gray-300">
                             <span className='flex gap-2 items-center hover:text-red-700'><Cog className="h-4 w-4" /> Ver como cliente</span>
                         </a>
                     </div>
