@@ -9,9 +9,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
@@ -39,18 +39,33 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'phone' => 'nullable|string|max:255'
         ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone
         ]);
+        $this->avatar($request, $user->id);
 
         event(new Registered($user));
 
         // Auth::login($user);
 
         return redirect()->route("register");
+    }
+
+    /**
+     * Handle Avatar
+     */
+
+    public function avatar(Request $request, Int $id) 
+    {
+        $user = User::select("avatar")->find($id);
+        if(isset($user->avatar)) {
+            $imagen = str_replace("storage/", "", $user->avatar);
+            Storage::disk("public")->delete($imagen);
+        }
+        $imagen = "storage/" . $request->file("file")->store("avatars", "public");
+        User::where('id', $id)->update(['avatar' => $imagen]);
     }
 }

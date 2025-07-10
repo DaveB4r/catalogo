@@ -1,18 +1,19 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { ChangeEvent, FormEventHandler, useState } from 'react';
 
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BreadcrumbItem } from '@/types';
 import AppLayout from '@/layouts/app-layout';
+import { BreadcrumbItem } from '@/types';
 
 type RegisterForm = {
     name: string;
     email: string;
     phone: string;
+    file: File | null;
     password: string;
     password_confirmation: string;
 };
@@ -22,6 +23,7 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
+        file: null,
         phone: '',
         password_confirmation: '',
     });
@@ -29,22 +31,40 @@ export default function Register() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('register'), {
+            forceFormData: true,
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
 
+    const [preview, setPreview] = useState('');
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Registrar Usuario',
-            href: '/register'
-        }
-    ]
+            href: '/register',
+        },
+    ];
+
+    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target!.files![0];
+        if (!file) return;
+        setData('file', file);
+        previewFile(file);
+    };
+
+    const previewFile = (file: File) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreview(reader.result as string);
+        };
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Registrar" />
-            <form className="flex flex-col justify-center items-center gap-6 mt-4" onSubmit={submit}>
-                <div className="grid gap-6 w-96">
+            <form className="mt-4 flex flex-col items-center justify-center gap-6" onSubmit={submit}>
+                <div className="grid w-96 gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="name">Nombre</Label>
                         <Input
@@ -95,12 +115,35 @@ export default function Register() {
                     </div>
 
                     <div className="grid gap-2">
+                        <Label htmlFor="avatar">Foto de Perfil</Label>
+                        <Input
+                            id="avatar"
+                            type="file"
+                            tabIndex={4}
+                            onChange={(e) => handleChangeImage(e)}
+                            disabled={processing}
+                            placeholder="Foto de perfil"
+                        />
+                        {preview && (
+                            <div className="space-y-2">
+                                <img
+                                    src={preview}
+                                    alt="preview"
+                                    width={270}
+                                    height={150}
+                                    className="h-36 w-36 rounded-xl object-cover"
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="grid gap-2">
                         <Label htmlFor="password">Contraseña</Label>
                         <Input
                             id="password"
                             type="password"
                             required
-                            tabIndex={4}
+                            tabIndex={5}
                             autoComplete="new-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
@@ -116,7 +159,7 @@ export default function Register() {
                             id="password_confirmation"
                             type="password"
                             required
-                            tabIndex={5}
+                            tabIndex={6}
                             autoComplete="new-password"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}

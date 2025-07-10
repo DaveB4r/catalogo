@@ -1,7 +1,7 @@
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
+import { ChangeEvent, FormEventHandler, useState } from 'react';
 
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
@@ -33,13 +33,32 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         email: auth.user.email,
         phone: auth.user.phone,
     });
+    const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState(auth.user.avatar ? `http://localhost:8000/${auth.user.avatar}` : '');
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
+        if (file) {
+            router.post(`/avatar/${auth.user.id}`, { file });
+            setFile(null);
+        }
         patch(route('profile.update'), {
             preserveScroll: true,
         });
+    };
+
+    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target!.files![0];
+        if (!file) return;
+        setFile(file);
+        previewFile(file);
+    };
+    const previewFile = (file: File) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreview(reader.result as string);
+        };
     };
 
     return (
@@ -99,6 +118,23 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             />
 
                             <InputError className="mt-2" message={errors.phone} />
+                        </div>
+
+                        <div className="grid gap-2">
+                            <Label htmlFor="avatar">Foto de Perfil</Label>
+
+                            <Input
+                                id="avatar"
+                                type="file"
+                                className="mt-1 block w-full"
+                                onChange={(e) => handleChangeImage(e)}
+                                placeholder="Foto de perfil"
+                            />
+                            {preview && (
+                                <div className="space-y-2">
+                                    <img src={preview} alt="preview" width={270} height={150} className="h-36 w-36 rounded-xl object-cover" />
+                                </div>
+                            )}
                         </div>
 
                         {mustVerifyEmail && auth.user.email_verified_at === null && (

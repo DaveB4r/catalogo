@@ -15,12 +15,14 @@ class CatalogoController extends Controller
      */
     public function index(string $id)
     {
-        $user = User::where("name", str_replace("_"," ",$id))->first();
-        if(!isset($user) || $user-> name !== str_replace("_"," ",$id)) {
+        $user = User::where("name", str_replace("_", " ", $id))->first();
+        if (!isset($user) || $user->name !== str_replace("_", " ", $id)) {
             return redirect()->route("login");
         }
         $productos = Productos::where("productos.user_id", $user->id)->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.tallas", "productos.colores", "productos.categoria_id", "categorias.nombre as categoria")->get();
         return Inertia::render("Catalogo/Index", [
+            "logo" => $user->avatar,
+            "name" => $user->name,
             "productos" => $productos,
             "phone" => $user->phone
         ]);
