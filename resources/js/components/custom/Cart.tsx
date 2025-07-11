@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function Cart({ isOpen, setIsOpen, phone }: Props) {
+    const host = window.location.origin;
     const { state, dispatch } = useAppContext();
     const removeCart = (productId: number) => {
         dispatch({ type: 'REMOVE_FROM_CART', productId });
@@ -23,7 +24,7 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         const phoneNumber = phone;
         let message = '¡Hola! Quisiera hacer el siguiente pedido:\n\n';
         state.forEach((product) => {
-            message += `*Producto:* ${product.nombre}\n*Cantidad:* ${product.cantidad}\n*Talla:* ${product.tallas}\n*Color:* ${product.colores}\n_____________________________\n`;
+            message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}\n*Cantidad:* ${product.cantidad}\n*Talla:* ${product.tallas}\n*Color:* ${product.colores}\n_____________________________\n`;
         });
         message += '\n¡Gracias!';
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -48,7 +49,7 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                         <div key={index} className="mb-4 flex items-center justify-between border-b-2 border-b-black pb-2">
                             <div className="flex w-full items-center">
                                 <img
-                                    src={`http://localhost:8000/${product.imagen as string}`}
+                                    src={`${host}/${product.imagen as string}`}
                                     alt={product.nombre}
                                     className="mr-4 h-32 w-32 rounded-md object-contain"
                                 />

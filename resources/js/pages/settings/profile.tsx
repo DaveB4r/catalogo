@@ -26,6 +26,7 @@ type ProfileForm = {
 };
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
+    const host = window.location.origin;
     const { auth } = usePage<SharedData>().props;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
@@ -34,7 +35,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         phone: auth.user.phone,
     });
     const [file, setFile] = useState<File | null>(null);
-    const [preview, setPreview] = useState(auth.user.avatar ? `http://localhost:8000/${auth.user.avatar}` : '');
+    const [preview, setPreview] = useState(auth.user.avatar ? `${host}/${auth.user.avatar}` : '');
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();

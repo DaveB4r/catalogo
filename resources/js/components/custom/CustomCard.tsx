@@ -22,6 +22,7 @@ type Props = {
 };
 
 export default function CustomCard({ id, title, image, category, category_id, admin, type, sizes, colors, onClickEdit, onClickDelete }: Props) {
+    const host = window.location.origin;
     const { dispatch } = useAppContext();
     const [sizeSelected, setSizeSelected] = useState('');
     const [colorSelected, setColorSelected] = useState('');
@@ -43,7 +44,7 @@ export default function CustomCard({ id, title, image, category, category_id, ad
     return (
         <Card className="min-h-12 w-72 p-0 transition-colors hover:bg-accent/50">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
-                {image && <img src={`http://localhost:8000/${image}`} alt={title} className="h-56 w-full object-contain" />}
+                {image && <img src={`${host}/${image}`} alt={title} className="h-56 w-full object-contain" />}
                 <CardTitle className="text-xl font-extrabold">{title}</CardTitle>
                 {category && <h3 className="text-sm font-thin text-gray-600">{category}</h3>}
                 {admin && (

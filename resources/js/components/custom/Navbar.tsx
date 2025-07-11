@@ -13,6 +13,7 @@ type Props = {
 };
 
 export default function Navbar({ phone, name, logo }: Props) {
+    const host = window.location.origin;
     const { state } = useAppContext();
     const [openCart, setOpenCart] = useState(false);
     const getInitials = useInitials();
@@ -20,7 +21,7 @@ export default function Navbar({ phone, name, logo }: Props) {
         <NavigationMenu viewport={false} className="sticky top-0 z-50 mb-4 border-b-1 border-blue-950 bg-white pt-4 pb-2">
             <NavigationMenuList className="flex w-[calc(100vw-20px)] justify-between px-5">
                 <Avatar className="h-16 w-16 overflow-hidden rounded-full">
-                    <AvatarImage src={`http://localhost:8000/${logo}`} alt={name} />
+                    <AvatarImage src={`${host}/${logo}`} alt={name} />
                     <AvatarFallback className="rounded-lg bg-blue-950 text-white dark:bg-neutral-700">{getInitials(name)}</AvatarFallback>
                 </Avatar>
                 <div className="relative">

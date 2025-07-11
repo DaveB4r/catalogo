@@ -133,6 +133,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
                         form={formElement}
                         processing={processing}
                         onClick={handleNew}
+                        hasVariations={true}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
