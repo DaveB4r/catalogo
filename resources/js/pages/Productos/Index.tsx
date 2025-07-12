@@ -6,6 +6,7 @@ import { IFlash } from '@/interfaces/IFlash';
 import { IForm, IFormInputs } from '@/interfaces/IForm';
 import { IProducto } from '@/interfaces/IProducto';
 import { IUser } from '@/interfaces/IUser';
+import { IVariationsData } from '@/interfaces/IVariations';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
@@ -34,7 +35,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     const [toastType, setToastType] = useState<'success' | 'error'>('success');
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState('');
-
+    const [variationsData, setVariationsData] = useState<IVariationsData[]>([]);
 
     useEffect(() => {
         if (flash?.success) {
@@ -77,6 +78,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(variationsData)
+        return;
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
                 onSuccess: () => {
@@ -103,6 +106,10 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             setFile(null);
         }
     };
+
+    const saveVariations = () => {
+        console.log(variationsData)
+    }
 
     const handleNew = () => {
         setEditingProducto(null);
@@ -209,8 +216,15 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-between">
                         <h1 className="mr-4 text-2xl font-bold">Productos</h1>
-                        <a href={`/catalogo/${String(user.name).replaceAll(" ", "_")}`} target="_blank" rel="noopener noreferrer" className="hover:bg-accent/50 p-2 rounded-lg border border-gray-300">
-                            <span className='flex gap-2 items-center hover:text-red-700'><Cog className="h-4 w-4" /> Ver como cliente</span>
+                        <a
+                            href={`/catalogo/${String(user.name).replaceAll(' ', '_')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg border border-gray-300 p-2 hover:bg-accent/50"
+                        >
+                            <span className="flex items-center gap-2 hover:text-red-700">
+                                <Cog className="h-4 w-4" /> Ver como cliente
+                            </span>
                         </a>
                     </div>
                     <CustomPopup
@@ -222,6 +236,9 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         processing={processing}
                         preview={preview}
                         onClick={handleNew}
+                        hasVariations={true}
+                        variationsData={variationsData}
+                        setVariationsData={setVariationsData}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -234,7 +251,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                             category={producto.categoria}
                             onClickEdit={() => handleEdit(producto)}
                             onClickDelete={() => handleDelete(producto.id)}
-                            type='product'
+                            type="product"
                             admin={true}
                         />
                     ))}

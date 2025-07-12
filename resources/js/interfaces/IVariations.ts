@@ -1,7 +1,5 @@
-import { JSX } from 'react';
-
-export interface IVariations {
+export interface IVariationsData {
     id: number;
-    nombre: JSX.Element;
-    opciones: JSX.Element;
+    nombre: string;
+    opciones: string;
 }
