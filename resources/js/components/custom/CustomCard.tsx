@@ -1,7 +1,8 @@
 import { useAppContext } from '@/context/AppContext';
 import { IProducto } from '@/interfaces/IProducto';
+import { IVariationsData } from '@/interfaces/IVariations';
 import { Pencil, ShoppingCart, Trash2 } from 'lucide-react';
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Label } from '../ui/label';
@@ -17,28 +18,59 @@ type Props = {
     onClickDelete?: MouseEventHandler<HTMLButtonElement>;
     admin: boolean;
     type: 'category' | 'product';
-    sizes?: string[];
-    colors?: string[];
+    variations?: string;
 };
 
-export default function CustomCard({ id, title, image, category, category_id, admin, type, sizes, colors, onClickEdit, onClickDelete }: Props) {
+export default function CustomCard({ id, title, image, category, category_id, admin, type, variations, onClickEdit, onClickDelete }: Props) {
     const host = window.location.origin;
     const { dispatch } = useAppContext();
-    const [sizeSelected, setSizeSelected] = useState('');
-    const [colorSelected, setColorSelected] = useState('');
+    const [variationsIds, setVariationsIds] = useState<string[]>([]);
+    const [variationsNames, setVariationsNames] = useState<string[]>([]);
+    const [variationsOptions, setVariationsOptions] = useState<string[]>([]);
+    const [variationsData, setVariationsData] = useState<IVariationsData[]>([]);
+    const [buttonDisable, setButtonDisable] = useState(true);
+
+    useEffect(() => {
+        variationsData.forEach((variation) => {
+            setButtonDisable(variation.nombre === '' && variation.opciones === '');
+        });
+    }, [variationsData]);
+
+    useEffect(() => {
+        if (variations) {
+            setVariationsIds([]);
+            setVariationsNames([]);
+            setVariationsOptions([]);
+            variations.split('++').forEach((variationItem, index) => {
+                variationItem.split('|-|').forEach((variation) => {
+                    if (index === 0) {
+                        setVariationsIds((prev) => [...prev, variation]);
+                        setVariationsData((prev) => [...prev, { id: Number(variation), nombre: '', opciones: '' }]);
+                    } else if (index === 1) {
+                        setVariationsNames((prev) => [...prev, variation]);
+                    } else if (index === 2) {
+                        setVariationsOptions((prev) => [...prev, variation]);
+                    }
+                });
+            });
+        }
+    }, [variations]);
 
     const addToCart = () => {
         const product: IProducto = {
             id,
             nombre: title,
             imagen: image,
-            tallas: sizeSelected,
-            colores: colorSelected,
             categoria_id: Number(category_id),
             categoria: category as string,
             cantidad: 1,
+            variations: variationsData,
         };
         dispatch({ type: 'ADD_TO_CART', product });
+    };
+
+    const handleSelectVariation = (id: string, nombre: string, value: string) => {
+        setVariationsData((prev) => prev.map((i) => (i.id === Number(id) ? { ...i, nombre, opciones: value } : i)));
     };
 
     return (
@@ -65,64 +97,35 @@ export default function CustomCard({ id, title, image, category, category_id, ad
             </CardHeader>
             {!admin && type === 'product' && (
                 <CardContent className="my-3">
-                    {sizes ? (
-                        <div className="mb-3">
-                            <Label htmlFor="talla">Talla</Label>
-                            <Select value={sizeSelected} onValueChange={(value) => setSizeSelected(value)}>
-                                <SelectTrigger className="focus:ring-2 focus:ring-primary">
-                                    <SelectValue placeholder="Seleccione talla" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {sizes.map((selectOpt, index) => (
-                                        <SelectItem key={index} value={selectOpt}>
-                                            {selectOpt}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    ) : (
-                        <div className="mb-3">
-                            <Label>Talla</Label>
-                            <p className="my-2 text-sm text-gray-500">No aplica</p>
-                        </div>
-                    )}
-                    {colors ? (
-                        <div className="mb-3">
-                            <Label htmlFor="color">Color</Label>
-                            <Select value={colorSelected} onValueChange={(value) => setColorSelected(value)}>
-                                <SelectTrigger className="focus:ring-2 focus:ring-primary">
-                                    <SelectValue placeholder="Seleccione Color" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {colors.map((selectOpt, index) => (
-                                        <SelectItem key={index} value={selectOpt}>
-                                            {selectOpt}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    ) : (
-                        <div className="mb-3">
-                            <Label>Color</Label>
-                            <p className="my-2 text-sm text-gray-500">No aplica</p>
-                        </div>
-                    )}
                     {!admin && (
-                        <Button
-                            variant="default"
-                            size="lg"
-                            className="w-full cursor-pointer"
-                            disabled={
-                                (sizes && sizeSelected === '' && colors && colorSelected === '') ||
-                                (colors && colorSelected === '') ||
-                                (sizes && sizeSelected === '')
-                            }
-                            onClick={addToCart}
-                        >
-                            <ShoppingCart className="h-4 w-4" /> Agregar al carrito
-                        </Button>
+                        <div>
+                            <div>
+                                {variationsIds.length > 0 && (
+                                    <div className="my-2">
+                                        {variationsIds.map((variation, index) => (
+                                            <div className="mb3" key={index}>
+                                                <Label>{variationsNames[index]}</Label>
+                                                <Select onValueChange={(value) => handleSelectVariation(variation, variationsNames[index], value)}>
+                                                    <SelectTrigger className="focus:ring-2 focus:ring-primary">
+                                                        <SelectValue placeholder={`Seleccione ${variationsNames[index]}`} />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {variationsOptions[index].split(',').map((item, indexOpt) => (
+                                                            <SelectItem key={indexOpt} value={item}>
+                                                                {item}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <Button variant="default" size="lg" className="w-full cursor-pointer" disabled={buttonDisable} onClick={addToCart}>
+                                <ShoppingCart className="h-4 w-4" /> Agregar al carrito
+                            </Button>
+                        </div>
                     )}
                 </CardContent>
             )}

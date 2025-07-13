@@ -24,8 +24,7 @@ export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
                         category_id={producto.categoria_id}
                         admin={false}
                         type="product"
-                        sizes={producto.tallas?.split(',')}
-                        colors={producto.colores?.split(',')}
+                        variations={`${producto.variations_ids}++${producto.variations_nombres}++${producto.variations_opciones}`}
                     />
                 ))}
             </div>

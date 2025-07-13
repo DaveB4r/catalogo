@@ -7,6 +7,7 @@ use App\Models\Productos;
 use App\Models\Variations;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -17,13 +18,29 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        $productos = Productos::where("productos.user_id", Auth::id())->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.categoria_id", "categorias.nombre AS categoria")->get();
+        $productos = Productos::where("productos.user_id", Auth::id())
+            ->leftJoin("categorias", "productos.categoria_id", "=", "categorias.id")
+            ->leftJoin("variations", "productos.id", "=", "variations.producto_id")
+            ->select(
+                "productos.id",
+                "productos.nombre",
+                "productos.imagen",
+                "productos.categoria_id",
+                "categorias.nombre AS categoria",
+                DB::raw("GROUP_CONCAT(variations.id SEPARATOR \"|-|\") as variations_ids"),
+                DB::raw("GROUP_CONCAT(variations.nombre SEPARATOR \"|-|\") as variations_nombres"),
+                DB::raw("GROUP_CONCAT(variations.opciones SEPARATOR \"|-|\") as variations_opciones")
+            )
+            ->groupBy("productos.id")
+            ->get();
         $categorias = Categorias::where("user_id", Auth::id())->get();
         $user = Auth::user();
+        $lastVariationId = Variations::max('id');
         return Inertia::render("Productos/Index", [
             "productos" => $productos,
             "categorias" => $categorias,
             "user" => $user,
+            "lastVariationId" => $lastVariationId,
             "flash" => [
                 "success" => session("success"),
                 "error" => session("error"),
@@ -54,17 +71,10 @@ class ProductosController extends Controller
             ...$validated,
             "user_id" => Auth::id()
         ]);
-        $variationModel = new Variations();
 
         if (isset($request->variationsData)) {
             if (!empty($request->variationsData)) {
-                foreach ($request->variationsData as $variation) {
-                    // dd($variation["nombre"]);
-                    $variationModel->nombre = $variation["nombre"];
-                    $variationModel->opciones = $variation["opciones"];
-                    $variationModel->producto_id = $producto->id;
-                    $variationModel->save();
-                }
+                $this->save_variations($request->variationsData, $producto->id);
             }
         }
 
@@ -98,6 +108,13 @@ class ProductosController extends Controller
         ]);
 
         $producto->update($validated);
+        if (isset($request->variationsData)) {
+            if (!empty($request->variationsData)) {
+                foreach ($request->variationsData as $variation) {
+                    Variations::updateOrInsert(['id' => $variation["id"]], ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                }
+            }
+        }
 
         return redirect()->route("productos.index")->with("id", $producto->id);
     }
@@ -109,6 +126,7 @@ class ProductosController extends Controller
     {
         $imagen = str_replace("storage/", "", $producto->imagen);
         Storage::disk("public")->delete($imagen);
+        Variations::where('producto_id', $producto->id)->delete();
         $producto->delete();
         return redirect()->route("productos.index")->with("success", "Producto eliminado satisfactoriamente");
     }
@@ -128,5 +146,20 @@ class ProductosController extends Controller
         $imagen = "storage/" . $request->file("file")->store("productos", "public");
         Productos::where('id', $id)->update(['imagen' => $imagen]);
         return redirect()->route("productos.index")->with("success", "Producto {$message} satisfactoriamente");
+    }
+
+    /**
+     * Handle Product Variations
+     */
+
+    public function save_variations($variationsData, $product_id)
+    {
+        $variationModel = new Variations();
+        foreach ($variationsData as $variation) {
+            $variationModel->nombre = $variation["nombre"];
+            $variationModel->opciones = $variation["opciones"];
+            $variationModel->producto_id = $product_id;
+            $variationModel->save();
+        }
     }
 }

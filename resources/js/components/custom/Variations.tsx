@@ -9,15 +9,17 @@ type Props = {
     isOpen: boolean;
     variationsData: IVariationsData[];
     setVariationsData: Dispatch<SetStateAction<IVariationsData[]>>;
+    isEditing?: boolean;
+    lastVariationId: number;
 };
 
-const Variations = ({ isOpen, variationsData, setVariationsData }: Props) => {
+const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, lastVariationId }: Props) => {
     useEffect(() => {
-        setVariationsData([]);
+        if (!isEditing) setVariationsData([]);
     }, [isOpen]);
 
     const createVariation = () => {
-        setVariationsData((prev) => [...prev, { id: variationsData.length, nombre: '', opciones: '' }]);
+        setVariationsData((prev) => [...prev, { id: lastVariationId + variationsData.length + 1, nombre: '', opciones: '' }]);
     };
 
     const deleteVariation = (id: number) => {

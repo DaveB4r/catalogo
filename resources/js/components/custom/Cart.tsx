@@ -24,7 +24,10 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         const phoneNumber = phone;
         let message = '¡Hola! Quisiera hacer el siguiente pedido:\n\n';
         state.forEach((product) => {
-            message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}\n*Cantidad:* ${product.cantidad}\n*Talla:* ${product.tallas}\n*Color:* ${product.colores}\n_____________________________\n`;
+            let variations = '';
+            product?.variations?.map((variation) => variations += `\n*${variation.nombre}*: ${variation.opciones}`)
+            console.log(product);
+            message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}${variations}\n*Cantidad:* ${product.cantidad}\n_____________________________\n`;
         });
         message += '\n¡Gracias!';
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;

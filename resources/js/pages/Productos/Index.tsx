@@ -17,6 +17,7 @@ type Props = {
     productos: IProducto[];
     categorias: ICategorias[];
     user: IUser;
+    lastVariationId: number;
     flash?: IFlash;
 };
 
@@ -27,7 +28,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function ProductosIndex({ productos, categorias, user, flash }: Props) {
+export default function ProductosIndex({ productos, categorias, user, lastVariationId, flash }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [editingProducto, setEditingProducto] = useState<IProducto | null>(null);
     const [showToast, setShowToast] = useState(false);
@@ -62,8 +63,10 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     }, [showToast]);
 
     useEffect(() => {
-        setData('variationsData', variationsData as never[]);
-    },[variationsData])
+        if (variationsData.length > 0) {
+            setData('variationsData', variationsData as never[]);
+        }
+    }, [variationsData]);
 
     const {
         data,
@@ -76,7 +79,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     } = useForm({
         nombre: '',
         categoria_id: '',
-        variationsData: []
+        variationsData: [],
     });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -113,7 +116,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setData({
             nombre: '',
             categoria_id: '',
-            variationsData: []
+            variationsData: [],
         });
         setPreview('');
         setIsOpen(true);
@@ -124,8 +127,24 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setData({
             nombre: producto.nombre,
             categoria_id: producto.categoria_id.toString(),
-            variationsData: []
+            variationsData: [],
         });
+        if (producto.variations_ids && producto.variations_nombres && producto.variations_opciones) {
+            const separator = '|-|';
+            const variationsIds = producto.variations_ids.split(separator);
+            const variationsNombres = producto.variations_nombres?.split(separator);
+            const variationsOpciones = producto.variations_opciones?.split(separator);
+            let array = [];
+            for (let i = 0; i < variationsIds.length; i++) {
+                const variationObject: IVariationsData = {
+                    id: Number(variationsIds[i]),
+                    nombre: variationsNombres[i],
+                    opciones: variationsOpciones[i],
+                };
+                array.push(variationObject);
+            }
+            setVariationsData(array);
+        }
         setPreview(producto.imagen as string);
         setIsOpen(true);
     };
@@ -218,6 +237,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         hasVariations={true}
                         variationsData={variationsData}
                         setVariationsData={setVariationsData}
+                        isEditing={editingProducto ? true : false}
+                        lastVariationId={lastVariationId}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
