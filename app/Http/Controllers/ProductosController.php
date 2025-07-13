@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorias;
 use App\Models\Productos;
+use App\Models\Variations;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        $productos = Productos::where("productos.user_id", Auth::id())->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.tallas", "productos.colores", "productos.categoria_id", "categorias.nombre AS categoria")->get();
+        $productos = Productos::where("productos.user_id", Auth::id())->join("categorias", "productos.categoria_id", "=", "categorias.id", "left")->select("productos.id", "productos.nombre", "productos.imagen", "productos.categoria_id", "categorias.nombre AS categoria")->get();
         $categorias = Categorias::where("user_id", Auth::id())->get();
         $user = Auth::user();
         return Inertia::render("Productos/Index", [
@@ -46,8 +47,6 @@ class ProductosController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
-            'tallas' => 'nullable|string|max:255',
-            'colores' => 'nullable|string|max:255',
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 
@@ -55,6 +54,19 @@ class ProductosController extends Controller
             ...$validated,
             "user_id" => Auth::id()
         ]);
+        $variationModel = new Variations();
+
+        if (isset($request->variationsData)) {
+            if (!empty($request->variationsData)) {
+                foreach ($request->variationsData as $variation) {
+                    // dd($variation["nombre"]);
+                    $variationModel->nombre = $variation["nombre"];
+                    $variationModel->opciones = $variation["opciones"];
+                    $variationModel->producto_id = $producto->id;
+                    $variationModel->save();
+                }
+            }
+        }
 
         return redirect()->route("productos.index")->with("id", $producto->id);
     }
@@ -82,8 +94,6 @@ class ProductosController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
-            'tallas' => 'nullable|string|max:255',
-            'colores' => 'nullable|string|max:255',
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 

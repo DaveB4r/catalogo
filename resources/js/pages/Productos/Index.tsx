@@ -61,6 +61,10 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         }
     }, [showToast]);
 
+    useEffect(() => {
+        setData('variationsData', variationsData as never[]);
+    },[variationsData])
+
     const {
         data,
         setData,
@@ -71,15 +75,12 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         delete: destroy,
     } = useForm({
         nombre: '',
-        tallas: '',
-        colores: '',
         categoria_id: '',
+        variationsData: []
     });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(variationsData)
-        return;
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
                 onSuccess: () => {
@@ -107,17 +108,12 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         }
     };
 
-    const saveVariations = () => {
-        console.log(variationsData)
-    }
-
     const handleNew = () => {
         setEditingProducto(null);
         setData({
             nombre: '',
-            tallas: '',
-            colores: '',
             categoria_id: '',
+            variationsData: []
         });
         setPreview('');
         setIsOpen(true);
@@ -127,9 +123,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setEditingProducto(producto);
         setData({
             nombre: producto.nombre,
-            tallas: producto.tallas || '',
-            colores: producto.colores || '',
             categoria_id: producto.categoria_id.toString(),
+            variationsData: []
         });
         setPreview(producto.imagen as string);
         setIsOpen(true);
@@ -162,22 +157,6 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             inputId: 'nombre',
             inputValue: data.nombre,
             inputOnchange: (e) => setData('nombre', e.target.value),
-        },
-        {
-            label: 'Tallas (separadas por coma)',
-            placeholder: 'Ej: S, M, L, XL',
-            inputType: 'text',
-            inputId: 'tallas',
-            inputValue: data.tallas,
-            inputOnchange: (e) => setData('tallas', e.target.value),
-        },
-        {
-            label: 'Colores (separados por coma)',
-            placeholder: 'Ej: Rojo, Azul',
-            inputType: 'text',
-            inputId: 'colores',
-            inputValue: data.colores,
-            inputOnchange: (e) => setData('colores', e.target.value),
         },
         {
             label: 'Categoria',
