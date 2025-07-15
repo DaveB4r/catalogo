@@ -106,6 +106,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                         <div className="grid gap-2">
                             <Label htmlFor="phone">Celular</Label>
+                            <small className='text-destructive'>(prefijo pais) seguido de Numero de celular sin espacios: 573001234567</small>
 
                             <Input
                                 id="phone"

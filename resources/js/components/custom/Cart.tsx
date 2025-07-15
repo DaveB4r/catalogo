@@ -25,7 +25,7 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         let message = '¡Hola! Quisiera hacer el siguiente pedido:\n\n';
         state.forEach((product) => {
             let variations = '';
-            product?.variations?.map((variation) => variations += `\n*${variation.nombre}*: ${variation.opciones}`)
+            product?.variations?.map((variation) => (variations += `\n*${variation.nombre}*: ${variation.opciones}`));
             console.log(product);
             message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}${variations}\n*Cantidad:* ${product.cantidad}\n_____________________________\n`;
         });
@@ -59,8 +59,14 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                                 <div className="flex w-full flex-col gap-4">
                                     <p className="font-bold">{product.nombre}</p>
                                     <p className="text-sm text-gray-600">
-                                        Talla: {product.tallas}, Color: {product.colores}
+                                        {product?.variations?.map((item) => (
+                                            <span key={item.id}>
+                                                {item.nombre}: {item.opciones}
+                                                <br />
+                                            </span>
+                                        ))}
                                     </p>
+
                                     <div className="flex items-center gap-2">
                                         <Button
                                             className="cursor-pointer text-lg font-black hover:bg-gray-500"
