@@ -100,6 +100,7 @@ export default function Register() {
 
                     <div className="grid gap-2">
                         <Label htmlFor="phone">Celular</Label>
+                        <small className="text-destructive">(prefijo pais) seguido de Numero de celular sin espacios: 573001234567</small>
                         <Input
                             id="phone"
                             type="text"
@@ -126,13 +127,7 @@ export default function Register() {
                         />
                         {preview && (
                             <div className="space-y-2">
-                                <img
-                                    src={preview}
-                                    alt="preview"
-                                    width={270}
-                                    height={150}
-                                    className="h-36 w-36 rounded-xl object-cover"
-                                />
+                                <img src={preview} alt="preview" width={270} height={150} className="h-36 w-36 rounded-xl object-cover" />
                             </div>
                         )}
                     </div>

@@ -162,7 +162,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         )}
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save</Button>
+                            <Button disabled={processing}>Actualizar</Button>
 
                             <Transition
                                 show={recentlySuccessful}
@@ -171,7 +171,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">Guardado</p>
+                                <p className="text-sm text-neutral-600">Actualizado</p>
                             </Transition>
                         </div>
                     </form>

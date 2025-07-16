@@ -31,6 +31,7 @@ export default function CustomCard({ id, title, image, category, category_id, ad
     const [buttonDisable, setButtonDisable] = useState(true);
 
     useEffect(() => {
+        setButtonDisable(variationsData.length > 0)
         variationsData.forEach((variation) => {
             setButtonDisable(variation.nombre === '' && variation.opciones === '');
         });
@@ -43,12 +44,12 @@ export default function CustomCard({ id, title, image, category, category_id, ad
             setVariationsOptions([]);
             variations.split('++').forEach((variationItem, index) => {
                 variationItem.split('|-|').forEach((variation) => {
-                    if (index === 0) {
+                    if (index === 0 && variation != "null") {
                         setVariationsIds((prev) => [...prev, variation]);
                         setVariationsData((prev) => [...prev, { id: Number(variation), nombre: '', opciones: '' }]);
-                    } else if (index === 1) {
+                    } else if (index === 1 && variation != "null") {
                         setVariationsNames((prev) => [...prev, variation]);
-                    } else if (index === 2) {
+                    } else if (index === 2 && variation != "null") {
                         setVariationsOptions((prev) => [...prev, variation]);
                     }
                 });
@@ -74,7 +75,7 @@ export default function CustomCard({ id, title, image, category, category_id, ad
     };
 
     return (
-        <Card className="min-h-12 w-72 p-0 transition-colors hover:bg-accent/50">
+        <Card className="min-h-12 max-h-[600px] w-72 p-0 transition-colors hover:bg-accent/50">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
                 {image && <img src={`${host}/${image}`} alt={title} className="h-56 w-full object-contain" />}
                 <CardTitle className="text-xl font-extrabold">{title}</CardTitle>

@@ -1,4 +1,5 @@
 import CustomCard from '@/components/custom/CustomCard';
+import Footer from '@/components/custom/Footer';
 import Navbar from '@/components/custom/Navbar';
 import { IProducto } from '@/interfaces/IProducto';
 
@@ -13,7 +14,7 @@ export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
     return (
         <div className="flex h-full w-full flex-1 flex-col items-center justify-center rounded-xl">
             <Navbar phone={phone} logo={logo} name={name} />
-            <div className="mb-10 grid grid-cols-1 gap-4 md:mx-10 md:grid-cols-3 lg:grid-cols-4">
+            <div className="mb-10 grid grid-cols-1 gap-4 md:mx-10 md:grid-cols-3 lg:grid-cols-4 min-h-[calc(100vh-148px)]">
                 {productos.map((producto) => (
                     <CustomCard
                         key={producto.id}
@@ -28,6 +29,7 @@ export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
                     />
                 ))}
             </div>
+            <Footer />
         </div>
     );
 }
