@@ -19,7 +19,9 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, last
     }, [isOpen]);
 
     const createVariation = () => {
-        setVariationsData((prev) => [...prev, { id: lastVariationId + variationsData.length + 1, nombre: '', opciones: '' }]);
+        const plus = isEditing ? 1 : variationsData.length + 1;
+        console.log(lastVariationId,plus)
+        setVariationsData((prev) => [...prev, { id: lastVariationId + plus, nombre: '', opciones: '' }]);
     };
 
     const deleteVariation = (id: number) => {
@@ -31,7 +33,7 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, last
                 {variationsData.map((item, index) => (
                     <div key={index} className="my-2 border-t-1 border-t-black py-2">
                         <div className="mb-2 space-y-2">
-                            <Label htmlFor={`name-variation-${item.id}`}>Nombre Variacion {index + 1}</Label>
+                            <Label htmlFor={`name-variation-${item.id}`}>Nombre Variacion {item.id}</Label>
                             <Input
                                 type="text"
                                 id={`name-variation-${item.id}`}

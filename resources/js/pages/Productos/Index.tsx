@@ -2,6 +2,7 @@ import CustomCard from '@/components/custom/CustomCard';
 import CustomPopup from '@/components/custom/CustomFormPopup';
 import ToastDiv from '@/components/custom/ToastDiv';
 import { Button } from '@/components/ui/button';
+import { useAppContext } from '@/context/AppContext';
 import { ICategorias } from '@/interfaces/ICategorias';
 import { IFlash } from '@/interfaces/IFlash';
 import { IForm, IFormInputs } from '@/interfaces/IForm';
@@ -30,6 +31,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function ProductosIndex({ productos, categorias, user, lastVariationId, flash }: Props) {
+    const { dispatch } = useAppContext();
     const [isOpen, setIsOpen] = useState(false);
     const [editingProducto, setEditingProducto] = useState<IProducto | null>(null);
     const [showToast, setShowToast] = useState(false);
@@ -48,9 +50,16 @@ export default function ProductosIndex({ productos, categorias, user, lastVariat
             setToastMessage(flash.error);
             setToastType('error');
             setShowToast(true);
-        }
-        if (flash?.id) {
+        } else if (flash?.id) {
+            setToastMessage('Producto editado satisfactoriamente');
+            setToastType('success');
+            setShowToast(true);
             uploadImage(flash?.id);
+        } else if (flash?.deleted) {
+            setToastMessage('Producto elminado satisfactoriamente');
+            setToastType('success');
+            setShowToast(true);
+            dispatch({ type: 'REMOVE_FROM_CART', productId: flash?.deleted, store: String(user.name).replaceAll(' ', '_') });
         }
     }, [flash]);
 
@@ -218,10 +227,10 @@ export default function ProductosIndex({ productos, categorias, user, lastVariat
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Catalogo" />
-            <div className="flex w-full h-full flex-1 flex-col gap-4 rounded-xl py-4 md:p-4">
+            <div className="flex h-full w-full flex-1 flex-col gap-4 rounded-xl py-4 md:p-4">
                 {showToast && <ToastDiv toastMessage={toastMessage} toastType={toastType} />}
-                <div className="flex flex-col md:flex-row items-center justify-between">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-2 my-2 md:gap-4">
+                <div className="flex flex-col items-center justify-between md:flex-row">
+                    <div className="my-2 flex flex-col items-center justify-between gap-2 md:flex-row md:gap-4">
                         <h1 className="mr-4 text-2xl font-bold">Productos</h1>
                         <Button variant="outline" className="cursor-pointer hover:text-red-600">
                             <a
@@ -253,7 +262,7 @@ export default function ProductosIndex({ productos, categorias, user, lastVariat
                         lastVariationId={lastVariationId}
                     />
                 </div>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto">
+                <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {productos.map((producto) => (
                         <CustomCard
                             key={producto.id}

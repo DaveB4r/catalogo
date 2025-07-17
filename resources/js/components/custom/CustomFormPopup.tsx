@@ -86,8 +86,8 @@ export default function CustomPopup({
                             <img src={preview} alt="imagen" width={270} height={150} className="h-36 w-36 rounded-xl object-cover" />
                         </div>
                     )}
-                    {hasVariations && variationsData && lastVariationId && setVariationsData && (
-                        <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} lastVariationId={lastVariationId}/>
+                    {hasVariations && variationsData && setVariationsData && (
+                        <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} lastVariationId={lastVariationId as number}/>
                     )}
                     <Button type="submit" disabled={processing}>
                         {form.buttonSubmit}

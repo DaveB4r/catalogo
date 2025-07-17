@@ -31,8 +31,9 @@ const reducer = (state: IProducto[], action: ActionType): IProducto[] => {
             localStorage.setItem(`cart_${storeName}`, JSON.stringify(updatedState));
             return updatedState;
         case 'REMOVE_FROM_CART':
-            localStorage.setItem(`cart_${storeName}`, JSON.stringify([...state.filter((item) => !(item.id === action.productId))]));
-            return JSON.parse(localStorage.getItem(`cart_${storeName}`) as string);
+            const storeRemove = action.store ? action.store : storeName;
+            localStorage.setItem(`cart_${storeRemove}`, JSON.stringify([...state.filter((item) => !(item.id === action.productId))]));
+            return JSON.parse(localStorage.getItem(`cart_${storeRemove}`) as string);
         case 'RESET_CART':
             return [];
         default:

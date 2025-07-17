@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class ProductosController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductosController extends Controller
             ->get();
         $categorias = Categorias::where("user_id", Auth::id())->get();
         $user = Auth::user();
-        $lastVariationId = Variations::max('id');
+        $lastVariationId = Variations::latest("id")->value("id") ? Variations::latest("id")->value("id") : 0;
         return Inertia::render("Productos/Index", [
             "productos" => $productos,
             "categorias" => $categorias,
@@ -44,17 +45,10 @@ class ProductosController extends Controller
             "flash" => [
                 "success" => session("success"),
                 "error" => session("error"),
-                "id" => session("id")
+                "id" => session("id"),
+                "deleted" => session("deleted")
             ]
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -82,22 +76,6 @@ class ProductosController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Productos $producto)
@@ -107,11 +85,24 @@ class ProductosController extends Controller
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 
+        $variationsIds = Variations::where("producto_id", $producto->id)->select("id")->get();
+
         $producto->update($validated);
         if (isset($request->variationsData)) {
             if (!empty($request->variationsData)) {
+                $idsToRemove = [];
                 foreach ($request->variationsData as $variation) {
                     Variations::updateOrInsert(['id' => $variation["id"]], ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                    array_push($idsToRemove, $variation["id"]);
+                }
+                $filtered = $variationsIds->reject(function ($item) use ($idsToRemove) {
+                    return in_array($item->id, $idsToRemove);
+                })->values();
+                if (count($filtered) > 0) {
+                    foreach ($filtered as $variationToRemove) {
+                        var_dump($variationToRemove->id);
+                        Variations::where("id", $variationToRemove->id)->delete();
+                    }
                 }
             }
         }
@@ -128,7 +119,7 @@ class ProductosController extends Controller
         Storage::disk("public")->delete($imagen);
         Variations::where('producto_id', $producto->id)->delete();
         $producto->delete();
-        return redirect()->route("productos.index")->with("success", "Producto eliminado satisfactoriamente");
+        return redirect()->route("productos.index")->with("deleted", $producto->id);
     }
 
     /**
