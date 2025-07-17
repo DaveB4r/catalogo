@@ -10,18 +10,17 @@ type Props = {
     variationsData: IVariationsData[];
     setVariationsData: Dispatch<SetStateAction<IVariationsData[]>>;
     isEditing?: boolean;
-    lastVariationId: number;
+    variationEditId?: number;
 };
 
-const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, lastVariationId }: Props) => {
+const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, variationEditId }: Props) => {
     useEffect(() => {
         if (!isEditing) setVariationsData([]);
     }, [isOpen]);
 
     const createVariation = () => {
-        const plus = isEditing ? 1 : variationsData.length + 1;
-        console.log(lastVariationId,plus)
-        setVariationsData((prev) => [...prev, { id: lastVariationId + plus, nombre: '', opciones: '' }]);
+        const variationId = variationEditId ? variationEditId : Math.floor(Math.random() * 999999);
+        setVariationsData((prev) => [...prev, { id: variationId, nombre: '', opciones: '' }]);
     };
 
     const deleteVariation = (id: number) => {
@@ -33,7 +32,7 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, last
                 {variationsData.map((item, index) => (
                     <div key={index} className="my-2 border-t-1 border-t-black py-2">
                         <div className="mb-2 space-y-2">
-                            <Label htmlFor={`name-variation-${item.id}`}>Nombre Variacion {item.id}</Label>
+                            <Label htmlFor={`name-variation-${item.id}`}>Nombre Variacion {index + 1}</Label>
                             <Input
                                 type="text"
                                 id={`name-variation-${item.id}`}

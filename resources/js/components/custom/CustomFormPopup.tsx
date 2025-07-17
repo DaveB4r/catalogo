@@ -23,7 +23,6 @@ type Props = {
     variationsData?: IVariationsData[];
     setVariationsData?: Dispatch<SetStateAction<IVariationsData[]>>;
     isEditing?: boolean;
-    lastVariationId?: number;
 };
 
 export default function CustomPopup({
@@ -39,7 +38,6 @@ export default function CustomPopup({
     variationsData,
     setVariationsData,
     isEditing,
-    lastVariationId,
 }: Props) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -87,7 +85,7 @@ export default function CustomPopup({
                         </div>
                     )}
                     {hasVariations && variationsData && setVariationsData && (
-                        <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} lastVariationId={lastVariationId as number}/>
+                        <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} />
                     )}
                     <Button type="submit" disabled={processing}>
                         {form.buttonSubmit}

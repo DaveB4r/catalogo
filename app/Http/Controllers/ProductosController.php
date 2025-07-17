@@ -36,12 +36,10 @@ class ProductosController extends Controller
             ->get();
         $categorias = Categorias::where("user_id", Auth::id())->get();
         $user = Auth::user();
-        $lastVariationId = Variations::latest("id")->value("id") ? Variations::latest("id")->value("id") : 0;
         return Inertia::render("Productos/Index", [
             "productos" => $productos,
             "categorias" => $categorias,
             "user" => $user,
-            "lastVariationId" => $lastVariationId,
             "flash" => [
                 "success" => session("success"),
                 "error" => session("error"),
@@ -92,7 +90,12 @@ class ProductosController extends Controller
             if (!empty($request->variationsData)) {
                 $idsToRemove = [];
                 foreach ($request->variationsData as $variation) {
-                    Variations::updateOrInsert(['id' => $variation["id"]], ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                    $exists = $variation["id"] < 100000;
+                    if($exists) {
+                        Variations::updateOrInsert(['id' => $variation["id"]], ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                    }else {
+                        Variations::updateOrInsert( ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                    }                    
                     array_push($idsToRemove, $variation["id"]);
                 }
                 $filtered = $variationsIds->reject(function ($item) use ($idsToRemove) {
@@ -145,12 +148,8 @@ class ProductosController extends Controller
 
     public function save_variations($variationsData, $product_id)
     {
-        $variationModel = new Variations();
         foreach ($variationsData as $variation) {
-            $variationModel->nombre = $variation["nombre"];
-            $variationModel->opciones = $variation["opciones"];
-            $variationModel->producto_id = $product_id;
-            $variationModel->save();
+            Variations::updateOrInsert(['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $product_id]);
         }
     }
 }

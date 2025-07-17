@@ -19,7 +19,6 @@ type Props = {
     productos: IProducto[];
     categorias: ICategorias[];
     user: IUser;
-    lastVariationId: number;
     flash?: IFlash;
 };
 
@@ -30,7 +29,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function ProductosIndex({ productos, categorias, user, lastVariationId, flash }: Props) {
+export default function ProductosIndex({ productos, categorias, user, flash }: Props) {
     const { dispatch } = useAppContext();
     const [isOpen, setIsOpen] = useState(false);
     const [editingProducto, setEditingProducto] = useState<IProducto | null>(null);
@@ -259,7 +258,6 @@ export default function ProductosIndex({ productos, categorias, user, lastVariat
                         variationsData={variationsData}
                         setVariationsData={setVariationsData}
                         isEditing={editingProducto ? true : false}
-                        lastVariationId={lastVariationId}
                     />
                 </div>
                 <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
