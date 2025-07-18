@@ -26,6 +26,7 @@ class ProductosController extends Controller
                 "productos.id",
                 "productos.nombre",
                 "productos.imagen",
+                "productos.precio",
                 "productos.categoria_id",
                 "categorias.nombre AS categoria",
                 DB::raw("GROUP_CONCAT(variations.id SEPARATOR \"|-|\") as variations_ids"),
@@ -56,6 +57,7 @@ class ProductosController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
+            'precio' => 'required|string|max:255',
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 
@@ -80,6 +82,7 @@ class ProductosController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
+            'precio' => 'required|string|max:255',
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 
@@ -91,11 +94,11 @@ class ProductosController extends Controller
                 $idsToRemove = [];
                 foreach ($request->variationsData as $variation) {
                     $exists = $variation["id"] < 100000;
-                    if($exists) {
+                    if ($exists) {
                         Variations::updateOrInsert(['id' => $variation["id"]], ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
-                    }else {
-                        Variations::updateOrInsert( ['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
-                    }                    
+                    } else {
+                        Variations::updateOrInsert(['nombre' => $variation["nombre"], 'opciones' => $variation["opciones"], "producto_id" => $producto->id]);
+                    }
                     array_push($idsToRemove, $variation["id"]);
                 }
                 $filtered = $variationsIds->reject(function ($item) use ($idsToRemove) {

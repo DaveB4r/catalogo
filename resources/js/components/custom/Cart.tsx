@@ -1,6 +1,6 @@
 import { useAppContext } from '@/context/AppContext';
 import { Phone, Trash2, X } from 'lucide-react';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 
 type Props = {
@@ -12,6 +12,20 @@ type Props = {
 export default function Cart({ isOpen, setIsOpen, phone }: Props) {
     const host = window.location.origin;
     const { state, dispatch } = useAppContext();
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        setTotal(0)
+        state.map((product) => {
+            setTotal((total) => {
+                const price = Number(String(product.precio).replaceAll('.', ''));
+                const quantity = Number(product.cantidad);
+                total += (price * quantity);
+                return total;
+            });
+        });
+    }, [state]);
+
     const removeCart = (productId: number) => {
         dispatch({ type: 'REMOVE_FROM_CART', productId });
     };
@@ -27,9 +41,9 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
             let variations = '';
             product?.variations?.map((variation) => (variations += `\n*${variation.nombre}*: ${variation.opciones}`));
             console.log(product);
-            message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}${variations}\n*Cantidad:* ${product.cantidad}\n_____________________________\n`;
+            message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}\n*Precio:*$ ${product.precio} ${variations}\n*Cantidad:* ${product.cantidad}\n_____________________________\n`;
         });
-        message += '\n¡Gracias!';
+        message += `*Total:*$ ${Number(total).toLocaleString('es-CO')}\n¡Gracias!`;
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     };
@@ -56,8 +70,9 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                                     alt={product.nombre}
                                     className="mr-4 h-32 w-32 rounded-md object-contain"
                                 />
-                                <div className="flex w-full flex-col gap-4">
+                                <div className="flex w-full flex-col gap-2">
                                     <p className="font-bold">{product.nombre}</p>
+                                    <p className="font-bold">$ {product.precio}</p>
                                     <p className="text-sm text-gray-600">
                                         {product?.variations?.map((item) => (
                                             <span key={item.id}>
@@ -93,7 +108,8 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                 )}
             </div>
             <div className="border-t p-4">
-                <Button variant="default" className="w-full cursor-pointer" onClick={handleSendOrder}>
+                <p className="my-2 text-right font-bold">Total: $ {Number(total).toLocaleString('es-CO')}</p>
+                <Button variant="default" className="w-full cursor-pointer" onClick={handleSendOrder} disabled={total === 0}>
                     <Phone /> Enviar Pedido
                 </Button>
             </div>

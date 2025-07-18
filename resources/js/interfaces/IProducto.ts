@@ -4,6 +4,7 @@ export interface IProducto {
     id: number;
     nombre: string;
     imagen?: string | null;
+    precio: string;
     categoria_id: number;
     categoria: string;
     cantidad?: number | null;

@@ -20,6 +20,7 @@ export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
                         key={producto.id}
                         id={producto.id}
                         title={producto.nombre}
+                        price={producto.precio}
                         image={producto.imagen}
                         category={producto.categoria}
                         category_id={producto.categoria_id}

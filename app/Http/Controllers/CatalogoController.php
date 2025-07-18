@@ -27,6 +27,7 @@ class CatalogoController extends Controller
                 "productos.id",
                 "productos.nombre",
                 "productos.imagen",
+                "productos.precio",
                 "productos.categoria_id",
                 DB::raw("GROUP_CONCAT(variations.id SEPARATOR \"|-|\") as variations_ids"),
                 DB::raw("GROUP_CONCAT(variations.nombre SEPARATOR \"|-|\") as variations_nombres"),

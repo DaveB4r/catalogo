@@ -87,6 +87,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         delete: destroy,
     } = useForm({
         nombre: '',
+        precio: '',
         categoria_id: '',
         variationsData: [],
     });
@@ -125,6 +126,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setData({
             nombre: '',
             categoria_id: '',
+            precio: '',
             variationsData: [],
         });
         setPreview('');
@@ -135,6 +137,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setEditingProducto(producto);
         setData({
             nombre: producto.nombre,
+            precio: producto.precio,
             categoria_id: producto.categoria_id.toString(),
             variationsData: [],
         });
@@ -185,6 +188,11 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         window.open(url, '_blank');
     };
 
+    const formatWithSeparator = (value: string) => {
+        const cleaned = value.replace(/[^\d]/g, '');
+        return cleaned ? Number(cleaned).toLocaleString('es-CO') : '';
+    };
+
     const formInputs: IFormInputs[] = [
         {
             label: 'Nombre',
@@ -207,6 +215,14 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             },
             selectOptions: categorias,
             selectTitle: 'Selecciona una Categoria',
+        },
+        {
+            label: 'Precio',
+            placeholder: 'Precio producto sin puntos ni comas',
+            inputType: 'text',
+            inputId: 'precio',
+            inputValue: data.precio,
+            inputOnchange: (e) => setData('precio', formatWithSeparator(e.target.value)),
         },
         {
             label: 'Imagen',
@@ -266,6 +282,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                             key={producto.id}
                             id={producto.id}
                             title={producto.nombre}
+                            price={producto.precio}
                             image={producto.imagen}
                             category={producto.categoria}
                             onClickEdit={() => handleEdit(producto)}
