@@ -63,7 +63,7 @@ export default function Register() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Registrar" />
-            <form className="mt-4 flex flex-col items-center justify-center gap-6" onSubmit={submit}>
+            <form className="mt-24 flex flex-col items-center justify-center gap-6" onSubmit={submit}>
                 <div className="grid w-96 gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="name">Nombre</Label>

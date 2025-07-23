@@ -27,6 +27,9 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState<'success' | 'error'>('success');
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(0);
 
     useEffect(() => {
         if (flash?.success) {
@@ -48,6 +51,13 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
             return () => clearTimeout(timer);
         }
     }, [showToast]);
+
+    useEffect(() => {
+        if (confirmDelete && idToDelete > 0) {
+            destroy(route('categorias.destroy', idToDelete));
+            setIdToDelete(0);
+        }
+    }, [confirmDelete, idToDelete]);
 
     const {
         data,
@@ -84,10 +94,10 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     const handleNew = () => {
         setEditingCategoria(null);
         setData({
-            nombre: ""
+            nombre: '',
         });
         setIsOpen(true);
-    }
+    };
 
     const handleEdit = (categoria: ICategorias) => {
         setEditingCategoria(categoria);
@@ -98,7 +108,8 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     };
 
     const handleDelete = (categoriaId: number) => {
-        destroy(route('categorias.destroy', categoriaId));
+        setShowConfirm(true);
+        setIdToDelete(categoriaId);
     };
 
     const formInputs: IFormInputs[] = [
@@ -121,9 +132,18 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     return (
         <AppLayout breadcrumbs={breadcumbs}>
             <Head title="Categorias" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <div className="mt-10 flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 {showToast && <ToastDiv toastMessage={toastMessage} toastType={toastType} />}
-                <div className="flex items-center justify-between">
+                {showConfirm && (
+                    <ToastDiv
+                        toastMessage="Realmente desea eliminar esta categoria"
+                        toastType="error"
+                        confirm={showConfirm}
+                        setConfirmDelete={setConfirmDelete}
+                        setShowConfirm={setShowConfirm}
+                    />
+                )}
+                <div className="flex flex-col items-center justify-between md:flex-row">
                     <h1 className="text-2xl font-bold">Categorias</h1>
                     <CustomPopup
                         isOpen={isOpen}
@@ -145,6 +165,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
                             admin={true}
                             onClickEdit={() => handleEdit(categoria)}
                             onClickDelete={() => handleDelete(categoria.id)}
+                            price={''}
                         />
                     ))}
                 </div>

@@ -36,6 +36,9 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState<'success' | 'error'>('success');
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(0);
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState('');
     const [variationsData, setVariationsData] = useState<IVariationsData[]>([]);
@@ -76,6 +79,13 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             setData('variationsData', variationsData as never[]);
         }
     }, [variationsData]);
+
+    useEffect(() => {
+        if (confirmDelete && idToDelete > 0) {
+            destroy(route('productos.destroy', idToDelete));
+            setIdToDelete(0);
+        }
+    }, [confirmDelete, idToDelete]);
 
     const {
         data,
@@ -162,7 +172,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     };
 
     const handleDelete = (productoId: number) => {
-        destroy(route('productos.destroy', productoId));
+        setShowConfirm(true);
+        setIdToDelete(productoId);
     };
 
     const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -242,8 +253,17 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Catalogo" />
-            <div className="flex h-full w-full flex-1 flex-col gap-4 rounded-xl py-4 md:p-4">
+            <div className="mt-10 flex h-full w-full flex-1 flex-col gap-4 rounded-xl py-4 md:p-4">
                 {showToast && <ToastDiv toastMessage={toastMessage} toastType={toastType} />}
+                {showConfirm && (
+                    <ToastDiv
+                        toastMessage="Realmente desea eliminar este producto"
+                        toastType="error"
+                        confirm={showConfirm}
+                        setConfirmDelete={setConfirmDelete}
+                        setShowConfirm={setShowConfirm}
+                    />
+                )}
                 <div className="flex flex-col items-center justify-between md:flex-row">
                     <div className="my-2 flex flex-col items-center justify-between gap-2 md:flex-row md:gap-4">
                         <h1 className="mr-4 text-2xl font-bold">Productos</h1>
