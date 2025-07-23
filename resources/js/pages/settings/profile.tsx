@@ -1,7 +1,7 @@
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { ChangeEvent, FormEventHandler, useState } from 'react';
+import { ChangeEvent, FormEventHandler, useEffect, useState } from 'react';
 
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
@@ -36,16 +36,24 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     });
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState(auth.user.avatar ? `${host}/${auth.user.avatar}` : '');
+    const [changeAvatar, setChangeAvatar] = useState(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        if (file) {
-            router.post(`/avatar/${auth.user.id}`, { file });
-            setFile(null);
-        }
         patch(route('profile.update'), {
             preserveScroll: true,
         });
+        setTimeout(() => {
+            setChangeAvatar(true)
+        }, 1000)
+    };
+
+    const uploadImage = () => {
+        if (file) {
+            router.post(`/avatar/${auth.user.id}`, { file });
+            setFile(null);
+            setChangeAvatar(false);
+        }
     };
 
     const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +69,12 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
             setPreview(reader.result as string);
         };
     };
+
+    useEffect(() => {
+        if (changeAvatar) {
+            uploadImage();
+        }
+    }, [changeAvatar]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -106,7 +120,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                         <div className="grid gap-2">
                             <Label htmlFor="phone">Celular</Label>
-                            <small className='text-destructive'>(prefijo pais) seguido de Numero de celular sin espacios: 573001234567</small>
+                            <small className="text-destructive">(prefijo pais) seguido de Numero de celular sin espacios: 573001234567</small>
 
                             <Input
                                 id="phone"
