@@ -2,12 +2,12 @@
 
 use App\Models\User;
 
-test('guests are redirected to the login page', function () {
-    $this->get('/dashboard')->assertRedirect('/login');
+test('usuarios invitados seran redireccionados al login', function () {
+    $this->get('/productos')->assertRedirect('/login');
 });
 
-test('authenticated users can visit the dashboard', function () {
+test('Usuario autenticados pueden configurar el catalogo', function () {
     $this->actingAs($user = User::factory()->create());
 
-    $this->get('/dashboard')->assertOk();
+    $this->get('/productos')->assertOk();
 });

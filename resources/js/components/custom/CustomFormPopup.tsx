@@ -47,7 +47,7 @@ export default function CustomPopup({
                     {buttonName}
                 </Button>
             </DialogTrigger>
-            <DialogContent aria-describedby="dialog-desc" className="max-h-screen overflow-y-auto sm:max-w-[425px]">
+            <DialogContent aria-describedby="dialog-desc" className="max-h-[calc(100vh-50px)] overflow-y-auto sm:max-w-[425px] py-10">
                 <DialogHeader>
                     <DialogTitle>{dialogTitle}</DialogTitle>
                 </DialogHeader>
