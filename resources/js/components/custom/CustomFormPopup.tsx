@@ -43,17 +43,17 @@ export default function CustomPopup({
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger>
                 <Button onClick={onClick}>
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className="m-2 h-4 w-4" />
                     {buttonName}
                 </Button>
             </DialogTrigger>
-            <DialogContent aria-describedby="dialog-desc" className="max-h-[calc(100vh-50px)] overflow-y-auto sm:max-w-[425px] py-10">
+            <DialogContent aria-describedby="dialog-desc" className="max-h-[calc(100vh-50px)] overflow-y-auto sm:max-w-[425px] py-20 md:py-10 mt-10 md:mt-0">
                 <DialogHeader>
                     <DialogTitle>{dialogTitle}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={form.onSubmit} className="space-y-4">
                     {form.inputs.map((item, index) => (
-                        <div className="mb-2 space-y-2" key={index}>
+                        <div className="m-2 space-y-2" key={index}>
                             <Label htmlFor={item.inputId}>{item.label}</Label>
                             {item.selectOptions ? (
                                 <Select value={item.inputValue} onValueChange={item.selectOnchange}>
