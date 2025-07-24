@@ -10,7 +10,7 @@ Route::get('/', function () {
     return redirect()->route("login");
 })->name('home');
 
-Route::get('catalogo/{id}', [CatalogoController::class, 'index'])->name("catalogo");
+Route::get('c/{id}', [CatalogoController::class, 'index'])->name("catalogo");
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categorias', CategoriasController::class);

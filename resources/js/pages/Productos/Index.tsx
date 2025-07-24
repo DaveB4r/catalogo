@@ -269,7 +269,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         <h1 className="mr-4 text-2xl font-bold">Productos</h1>
                         <Button variant="outline" className="cursor-pointer hover:text-red-600">
                             <a
-                                href={`/catalogo/${String(user.name).replaceAll(' ', '_')}`}
+                                href={`/c/${String(user.name).replaceAll(' ', '_')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center gap-2"
