@@ -40,7 +40,6 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         state.forEach((product) => {
             let variations = '';
             product?.variations?.map((variation) => (variations += `\n*${variation.nombre}*: ${variation.opciones}`));
-            console.log(product);
             message += `*Imagen:* ${host}/${product.imagen}\n*Producto:* ${product.nombre}\n*Precio:*$ ${product.precio} ${variations}\n*Cantidad:* ${product.cantidad}\n_____________________________\n`;
         });
         message += `*Total:*$ ${Number(total).toLocaleString('es-CO')}\n¡Gracias!`;

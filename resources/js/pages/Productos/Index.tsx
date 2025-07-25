@@ -82,9 +82,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     }, [showToast]);
 
     useEffect(() => {
-        if (variationsData.length > 0) {
-            setData('variationsData', variationsData as never[]);
-        }
+        setData('variationsData', variationsData as never[]);
     }, [variationsData]);
 
     useEffect(() => {
@@ -143,7 +141,10 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             if (variationError) {
                 return;
             }
+        } else {
+            setVariationsError('');
         }
+        
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
                 onSuccess: () => {
