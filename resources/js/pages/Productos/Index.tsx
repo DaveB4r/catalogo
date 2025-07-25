@@ -192,7 +192,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     };
 
     const handleShare = () => {
-        const shareLink = `${window.location.origin}/catalogo/${String(user.name).replaceAll(' ', '_')}`;
+        const shareLink = `${window.location.origin}/c/${String(user.name).replaceAll(' ', '_')}`;
         const shareMessage = `Dale un vistazo a mi nuevo catalogo: ${shareLink}`;
         const encodedMessage = encodeURIComponent(shareMessage);
         const url = `https://wa.me/?text=${encodedMessage}`;
