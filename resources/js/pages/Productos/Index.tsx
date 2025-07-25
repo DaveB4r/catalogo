@@ -48,6 +48,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         precio: '',
         imagen: '',
     });
+    const [variationsError, setVariationsError] = useState('');
 
     useEffect(() => {
         if (flash?.success) {
@@ -69,7 +70,6 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             setShowToast(true);
             dispatch({ type: 'REMOVE_FROM_CART', productId: flash?.deleted, store: String(user.name).replaceAll(' ', '_') });
         }
-        console.log(categorias)
     }, [flash]);
 
     useEffect(() => {
@@ -117,6 +117,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             precio: '',
             imagen: '',
         });
+        setVariationsError('');
+        let variationError = false;
         if (!data.nombre) {
             SetErrors((prev) => ({ ...prev, nombre: 'Debe ingresar el nombre.' }));
             return;
@@ -129,6 +131,18 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         } else if (!file && !editingProducto) {
             SetErrors((prev) => ({ ...prev, imagen: 'Debe seleccionar una imagen.' }));
             return false;
+        }
+        if (data.variationsData.length > 0) {
+            data.variationsData.map((variation: IVariationsData) => {
+                if (!variation.nombre || !variation.opciones) {
+                    setVariationsError('Por favor ingrese un valor');
+                    variationError = true;
+                    return;
+                }
+            });
+            if (variationError) {
+                return;
+            }
         }
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
@@ -171,6 +185,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             precio: '',
             imagen: '',
         });
+        setVariationsError('');
         setPreview('');
         setIsOpen(true);
     };
@@ -332,6 +347,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         setVariationsData={setVariationsData}
                         isEditing={editingProducto ? true : false}
                         categoriesLength={categorias.length}
+                        variationsError={variationsError}
                     />
                 </div>
                 <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

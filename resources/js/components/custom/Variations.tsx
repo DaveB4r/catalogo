@@ -11,9 +11,10 @@ type Props = {
     setVariationsData: Dispatch<SetStateAction<IVariationsData[]>>;
     isEditing?: boolean;
     variationEditId?: number;
+    variationsError?: string;
 };
 
-const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, variationEditId }: Props) => {
+const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, variationEditId, variationsError }: Props) => {
     useEffect(() => {
         if (!isEditing) setVariationsData([]);
     }, [isOpen]);
@@ -41,7 +42,9 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, vari
                                 onChange={(e) =>
                                     setVariationsData((prev) => prev.map((i) => (i.id === item.id ? { ...i, nombre: e.target.value } : i)))
                                 }
+                                className={`${variationsError && !item.nombre && 'border border-red-500'}`}
                             />
+                            {variationsError && !item.nombre && <small className="text-sm text-destructive">{variationsError}</small>}
                         </div>
                         <div className="mb-2 space-y-2">
                             <Label htmlFor={`opt-variation-${index}`}>Opciones Variacion {index + 1}</Label>
@@ -53,7 +56,9 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, vari
                                 onChange={(e) =>
                                     setVariationsData((prev) => prev.map((i) => (i.id === item.id ? { ...i, opciones: e.target.value } : i)))
                                 }
+                                className={`${variationsError && !item.opciones && 'border border-red-500'}`}
                             />
+                            {variationsError && !item.opciones && <small className="text-sm text-destructive">{variationsError}</small>}
                         </div>
                         <div className="mb-2 space-y-2">
                             <Button type="button" variant="destructive" onClick={() => deleteVariation(item.id)}>
