@@ -17,4 +17,6 @@ export interface IFormInputs {
     selectOnchange?: (value: string) => void;
     selectTitle?: string;
     selectOptions?: ICategorias[];
+    accept?: string;
+    error?: string;
 }

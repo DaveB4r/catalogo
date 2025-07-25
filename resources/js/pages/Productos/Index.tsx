@@ -42,6 +42,12 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState('');
     const [variationsData, setVariationsData] = useState<IVariationsData[]>([]);
+    const [errors, SetErrors] = useState({
+        nombre: '',
+        categoria: '',
+        precio: '',
+        imagen: '',
+    });
 
     useEffect(() => {
         if (flash?.success) {
@@ -63,6 +69,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             setShowToast(true);
             dispatch({ type: 'REMOVE_FROM_CART', productId: flash?.deleted, store: String(user.name).replaceAll(' ', '_') });
         }
+        console.log(categorias)
     }, [flash]);
 
     useEffect(() => {
@@ -104,6 +111,25 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        SetErrors({
+            nombre: '',
+            categoria: '',
+            precio: '',
+            imagen: '',
+        });
+        if (!data.nombre) {
+            SetErrors((prev) => ({ ...prev, nombre: 'Debe ingresar el nombre.' }));
+            return;
+        } else if (!data.categoria_id) {
+            SetErrors((prev) => ({ ...prev, categoria: 'Debe seleccionar una categoria.' }));
+            return;
+        } else if (!data.precio) {
+            SetErrors((prev) => ({ ...prev, precio: 'Debe ingresar un precio.' }));
+            return;
+        } else if (!file && !editingProducto) {
+            SetErrors((prev) => ({ ...prev, imagen: 'Debe seleccionar una imagen.' }));
+            return false;
+        }
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
                 onSuccess: () => {
@@ -138,6 +164,12 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             categoria_id: '',
             precio: '',
             variationsData: [],
+        });
+        SetErrors({
+            nombre: '',
+            categoria: '',
+            precio: '',
+            imagen: '',
         });
         setPreview('');
         setIsOpen(true);
@@ -212,6 +244,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             inputId: 'nombre',
             inputValue: data.nombre,
             inputOnchange: (e) => setData('nombre', e.target.value),
+            error: errors.nombre,
         },
         {
             label: 'Categoria',
@@ -226,6 +259,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             },
             selectOptions: categorias,
             selectTitle: 'Selecciona una Categoria',
+            error: errors.categoria,
         },
         {
             label: 'Precio',
@@ -234,20 +268,23 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             inputId: 'precio',
             inputValue: data.precio,
             inputOnchange: (e) => setData('precio', formatWithSeparator(e.target.value)),
+            error: errors.precio,
         },
         {
             label: 'Imagen',
             placeholder: 'Imagen del producto',
             inputType: 'file',
             inputId: 'imagen',
+            accept: 'image/jpeg, image/jpg, image/png, image/webp',
             inputOnchange: (e) => handleChangeImage(e),
+            error: errors.imagen,
         },
     ];
 
     const formElement: IForm = {
         onSubmit: handleSubmit,
         inputs: formInputs,
-        buttonSubmit: editingProducto ? 'editar' : 'Crear',
+        buttonSubmit: editingProducto ? 'Actualizar Producto' : 'Crear Producto',
     };
 
     return (
@@ -294,6 +331,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         variationsData={variationsData}
                         setVariationsData={setVariationsData}
                         isEditing={editingProducto ? true : false}
+                        categoriesLength={categorias.length}
                     />
                 </div>
                 <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

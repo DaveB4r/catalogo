@@ -30,6 +30,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [idToDelete, setIdToDelete] = useState(0);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (flash?.success) {
@@ -47,7 +48,8 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
         if (showToast) {
             const timer = setTimeout(() => {
                 setShowToast(false);
-            }, 3000);
+                window.location.reload();
+            }, 2000);
             return () => clearTimeout(timer);
         }
     }, [showToast]);
@@ -56,6 +58,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
         if (confirmDelete && idToDelete > 0) {
             destroy(route('categorias.destroy', idToDelete));
             setIdToDelete(0);
+            setConfirmDelete(false);
         }
     }, [confirmDelete, idToDelete]);
 
@@ -73,6 +76,11 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setError('');
+        if (!data.nombre) {
+            setError('Debe ingresar un nombre');
+            return;
+        }
         if (editingCategoria) {
             put(route('categorias.update', editingCategoria.id), {
                 onSuccess: () => {
@@ -93,6 +101,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
 
     const handleNew = () => {
         setEditingCategoria(null);
+        setError('');
         setData({
             nombre: '',
         });
@@ -120,6 +129,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
             inputId: 'nombre',
             inputValue: data.nombre,
             inputOnchange: (e) => setData('nombre', e.target.value),
+            error,
         },
     ];
 
@@ -132,7 +142,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     return (
         <AppLayout breadcrumbs={breadcumbs}>
             <Head title="Categorias" />
-            <div className="mt-10 flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <div className="mt-12 flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 {showToast && <ToastDiv toastMessage={toastMessage} toastType={toastType} />}
                 {showConfirm && (
                     <ToastDiv
@@ -155,7 +165,7 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
                         onClick={handleNew}
                     />
                 </div>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {categorias.map((categoria) => (
                         <CustomCard
                             key={categoria.id}
