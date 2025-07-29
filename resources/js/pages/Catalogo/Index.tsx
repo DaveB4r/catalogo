@@ -1,7 +1,10 @@
 import CustomCard from '@/components/custom/CustomCard';
 import Footer from '@/components/custom/Footer';
 import Navbar from '@/components/custom/Navbar';
+import { Button } from '@/components/ui/button';
 import { IProducto } from '@/interfaces/IProducto';
+import { Columns2, Square } from 'lucide-react';
+import { useState } from 'react';
 
 type Props = {
     logo: string;
@@ -11,10 +14,22 @@ type Props = {
 };
 
 export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
+    const [numColumns, setNumColumns] = useState('grid-cols-2');
     return (
         <div className="flex h-full w-full flex-1 flex-col items-center justify-center rounded-xl">
             <Navbar phone={phone} logo={logo} name={name} />
-            <div className="mb-10 grid grid-cols-1 gap-4 md:mx-10 md:grid-cols-3 lg:grid-cols-4 min-h-[calc(100vh-148px)]">
+            <div className="my-4 ml-4 self-start md:hidden">
+                {numColumns === 'grid-cols-2' ? (
+                    <Button variant="outline" size="sm" onClick={() => setNumColumns('grid-cols-1')}>
+                        <Square /> 1 Columna
+                    </Button>
+                ) : (
+                    <Button variant="outline" size="sm" onClick={() => setNumColumns('grid-cols-2')}>
+                        <Columns2 /> 2 Columnas
+                    </Button>
+                )}
+            </div>
+            <div className={`mb-10 grid ${numColumns} min-h-[calc(100vh-148px)] gap-2 px-2 md:mx-10 md:grid-cols-3 lg:grid-cols-4`}>
                 {productos.map((producto) => (
                     <CustomCard
                         key={producto.id}
@@ -27,6 +42,7 @@ export default function CatalogoIndex({ productos, phone, name, logo }: Props) {
                         admin={false}
                         type="product"
                         variations={`${producto.variations_ids}++${producto.variations_nombres}++${producto.variations_opciones}`}
+                        numColumns={numColumns}
                     />
                 ))}
             </div>
