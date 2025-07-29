@@ -91,7 +91,7 @@ export default function CustomCard({
     };
 
     return (
-        <Card className="min-h-12 max-w-84 p-0 gap-0 transition-colors hover:bg-accent/50">
+        <Card className="min-h-12 max-w-84 py-0 px-2 md:p-4 gap-0 transition-colors hover:bg-accent/50">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
                 {image && (
                     <img
