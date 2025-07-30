@@ -130,6 +130,10 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             SetErrors((prev) => ({ ...prev, imagen: 'Debe seleccionar una imagen.' }));
             return false;
         }
+        if (errors.imagen) {
+            SetErrors((prev) => ({ ...prev, imagen: errors.imagen }));
+            return false;
+        }
         if (data.variationsData.length > 0) {
             data.variationsData.map((variation: IVariationsData) => {
                 if (!variation.nombre || !variation.opciones) {
@@ -144,7 +148,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         } else {
             setVariationsError('');
         }
-        
+
         if (editingProducto) {
             put(route('productos.update', editingProducto.id), {
                 onSuccess: () => {
@@ -227,6 +231,17 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
     const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target!.files![0];
         if (!file) return;
+        const fileSizeinMB = file.size / (1024 * 1024);
+        if (fileSizeinMB > 10) {
+            SetErrors((prev) => ({ ...prev, imagen: 'Ha seleccionado una imagen muy pesada, el tamaño debe ser menor a 10 MB.' }));
+            return false;
+        }
+        SetErrors({
+            nombre: '',
+            categoria: '',
+            precio: '',
+            imagen: '',
+        });
         setFile(file);
         previewFile(file);
     };
