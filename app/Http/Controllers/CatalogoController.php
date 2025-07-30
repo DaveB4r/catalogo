@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -40,11 +41,15 @@ class CatalogoController extends Controller
                 'productos.categoria_id',
                 'categorias.nombre'
             )
+            ->orderBy("productos.categoria_id")
+            ->orderBy("productos.nombre")
             ->get();
+        $categorias = Categorias::where("user_id", $user->id)->select("id", "nombre")->orderBy('nombre')->get();
         return Inertia::render("Catalogo/Index", [
             "logo" => $user->avatar,
             "name" => $user->name,
             "productos" => $productos,
+            "categorias" => $categorias,
             "phone" => $user->phone
         ]);
     }

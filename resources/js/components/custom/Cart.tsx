@@ -52,7 +52,7 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
             className={`fixed top-0 right-0 z-50 flex h-full w-full transform flex-col bg-white shadow-lg transition-transform duration-300 ease-in-out md:w-96 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
             <div className="flex items-center justify-between border-b p-4">
-                <h2 className="font-bol text-xl">Carrito de Compras</h2>
+                <h2 className="font-balck text-xl">Carrito de Compras</h2>
                 <button className="cursor-pointer text-3xl text-gray-600 hover:text-gray-900" onClick={() => setIsOpen(!isOpen)}>
                     <X />
                 </button>
