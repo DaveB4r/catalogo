@@ -41,10 +41,10 @@ class CatalogoController extends Controller
                 'productos.categoria_id',
                 'categorias.nombre'
             )
-            ->orderBy("productos.categoria_id")
+            ->orderBy("categorias.nombre")
             ->orderBy("productos.nombre")
             ->get();
-        $categorias = Categorias::where("user_id", $user->id)->select("id", "nombre")->orderBy('nombre')->get();
+        $categorias = Categorias::where("categorias.user_id", $user->id)->select("categorias.id", "categorias.nombre")->rightJoin("productos", 'categorias.id', '=', 'productos.categoria_id')->groupBy('categorias.id')->orderBy('categorias.nombre')->get();
         return Inertia::render("Catalogo/Index", [
             "logo" => $user->avatar,
             "name" => $user->name,
