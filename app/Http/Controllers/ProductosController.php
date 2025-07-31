@@ -36,7 +36,7 @@ class ProductosController extends Controller
             ->orderBy("productos.nombre")
             ->groupBy("productos.id")
             ->get();
-        $categorias = Categorias::where("user_id", Auth::id())->get();
+        $categorias = Categorias::where("user_id", Auth::id())->orderBy('nombre')->get();
         $user = Auth::user();
         return Inertia::render("Productos/Index", [
             "productos" => $productos,

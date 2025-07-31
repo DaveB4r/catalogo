@@ -14,12 +14,12 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        $categorias = Categorias::where("user_id", Auth::id())->get();
+        $categorias = Categorias::where("user_id", Auth::id())->orderBy('nombre')->get();
         return Inertia::render("Categorias/Index", [
             "categorias" => $categorias,
             "flash" => [
-                "success" => session("success"),
-                "error" => session("error")
+                "success_categoria" => session("success_categoria"),
+                "error_categoria" => session("error_categoria")
             ]
         ]);
     }
@@ -34,13 +34,13 @@ class CategoriasController extends Controller
         ]);
         $exists = Categorias::where("user_id", Auth::id())->where("nombre", $request->nombre)->select("nombre")->count();
         if ($exists > 0) {
-            return redirect()->route("categorias.index")->with("error", "La categoria ya existe, intente nuevamente");
+            return redirect()->route("categorias.index")->with("error_categoria", "La categoria ya existe, intente nuevamente");
         }
         Categorias::create([
             ...$validated,
             "user_id" => Auth::id()
         ]);
-        return redirect()->route("categorias.index")->with("success", "Categoria creada satisfactoriamente");
+        return redirect()->route("categorias.index")->with("success_categoria", "Categoria creada satisfactoriamente");
     }
 
     /**
@@ -52,11 +52,11 @@ class CategoriasController extends Controller
             "nombre" => "required|string|max:255"
         ]);
         $exists = Categorias::where("user_id", Auth::id())->where("nombre", $request->nombre)->select("nombre")->count();
-        if($exists > 0) {
-            return redirect()->route("categorias.index")->with("error", "La categoria ya existe, intente nuevamente");
+        if ($exists > 0) {
+            return redirect()->route("categorias.index")->with("error_categoria", "La categoria ya existe, intente nuevamente");
         }
         $categoria->update($validated);
-        return redirect()->route("categorias.index")->with("success", "Categoria actualizada satisfactoriamente");
+        return redirect()->route("categorias.index")->with("success_categoria", "Categoria actualizada satisfactoriamente");
     }
 
     /**
@@ -65,6 +65,6 @@ class CategoriasController extends Controller
     public function destroy(Categorias $categoria)
     {
         $categoria->delete();
-        return redirect()->route("categorias.index")->with("success", "Categoria Eliminada satisfactoriamente");
+        return redirect()->route("categorias.index")->with("success_categoria", "Categoria Eliminada satisfactoriamente");
     }
 }

@@ -1,17 +1,17 @@
-import CustomCard from '@/components/custom/CustomCard';
 import CustomPopup from '@/components/custom/CustomFormPopup';
 import ToastDiv from '@/components/custom/ToastDiv';
 import { ICategorias } from '@/interfaces/ICategorias';
-import { IFlash } from '@/interfaces/IFlash';
+import { IFlashCategoria } from '@/interfaces/IFlashCategoria';
 import { IForm, IFormInputs } from '@/interfaces/IForm';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEvent, useEffect, useState } from 'react';
+import CategoriasTable from './CategoriasTable';
 
 type Props = {
     categorias: ICategorias[];
-    flash?: IFlash;
+    flash?: IFlashCategoria;
 };
 
 const breadcumbs: BreadcrumbItem[] = [
@@ -26,20 +26,20 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
     const [editingCategoria, setEditingCategoria] = useState<ICategorias | null>(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState<'success' | 'error'>('success');
+    const [toastType, setToastType] = useState<'success_categoria' | 'error_categoria'>('success_categoria');
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [idToDelete, setIdToDelete] = useState(0);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (flash?.success) {
-            setToastMessage(flash.success);
-            setToastType('success');
+        if (flash?.success_categoria) {
+            setToastMessage(flash.success_categoria);
+            setToastType('success_categoria');
             setShowToast(true);
-        } else if (flash?.error) {
-            setToastMessage(flash.error);
-            setToastType('error');
+        } else if (flash?.error_categoria) {
+            setToastMessage(flash.error_categoria);
+            setToastType('error_categoria');
             setShowToast(true);
         }
     }, [flash]);
@@ -48,7 +48,6 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
         if (showToast) {
             const timer = setTimeout(() => {
                 setShowToast(false);
-                window.location.reload();
             }, 2000);
             return () => clearTimeout(timer);
         }
@@ -165,19 +164,8 @@ export default function CategoriasIndex({ categorias, flash }: Props) {
                         onClick={handleNew}
                     />
                 </div>
-                <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {categorias.map((categoria) => (
-                        <CustomCard
-                            key={categoria.id}
-                            id={categoria.id}
-                            title={categoria.nombre}
-                            type="category"
-                            admin={true}
-                            onClickEdit={() => handleEdit(categoria)}
-                            onClickDelete={() => handleDelete(categoria.id)}
-                            price={''}
-                        />
-                    ))}
+                <div className="w-full md:w-xl p-4">
+                    <CategoriasTable categorias={categorias} onClickEdit={handleEdit} onClickDelete={handleDelete} />
                 </div>
             </div>
         </AppLayout>
