@@ -27,16 +27,19 @@ export default function Register() {
         phone: '',
         password_confirmation: '',
     });
+    const [preview, setPreview] = useState('');
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('register'), {
             forceFormData: true,
-            onFinish: () => reset('password', 'password_confirmation'),
+            onFinish: () => {
+                reset();
+                setPreview('');
+                setData('file', null);
+            },
         });
     };
-
-    const [preview, setPreview] = useState('');
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
