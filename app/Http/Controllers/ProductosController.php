@@ -33,7 +33,6 @@ class ProductosController extends Controller
                 DB::raw("GROUP_CONCAT(variations.nombre SEPARATOR \"|-|\") as variations_nombres"),
                 DB::raw("GROUP_CONCAT(variations.opciones SEPARATOR \"|-|\") as variations_opciones")
             )
-            ->orderBy("categorias.nombre")
             ->orderBy("productos.nombre")
             ->groupBy("productos.id")
             ->get();

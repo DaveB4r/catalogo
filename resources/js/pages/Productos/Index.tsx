@@ -1,4 +1,3 @@
-import CustomCard from '@/components/custom/CustomCard';
 import CustomPopup from '@/components/custom/CustomFormPopup';
 import ToastDiv from '@/components/custom/ToastDiv';
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,7 @@ import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Cog, Share2 } from 'lucide-react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import ProductosTable from './ProductosTable';
 
 type Props = {
     productos: IProducto[];
@@ -366,21 +366,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         variationsError={variationsError}
                     />
                 </div>
-                <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {productos.map((producto) => (
-                        <CustomCard
-                            key={producto.id}
-                            id={producto.id}
-                            title={producto.nombre}
-                            price={producto.precio}
-                            image={producto.imagen}
-                            category={producto.categoria}
-                            onClickEdit={() => handleEdit(producto)}
-                            onClickDelete={() => handleDelete(producto.id)}
-                            type="product"
-                            admin={true}
-                        />
-                    ))}
+                <div className="w-full p-4">
+                    <ProductosTable productos={productos} onClickEdit={handleEdit} onClickDelete={handleDelete} />
                 </div>
             </div>
         </AppLayout>
