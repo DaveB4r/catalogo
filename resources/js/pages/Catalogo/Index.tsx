@@ -1,9 +1,12 @@
 import CustomCard from '@/components/custom/CustomCard';
 import Footer from '@/components/custom/Footer';
 import Navbar from '@/components/custom/Navbar';
+import ProductView from '@/components/custom/ProductView';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ICategorias } from '@/interfaces/ICategorias';
 import { IProducto } from '@/interfaces/IProducto';
+import { DialogDescription } from '@radix-ui/react-dialog';
 import { Columns2, Square } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -16,9 +19,21 @@ type Props = {
 };
 
 export default function CatalogoIndex({ productos, phone, name, logo, categorias }: Props) {
+    const params = new URLSearchParams(window.location.search);
     const [numColumns, setNumColumns] = useState('grid-cols-2');
     const [productosVirtual, setProductosVirtual] = useState<IProducto[]>([]);
     const [active, setActive] = useState('todas');
+    const [producto, setProducto] = useState<IProducto | null>(null);
+    const [productoId, setProductoId] = useState(0);
+    const [openDialog, setOpenDialog] = useState(false);
+
+    useEffect(() => {
+        const productToView = productoId !== 0 ? productoId : Number(params.get('p'));
+        if (productToView > 0) {
+            setProducto(productos.filter((producto) => producto.id === productToView)[0]);
+            setOpenDialog(true);
+        }
+    }, [productoId]);
 
     useEffect(() => {
         setProductosVirtual(
@@ -32,7 +47,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
     }, [active, productos]);
 
     return (
-        <div className="flex h-full w-full flex-1 flex-col items-center justify-center rounded-xl">
+        <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border-none">
             <Navbar phone={phone} logo={logo} name={name} categorias={categorias} active={active} setActive={setActive} />
             <div className="my-4 ml-4 self-start md:hidden">
                 {numColumns === 'grid-cols-2' ? (
@@ -45,7 +60,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                     </Button>
                 )}
             </div>
-            <div className={`mb-10 grid ${numColumns} min-h-[calc(100vh-148px)] gap-2 px-2 md:mx-10 md:grid-cols-3 lg:grid-cols-4`}>
+            <div className={`mb-10 grid ${numColumns} min-h-[calc(100vh-148px)] gap-1 px-2 md:mx-10 md:grid-cols-3 lg:grid-cols-4`}>
                 {productosVirtual.map((producto) => (
                     <CustomCard
                         key={producto.id}
@@ -59,9 +74,21 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                         type="product"
                         variations={`${producto.variations_ids}++${producto.variations_nombres}++${producto.variations_opciones}`}
                         numColumns={numColumns}
+                        setProductId={setProductoId}
                     />
                 ))}
             </div>
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                <DialogContent className="flex max-h-[calc(100vh-50px)] min-h-[calc(100vh-25%)] min-w-[calc(100vw-5%)] flex-col overflow-y-auto md:min-w-[calc(100vw-50%)]">
+                    <DialogHeader>
+                        <DialogTitle>Detalles del producto</DialogTitle>
+                        <DialogDescription>
+                            Vista detallada <span className="font-black">{producto?.nombre}</span>
+                        </DialogDescription>
+                    </DialogHeader>
+                    {producto && <ProductView producto={producto} />}
+                </DialogContent>
+            </Dialog>
             <Footer />
         </div>
     );

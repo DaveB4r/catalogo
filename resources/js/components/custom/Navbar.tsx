@@ -17,14 +17,14 @@ type Props = {
     setActive: Dispatch<SetStateAction<string>>;
 };
 
-export default function Navbar({ phone, name, logo, categorias, active, setActive}: Props) {
+export default function Navbar({ phone, name, logo, categorias, active, setActive }: Props) {
     const host = window.location.origin;
     const { state } = useAppContext();
     const [openCart, setOpenCart] = useState(false);
     const [openFilter, setOpenFilter] = useState(false);
     const getInitials = useInitials();
     return (
-        <NavigationMenu viewport={false} className="sticky top-0 z-50 mb-4 border-b-1 border-blue-950 bg-white pt-4 pb-2">
+        <NavigationMenu viewport={false} className="sticky top-0 z-50 mb-4 border-b-1 border-blue-950 bg-white pt-4 pb-2 w-full">
             <NavigationMenuList className="flex w-[calc(100vw-20px)] justify-between px-5">
                 <button className="cursor-pointer rounded-2xl p-4 hover:bg-gray-200" onClick={() => setOpenFilter((openFilter) => !openFilter)}>
                     <Menu className="h-12 w-12" />
@@ -42,7 +42,7 @@ export default function Navbar({ phone, name, logo, categorias, active, setActiv
                     </button>
                 </div>
                 <Cart isOpen={openCart} setIsOpen={setOpenCart} phone={phone} />
-                <Filters isOpen={openFilter} setIsOpen={setOpenFilter} categorias={categorias} active={active} setActive={setActive}/>
+                <Filters isOpen={openFilter} setIsOpen={setOpenFilter} categorias={categorias} active={active} setActive={setActive} />
             </NavigationMenuList>
         </NavigationMenu>
     );

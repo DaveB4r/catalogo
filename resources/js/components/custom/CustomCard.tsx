@@ -1,8 +1,8 @@
 import { useAppContext } from '@/context/AppContext';
 import { IProducto } from '@/interfaces/IProducto';
 import { IVariationsData } from '@/interfaces/IVariations';
-import { Pencil, ShoppingCart, Star, Trash2 } from 'lucide-react';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { Pencil, ShoppingCart, Trash2 } from 'lucide-react';
+import { Dispatch, MouseEventHandler, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Label } from '../ui/label';
@@ -21,6 +21,7 @@ type Props = {
     type: 'category' | 'product';
     variations?: string;
     numColumns?: string;
+    setProductId?: Dispatch<SetStateAction<number>>;
 };
 
 export default function CustomCard({
@@ -36,6 +37,7 @@ export default function CustomCard({
     numColumns,
     onClickEdit,
     onClickDelete,
+    setProductId,
 }: Props) {
     const host = window.location.origin;
     const { dispatch } = useAppContext();
@@ -91,27 +93,22 @@ export default function CustomCard({
     };
 
     return (
-        <Card className="min-h-12 max-w-84 py-0 px-2 md:p-4 gap-0 transition-colors hover:bg-accent/50">
+        <Card className="min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
                 {image && (
                     <img
                         src={`${host}/${image}`}
                         alt={title}
-                        className={`min-h-56 w-full md:h-72 md:object-contain ${numColumns === 'grid-cols-1' ? 'h-56 object-contain' : 'object-cover'}`}
+                        className={`min-h-56 w-full rounded-lg md:h-72 md:object-contain ${numColumns === 'grid-cols-1' ? 'h-56 object-contain' : 'object-cover'}`}
+                        onClick={() => setProductId && setProductId(id)}
                     />
                 )}
-                {category && <h3 className="text-sm font-thin text-gray-600">{category}</h3>}
-                <CardTitle className="text-md font-extrabold capitalize md:text-xl">{title}</CardTitle>
-                {type === 'product' && !admin && (
-                    <div className="mt-2 flex">
-                        {Array(5)
-                            .fill(<Star className="h-4 w-4 text-black" />)
-                            .map((item, index) => (
-                                <span key={index}>{item}</span>
-                            ))}
-                    </div>
-                )}
-                {type === 'product' && <CardDescription className="text-sm font-bold text-black md:text-lg">$ {price}</CardDescription>}
+                <div className="mb-2 flex w-[80%] flex-col items-center justify-center gap-0 border-b-1 border-b-black py-2">
+                    <CardTitle className="text-lg font-extrabold capitalize md:text-xl">{title}</CardTitle>
+                    {category && <h3 className="text-sm/tight font-thin text-gray-500">{category}</h3>}
+                    {type === 'product' && <CardDescription className="text-lg font-bold text-black md:text-lg">$ {price}</CardDescription>}
+                </div>
+
                 {admin && (
                     <div className="absolute top-2 right-2 flex h-full w-full justify-end gap-2 transition-opacity hover:opacity-100 md:opacity-0">
                         <Button variant="ghost" size="icon" onClick={onClickEdit} className="cursor-pointer hover:bg-blue-400 hover:text-white">
@@ -129,35 +126,37 @@ export default function CustomCard({
                 )}
             </CardHeader>
             {!admin && type === 'product' && (
-                <CardContent className="px-0 mb-3">
+                <CardContent className="px-0">
                     {!admin && (
-                        <div>
-                            <div>
-                                {variationsIds.length > 0 && (
-                                    <div className="my-2">
-                                        {variationsIds.map((variation, index) => (
-                                            <div className="mb3" key={index}>
-                                                <Label>{variationsNames[index]}</Label>
-                                                <Select onValueChange={(value) => handleSelectVariation(variation, variationsNames[index], value)}>
-                                                    <SelectTrigger className="focus:ring-2 focus:ring-primary">
-                                                        <SelectValue placeholder={`Seleccione ${variationsNames[index]}`} />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {variationsOptions[index].split(',').map((item, indexOpt) => (
-                                                            <SelectItem key={indexOpt} value={item}>
-                                                                {item}
-                                                            </SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                            <Button variant="default" size="lg" className="w-full cursor-pointer" disabled={buttonDisable} onClick={addToCart}>
-                                <ShoppingCart className="h-4 w-4" /> Agregar al carrito
-                            </Button>
+                        <div className="flex items-center justify-between px-1">
+                            {variationsIds.length > 0 && (
+                                <div className="mx-1 min-w-[60%]">
+                                    {variationsIds.map((variation, index) => (
+                                        <div className="mb-1" key={index}>
+                                            <Label className="font-black text-black capitalize">{variationsNames[index]}</Label>
+                                            <Select onValueChange={(value) => handleSelectVariation(variation, variationsNames[index], value)}>
+                                                <SelectTrigger className="text-xs ring-1 focus:ring-2 focus:ring-primary">
+                                                    <SelectValue placeholder={`Seleccione ${variationsNames[index]}`} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {variationsOptions[index].split(',').map((item, indexOpt) => (
+                                                        <SelectItem key={indexOpt} value={item}>
+                                                            {item}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <button
+                                className={`mb-1 flex w-full items-center justify-center rounded-xl py-1 ${buttonDisable ? 'bg-gray-300' : 'bg-black'}`}
+                                disabled={buttonDisable}
+                                onClick={addToCart}
+                            >
+                                <ShoppingCart className="h-9 w-9 text-white" />
+                            </button>
                         </div>
                     )}
                 </CardContent>

@@ -11,6 +11,7 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Tooltip, TooltipContent } from '../ui/tooltip';
 import Variations from './Variations';
+import { DialogDescription } from '@radix-ui/react-dialog';
 
 type Props = {
     isOpen: boolean;
@@ -68,6 +69,7 @@ export default function CustomPopup({
             >
                 <DialogHeader>
                     <DialogTitle>{dialogTitle}</DialogTitle>
+                    <DialogDescription>Detalles del producto</DialogDescription>
                 </DialogHeader>
                 <form onSubmit={form.onSubmit} className="space-y-4">
                     {form.inputs.map((item, index) => (
