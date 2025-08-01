@@ -22,6 +22,7 @@ type Props = {
     variations?: string;
     numColumns?: string;
     setProductId?: Dispatch<SetStateAction<number>>;
+    setOpenDialog?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function CustomCard({
@@ -38,6 +39,7 @@ export default function CustomCard({
     onClickEdit,
     onClickDelete,
     setProductId,
+    setOpenDialog,
 }: Props) {
     const host = window.location.origin;
     const { dispatch } = useAppContext();
@@ -92,6 +94,11 @@ export default function CustomCard({
         setVariationsData((prev) => prev.map((i) => (i.id === Number(id) ? { ...i, nombre, opciones: value } : i)));
     };
 
+    const showProductDetail = (id: number) => {
+        setProductId && setProductId(id);
+        setOpenDialog && setOpenDialog(true);
+    };
+
     return (
         <Card className="min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
@@ -100,7 +107,7 @@ export default function CustomCard({
                         src={`${host}/${image}`}
                         alt={title}
                         className={`min-h-56 w-full rounded-lg md:h-72 md:object-contain ${numColumns === 'grid-cols-1' ? 'h-56 object-contain' : 'object-cover'}`}
-                        onClick={() => setProductId && setProductId(id)}
+                        onClick={() => showProductDetail(id)}
                     />
                 )}
                 <div className="mb-2 flex w-[80%] flex-col items-center justify-center gap-0 border-b-1 border-b-black py-2">
@@ -135,7 +142,7 @@ export default function CustomCard({
                                         <div className="mb-1" key={index}>
                                             <Label className="font-black text-black capitalize">{variationsNames[index]}</Label>
                                             <Select onValueChange={(value) => handleSelectVariation(variation, variationsNames[index], value)}>
-                                                <SelectTrigger className="text-xs ring-1 focus:ring-2 focus:ring-primary">
+                                                <SelectTrigger className="p-1 text-[10px] ring-1 focus:ring-2 focus:ring-primary">
                                                     <SelectValue placeholder={`Seleccione ${variationsNames[index]}`} />
                                                 </SelectTrigger>
                                                 <SelectContent>

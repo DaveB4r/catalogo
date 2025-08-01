@@ -110,7 +110,7 @@ export default function CustomPopup({
                     {hasVariations && variationsData && setVariationsData && (
                         <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} variationsError={variationsError}/>
                     )}
-                    <Button type="submit" disabled={processing}>
+                    <Button type="submit" disabled={processing} className='w-full'>
                         {form.buttonSubmit}
                     </Button>
                 </form>

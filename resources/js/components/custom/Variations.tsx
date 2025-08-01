@@ -68,7 +68,8 @@ const Variations = ({ isOpen, variationsData, setVariationsData, isEditing, vari
                     </div>
                 ))}
             </div>
-            <Button variant="default" type="button" onClick={createVariation}>
+            <p className='text-sm text-red-600 text-right'>Si el producto requiere variaciones presione el boton Añadir Variaciones</p>
+            <Button variant="default" type="button" className='self-end float-end mb-4 cursor-pointer' onClick={createVariation}>
                 <Plus />
                 Añadir Variacion
             </Button>

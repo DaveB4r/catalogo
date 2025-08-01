@@ -1,4 +1,5 @@
 import CustomCard from '@/components/custom/CustomCard';
+import FloatButton from '@/components/custom/FloatButton';
 import Footer from '@/components/custom/Footer';
 import Navbar from '@/components/custom/Navbar';
 import ProductView from '@/components/custom/ProductView';
@@ -31,7 +32,6 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
         const productToView = productoId !== 0 ? productoId : Number(params.get('p'));
         if (productToView > 0) {
             setProducto(productos.filter((producto) => producto.id === productToView)[0]);
-            setOpenDialog(true);
         }
     }, [productoId]);
 
@@ -48,7 +48,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border-none">
-            <Navbar phone={phone} logo={logo} name={name} categorias={categorias} active={active} setActive={setActive} />
+            <Navbar logo={logo} name={name} categorias={categorias} active={active} setActive={setActive} />
             <div className="my-4 ml-4 self-start md:hidden">
                 {numColumns === 'grid-cols-2' ? (
                     <Button variant="outline" size="sm" onClick={() => setNumColumns('grid-cols-1')}>
@@ -75,11 +75,12 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                         variations={`${producto.variations_ids}++${producto.variations_nombres}++${producto.variations_opciones}`}
                         numColumns={numColumns}
                         setProductId={setProductoId}
+                        setOpenDialog={setOpenDialog}
                     />
                 ))}
             </div>
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-                <DialogContent className="flex max-h-[calc(100vh-50px)] min-h-[calc(100vh-25%)] min-w-[calc(100vw-5%)] flex-col overflow-y-auto md:min-w-[calc(100vw-50%)]">
+                <DialogContent className="flex h-[calc(100vh-10%)] min-w-[calc(100vw-5%)] flex-col overflow-y-auto md:min-w-[calc(100vw-50%)]">
                     <DialogHeader>
                         <DialogTitle>Detalles del producto</DialogTitle>
                         <DialogDescription>
@@ -89,6 +90,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                     {producto && <ProductView producto={producto} />}
                 </DialogContent>
             </Dialog>
+            <FloatButton phone={phone}/>
             <Footer />
         </div>
     );
