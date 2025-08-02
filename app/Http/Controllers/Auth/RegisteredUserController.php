@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -58,14 +61,20 @@ class RegisteredUserController extends Controller
      * Handle Avatar
      */
 
-    public function avatar(Request $request, Int $id) 
+    public function avatar(Request $request, Int $id)
     {
         $user = User::select("avatar")->find($id);
-        if(isset($user->avatar)) {
+        if (isset($user->avatar)) {
             $imagen = str_replace("storage/", "", $user->avatar);
             Storage::disk("public")->delete($imagen);
         }
-        $imagen = "storage/" . $request->file("file")->store("avatars", "public");
+        $uploadedFile = $request->file("file");
+        $manager = new ImageManager(new Driver());
+        $imageFile = $manager->read($uploadedFile);
+        $encodedImage = $imageFile->toWebp(quality: 80);
+        $filename = Str::random(40) . ".webp";
+        Storage::disk('public')->put("avatars/" . $filename, $encodedImage->toFilePointer());
+        $imagen = "storage/avatars/" . $filename;
         User::where('id', $id)->update(['avatar' => $imagen]);
     }
 }

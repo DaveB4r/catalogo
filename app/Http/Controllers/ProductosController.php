@@ -10,7 +10,9 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Str;
 
 class ProductosController extends Controller
 {
@@ -141,7 +143,13 @@ class ProductosController extends Controller
             Storage::disk("public")->delete($imagen);
             $message = "actualizado";
         }
-        $imagen = "storage/" . $request->file("file")->store("productos", "public");
+        $uploadedFile = $request->file('file');
+        $manager = new ImageManager(new Driver());
+        $imageFile = $manager->read($uploadedFile);
+        $encodedImage = $imageFile->toWebp(quality: 80);
+        $filename = Str::random(40).".webp";
+        Storage::disk('public')->put("productos/" . $filename, $encodedImage->toFilePointer());
+        $imagen = "storage/productos/" . $filename;
         Productos::where('id', $id)->update(['imagen' => $imagen]);
         return redirect()->route("productos.index")->with("success", "Producto {$message} satisfactoriamente");
     }
