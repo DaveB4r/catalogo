@@ -80,7 +80,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                 ))}
             </div>
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-                <DialogContent className="flex h-[calc(100vh-10%)] min-w-[calc(100vw-5%)] flex-col overflow-y-auto md:min-w-[calc(100vw-50%)]">
+                <DialogContent className="flex max-h-[calc(100vh-20%)] min-w-[calc(100vw-5%)] flex-col overflow-y-auto md:min-w-[calc(100vw-50%)]">
                     <DialogHeader>
                         <DialogTitle>Detalles del producto</DialogTitle>
                         <DialogDescription>

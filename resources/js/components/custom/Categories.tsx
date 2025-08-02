@@ -21,7 +21,7 @@ const Categories = ({ categorias, active, setActive, horizontal, setIsOpen }: Pr
             {categorias.length === 0 ? (
                 <p className="text-center text-gray-500">No hay categorias</p>
             ) : (
-                <ul className={`flex list-none ${horizontal ? 'max-w-full' : 'flex-col flex-wrap'} gap-2`}>
+                <ul className={`flex list-none ${horizontal ? 'max-w-full' : 'flex-col flex-wrap gap-2'} `}>
                     <li>
                         <Button
                             variant="link"
