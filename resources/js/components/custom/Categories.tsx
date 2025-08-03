@@ -16,7 +16,7 @@ const Categories = ({ categorias, active, setActive, horizontal, setIsOpen }: Pr
         if (setIsOpen) setIsOpen((isOpen) => !isOpen);
     };
     return (
-        <div className={`flex-grow p-4 ${horizontal ? 'overflow-x-auto max-w-screen' : 'overflow-y-auto'}`}>
+        <div className={`flex-grow px-4 ${horizontal ? 'overflow-x-auto max-w-screen' : 'overflow-y-auto'}`}>
             {!horizontal && <h3 className="text-lg font-bold capitalize">Categorias</h3>}
             {categorias.length === 0 ? (
                 <p className="text-center text-gray-500">No hay categorias</p>
