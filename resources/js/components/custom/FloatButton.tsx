@@ -11,7 +11,7 @@ const FloatButton = ({ phone }: Props) => {
     const [openCart, setOpenCart] = useState(false);
     return (
         <div>
-            <div className="fixed right-0 bottom-0 md:top-[10rem]">
+            <div className="fixed right-0 bottom-0">
                 <button className="relative" onClick={() => setOpenCart((openCart) => !openCart)}>
                     <img
                         src="/images/shopping-cart.webp"

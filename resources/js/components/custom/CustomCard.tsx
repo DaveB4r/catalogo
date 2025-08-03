@@ -100,7 +100,7 @@ export default function CustomCard({
     };
 
     return (
-        <Card className="min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4">
+        <Card className="product-card min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
                 {image && (
                     <img
