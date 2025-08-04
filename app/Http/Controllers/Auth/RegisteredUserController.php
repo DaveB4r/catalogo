@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
@@ -18,6 +19,16 @@ use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
+    public function index()
+    {
+        $id = Auth::id();
+        if ($id !== 1)
+            return redirect()->route("productos.index");
+        $usuarios = DB::table("users")->leftJoin("productos", "productos.user_id", "=", "users.id")->select("users.id", "name", "email", "phone", DB::raw("Count(productos.id) as cantidad_productos"))->groupBy("users.id")->orderBy("cantidad_productos", "desc")->get();
+        return Inertia::render('auth/admin', [
+            "usuarios" => $usuarios
+        ]);
+    }
     /**
      * Show the registration page.
      */

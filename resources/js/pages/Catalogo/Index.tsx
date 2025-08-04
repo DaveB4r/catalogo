@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ICategorias } from '@/interfaces/ICategorias';
 import { IProducto } from '@/interfaces/IProducto';
+import { Head } from '@inertiajs/react';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { Columns2, Square } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -27,10 +28,6 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
     const [producto, setProducto] = useState<IProducto | null>(null);
     const [productoId, setProductoId] = useState(0);
     const [openDialog, setOpenDialog] = useState(false);
-
-    useEffect(() => {
-        document.title = `Catalogo ${name}`;
-    }, []);
 
     useEffect(() => {
         let productToView = productoId !== 0 ? productoId : Number(params.get('p'));
@@ -55,6 +52,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border-none">
+            <Head title={name}/>
             <Navbar logo={logo} name={name} categorias={categorias} active={active} setActive={setActive} />
             <div className="my-4 ml-4 self-start md:hidden">
                 {numColumns === 'grid-cols-2' ? (

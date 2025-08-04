@@ -43,7 +43,11 @@ export default function Register() {
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Registrar Usuario',
+            title: 'Administrar Catalogos',
+            href: '/admin_catalogo',
+        },
+        {
+            title: 'Registrar Catalogo',
             href: '/register',
         },
     ];

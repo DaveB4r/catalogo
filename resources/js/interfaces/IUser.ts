@@ -1,4 +1,7 @@
 export interface IUser {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
+    email?: string;
+    phone?: string;
+    cantidad_productos?: number;
 }

@@ -13,7 +13,7 @@ import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Cog, Share2 } from 'lucide-react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import ProductosTable from './ProductosTable';
+import ProductosTable from '@/components/custom/ProductosTable';
 
 type Props = {
     productos: IProducto[];

@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
+
+    Route::get('admin_catalogo', [RegisteredUserController::class, 'index']);
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

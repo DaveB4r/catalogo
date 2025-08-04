@@ -51,7 +51,7 @@ export default function CustomPopup({
             <Tooltip>
                 <TooltipTrigger>
                     <DialogTrigger asChild>
-                        <Button onClick={onClick} disabled={categoriesLength === 0} type="button">
+                        <Button onClick={onClick} disabled={categoriesLength === 0} type="button" className='cursor-pointer'>
                             <Plus className="m-2 h-4 w-4" />
                             {buttonName}
                         </Button>

@@ -7,7 +7,7 @@ import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEvent, useEffect, useState } from 'react';
-import CategoriasTable from './CategoriasTable';
+import CategoriasTable from '@/components/custom/CategoriasTable';
 
 type Props = {
     categorias: ICategorias[];
