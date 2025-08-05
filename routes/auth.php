@@ -36,7 +36,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('admin_catalogo', [RegisteredUserController::class, 'index']);
+    Route::get('admin_catalogo', [RegisteredUserController::class, 'index'])->name("admin_catalogo");
+
+    Route::delete('user_destroy/{id}', [RegisteredUserController::class, 'destroy'])->name('user_destroy');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

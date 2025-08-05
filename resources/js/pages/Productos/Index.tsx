@@ -89,6 +89,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         if (confirmDelete && idToDelete > 0) {
             destroy(route('productos.destroy', idToDelete));
             setIdToDelete(0);
+            setConfirmDelete(false);
         }
     }, [confirmDelete, idToDelete]);
 

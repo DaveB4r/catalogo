@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorias;
+use App\Models\Productos;
 use App\Models\User;
+use App\Models\Variations;
 use Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +29,11 @@ class RegisteredUserController extends Controller
             return redirect()->route("productos.index");
         $usuarios = DB::table("users")->leftJoin("productos", "productos.user_id", "=", "users.id")->select("users.id", "name", "email", "phone", DB::raw("Count(productos.id) as cantidad_productos"))->groupBy("users.id")->orderBy("cantidad_productos", "desc")->get();
         return Inertia::render('auth/admin', [
-            "usuarios" => $usuarios
+            "usuarios" => $usuarios,
+            "flash" => [
+                "success_user" => session("success_user"),
+                "error_user" => session("error_user")
+            ]
         ]);
     }
     /**
@@ -87,5 +94,32 @@ class RegisteredUserController extends Controller
         Storage::disk('public')->put("avatars/" . $filename, $encodedImage->toFilePointer());
         $imagen = "storage/avatars/" . $filename;
         User::where('id', $id)->update(['avatar' => $imagen]);
+    }
+
+    public function destroy(Int $id)
+    {
+        $user = User::find($id);
+        // elimino la imagen de perfil
+        if (isset($user->avatar)) {
+            $imagen = str_replace("storage/", "", $user->avatar);
+            Storage::disk("public")->delete($imagen);
+        }
+        // elimino productos
+        $productos = Productos::where("user_id", $user->id)->get();
+        if (count($productos) > 0) {
+            foreach ($productos as $producto) {
+                if (isset($producto->imagen)) {
+                    $imagen = str_replace("storage/", "", $producto->imagen);
+                    Storage::disk("public")->delete($imagen);
+                }
+                Variations::where("producto_id", $producto->id)->delete();
+                $producto->delete();
+            }
+        }
+        // elimino categorias
+        Categorias::where("user_id", $user->id)->delete();
+        $user->delete();
+        return redirect()->route("admin_catalogo")->with("success_user", "Catalogo Eliminado satisfactoriamente");
+        exit();
     }
 }
