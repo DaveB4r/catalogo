@@ -1,6 +1,7 @@
 import { IForm } from '@/interfaces/IForm';
 
 import { IVariationsData } from '@/interfaces/IVariations';
+import { DialogDescription } from '@radix-ui/react-dialog';
 import { TooltipTrigger } from '@radix-ui/react-tooltip';
 import { Plus } from 'lucide-react';
 import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
@@ -11,23 +12,22 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Tooltip, TooltipContent } from '../ui/tooltip';
 import Variations from './Variations';
-import { DialogDescription } from '@radix-ui/react-dialog';
 
 type Props = {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    buttonName: string;
-    dialogTitle: string;
+    buttonName?: string;
+    dialogTitle?: string;
     form: IForm;
     processing: boolean;
     preview?: string;
-    onClick: MouseEventHandler<HTMLButtonElement>;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
     hasVariations?: boolean;
     variationsData?: IVariationsData[];
     setVariationsData?: Dispatch<SetStateAction<IVariationsData[]>>;
     isEditing?: boolean;
     categoriesLength?: number;
-    variationsError?: string; 
+    variationsError?: string;
 };
 
 export default function CustomPopup({
@@ -44,25 +44,27 @@ export default function CustomPopup({
     setVariationsData,
     isEditing,
     categoriesLength,
-    variationsError
+    variationsError,
 }: Props) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <Tooltip>
-                <TooltipTrigger>
-                    <DialogTrigger asChild>
-                        <Button onClick={onClick} disabled={categoriesLength === 0} type="button" className='cursor-pointer'>
-                            <Plus className="m-2 h-4 w-4" />
-                            {buttonName}
-                        </Button>
-                    </DialogTrigger>
-                </TooltipTrigger>
-                {categoriesLength === 0 && (
-                    <TooltipContent>
-                        <p>Debe agregar al menos una categoria</p>
-                    </TooltipContent>
-                )}
-            </Tooltip>
+            {buttonName && (
+                <Tooltip>
+                    <TooltipTrigger>
+                        <DialogTrigger asChild>
+                            <Button onClick={onClick} disabled={categoriesLength === 0} type="button" className="cursor-pointer">
+                                <Plus className="m-2 h-4 w-4" />
+                                {buttonName}
+                            </Button>
+                        </DialogTrigger>
+                    </TooltipTrigger>
+                    {categoriesLength === 0 && (
+                        <TooltipContent>
+                            <p>Debe agregar al menos una categoria</p>
+                        </TooltipContent>
+                    )}
+                </Tooltip>
+            )}
             <DialogContent
                 aria-describedby="dialog-desc"
                 className="mt-10 max-h-[calc(100vh-50px)] overflow-y-auto py-20 sm:max-w-[425px] md:mt-0 md:py-10"
@@ -108,9 +110,15 @@ export default function CustomPopup({
                         </div>
                     )}
                     {hasVariations && variationsData && setVariationsData && (
-                        <Variations isOpen={isOpen} variationsData={variationsData} setVariationsData={setVariationsData} isEditing={isEditing} variationsError={variationsError}/>
+                        <Variations
+                            isOpen={isOpen}
+                            variationsData={variationsData}
+                            setVariationsData={setVariationsData}
+                            isEditing={isEditing}
+                            variationsError={variationsError}
+                        />
                     )}
-                    <Button type="submit" disabled={processing} className='w-full'>
+                    <Button type="submit" disabled={processing} className="w-full">
                         {form.buttonSubmit}
                     </Button>
                 </form>

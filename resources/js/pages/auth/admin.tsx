@@ -1,13 +1,15 @@
+import CustomPopup from '@/components/custom/CustomFormPopup';
 import ToastDiv from '@/components/custom/ToastDiv';
 import UsuariosTable from '@/components/custom/UsuariosTable';
 import { Button } from '@/components/ui/button';
 import { IFlashUser } from '@/interfaces/IFlashUser';
+import { IForm, IFormInputs } from '@/interfaces/IForm';
 import { IUser } from '@/interfaces/IUser';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 type Props = {
     usuarios: IUser[];
@@ -18,9 +20,6 @@ type RegisterForm = {
     name: string;
     email: string;
     phone: string;
-    file: File | null;
-    password: string;
-    password_confirmation: string;
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -34,20 +33,18 @@ export default function Admin({ usuarios, flash }: Props) {
     const {
         data,
         setData,
-        post,
         processing,
-        errors,
         reset,
+        put,
         delete: destroy,
     } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
-        password: '',
-        file: null,
         phone: '',
-        password_confirmation: '',
     });
 
+    const [isOpen, setIsOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState<IUser | null>(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState<'success_user' | 'error_user'>('success_user');
@@ -84,10 +81,65 @@ export default function Admin({ usuarios, flash }: Props) {
         }
     }, [confirmDelete, idToDelete]);
 
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (editingUser) {
+            put(route('user_update', editingUser.id), {
+                onSuccess: () => {
+                    setIsOpen(false);
+                    reset();
+                },
+            });
+        }
+    };
+
+    const handleEdit = (user: IUser) => {
+        setEditingUser(user);
+        setData({
+            name: user.name as string,
+            email: user.email as string,
+            phone: user.phone as string,
+        });
+        setIsOpen(true);
+    };
+
     const handleDelete = (userId: number) => {
         console.log(userId);
         setShowConfirm(true);
         setIdToDelete(userId);
+    };
+
+    const formInputs: IFormInputs[] = [
+        {
+            label: 'Nombre',
+            placeholder: 'Nombre del catalogo',
+            inputType: 'text',
+            inputId: 'nombre',
+            inputValue: data.name,
+            inputOnchange: (e) => setData('name', e.target.value),
+        },
+        {
+            label: 'Correo',
+            placeholder: 'Correo del catalogo',
+            inputType: 'email',
+            inputId: 'correo',
+            inputValue: data.email,
+            inputOnchange: (e) => setData('email', e.target.value),
+        },
+        {
+            label: 'Telefono',
+            placeholder: 'Telefono del catalogo',
+            inputType: 'text',
+            inputId: 'telefono',
+            inputValue: data.phone,
+            inputOnchange: (e) => setData('phone', e.target.value),
+        },
+    ];
+
+    const formElement: IForm = {
+        onSubmit: handleSubmit,
+        inputs: formInputs,
+        buttonSubmit: 'Actualizar Catalogo',
     };
 
     return (
@@ -112,8 +164,16 @@ export default function Admin({ usuarios, flash }: Props) {
                         </Button>
                     </Link>
                 </div>
+                <CustomPopup
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    dialogTitle="Editar Catalogo"
+                    form={formElement}
+                    processing={processing}
+                    isEditing={editingUser ? true : false}
+                />
                 <div className="w-full px-4">
-                    <UsuariosTable usuarios={usuarios} onClickDelete={handleDelete} />
+                    <UsuariosTable usuarios={usuarios} onClickDelete={handleDelete} onClickEdit={handleEdit} />
                 </div>
             </div>
         </AppLayout>

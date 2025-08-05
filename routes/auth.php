@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('user_destroy/{id}', [RegisteredUserController::class, 'destroy'])->name('user_destroy');
 
+    Route::put('user_update/{id}', [RegisteredUserController::class, 'update'])->name("user_update");
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

@@ -72,7 +72,20 @@ class RegisteredUserController extends Controller
 
         // Auth::login($user);
 
-        return redirect()->route("register");
+        return redirect()->route("admin_catalogo")->with("success_user", "Catalogo creado satisfactoriamente");
+    }
+
+    public function update(Request $request, Int $id): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:255'
+        ]);
+        
+        User::where("id", $id)->update($validated);
+
+        return redirect()->route("admin_catalogo")->with("success_user", "Catalogo editado satisfactoriamente");
     }
 
     /**

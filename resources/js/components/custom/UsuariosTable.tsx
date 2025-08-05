@@ -6,9 +6,10 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 type Props = {
     usuarios: IUser[];
     onClickDelete: (userId: number) => void;
+    onClickEdit: (user: IUser) => void;
 };
 
-const UsuariosTable = ({ usuarios, onClickDelete }: Props) => {
+const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
     return (
         <Table>
             <TableCaption>Lista de catalogos creados</TableCaption>
@@ -32,7 +33,12 @@ const UsuariosTable = ({ usuarios, onClickDelete }: Props) => {
                         <TableCell>{catalogo.cantidad_productos}</TableCell>
                         {catalogo.id !== 1 && (
                             <TableCell>
-                                <Button variant="ghost" size="icon" className="cursor-pointer text-blue-500 hover:bg-blue-500/90 hover:text-white">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="cursor-pointer text-blue-500 hover:bg-blue-500/90 hover:text-white"
+                                    onClick={() => onClickEdit(catalogo)}
+                                >
                                     <Pencil className="h-4 w-4" />
                                 </Button>
                                 <Button
