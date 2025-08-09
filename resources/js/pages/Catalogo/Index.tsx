@@ -74,7 +74,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
         <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border-none">
             <Head title={name} />
             <Navbar logo={logo} name={name} categorias={categorias} active={active} setActive={setActive} />
-            <div className="flex w-full justify-between p-4 md:justify-end">
+            <div className="flex w-full justify-between px-4 pt-2 pb-4 md:justify-end">
                 {numColumns === 'columns-2' ? (
                     <Button variant="outline" size="sm" onClick={() => setNumColumns('columns-1')} className="md:hidden">
                         <Square /> 1 Columna

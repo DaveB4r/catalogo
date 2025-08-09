@@ -3,6 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Crea increibles catalogos para mostrar a tus clientes todos tus productos" >
+        <meta property="og:title" content="My Awesome Page">
+        <meta property="og:description" content="Todos tus productos en un unico sitio.">
+        <meta property="og:image" content="https://micatalogofacil.com/images/preview.webp">
+        <meta property="og:url" content="https://micatalogofacil.com/">
+        <meta property="og:type" content="website">
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
