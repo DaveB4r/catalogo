@@ -6,7 +6,7 @@
         <meta name="description" content="Crea increibles catalogos para mostrar a tus clientes todos tus productos" >
         <meta property="og:title" content="{{ $metaTitle ?? "Mi Catalogo Facil" }}">
         <meta property="og:description" content="{{ $metaDescription ?? "Todos tus productos en un unico sitio." }}">
-        <meta property="og:image" content="{{ $metaImage ?? "https://micatalogofacil.com/images/preview.webp" }}">
+        <meta property="og:image" content="{{ $metaImage ?? "https://micatalogofacil.com/images/logo.webp" }}">
         <meta property="og:url" content="{{ $metaUrl ?? "https://micatalogofacil.com/" }}">
         <meta property="og:type" content="website">
 
