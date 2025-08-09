@@ -1,3 +1,3 @@
 export default function AppLogo() {
-    return <img src="/images/logo.png" alt="logo" width={200} height={200} />;
+    return <img src="/images/logo-2.webp" alt="logo" />;
 }

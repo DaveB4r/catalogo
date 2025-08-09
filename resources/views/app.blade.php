@@ -34,7 +34,7 @@
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/images/logo.png">
+        <link rel="apple-touch-icon" href="/images/logo-2.webp">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=oswald:400,700" rel="stylesheet" />
