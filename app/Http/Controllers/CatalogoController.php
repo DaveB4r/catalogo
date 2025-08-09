@@ -45,12 +45,19 @@ class CatalogoController extends Controller
             ->orderBy("productos.nombre")
             ->get();
         $categorias = Categorias::where("categorias.user_id", $user->id)->select("categorias.id", "categorias.nombre")->rightJoin("productos", 'categorias.id', '=', 'productos.categoria_id')->groupBy('categorias.id')->get();
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+        $mainUrl = $protocol . "://" . $_SERVER['HTTP_HOST'];
         return Inertia::render("Catalogo/Index", [
             "logo" => $user->avatar,
             "name" => $user->name,
             "productos" => $productos,
             "categorias" => $categorias,
             "phone" => $user->phone
+        ])->withViewData([
+            'metaTitle' => $user->name,
+            'metaDescription' => "Encuentra todos los productos de {$user->name} en un solo lugar.",
+            "metaImage" => $mainUrl. "/" .$user->avatar,
+            "metaUrl" => url()->current()
         ]);
     }
 }
