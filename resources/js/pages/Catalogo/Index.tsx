@@ -84,7 +84,7 @@ export default function CatalogoIndex({ productos, phone, name, logo, categorias
                         <Columns2 /> 2 Columnas
                     </Button>
                 )}
-                {/* <OrderBy orderBy={orderBy} setOrderBy={setOrderBy} /> */}
+                <OrderBy orderBy={orderBy} setOrderBy={setOrderBy} />
             </div>
             <div className={`mb-10 ${numColumns} min-h-[calc(100vh-148px)] gap-1 px-2 md:mx-10 md:columns-3 lg:columns-4`}>
                 {productosVirtual.map((producto) => (

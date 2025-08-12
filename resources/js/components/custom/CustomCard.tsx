@@ -100,7 +100,7 @@ export default function CustomCard({
     };
 
     return (
-        <Card className="product-card min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4 my-2">
+        <Card className="product-card my-2 min-h-12 max-w-84 gap-0 border-gray-400 py-0 transition-colors hover:bg-accent/50 md:p-4">
             <CardHeader className="relative flex flex-col items-center justify-between space-y-0 px-0">
                 {image && (
                     <img
@@ -146,11 +146,14 @@ export default function CustomCard({
                                                     <SelectValue placeholder={`Seleccione ${variationsNames[index]}`} />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {variationsOptions[index].split(',').map((item, indexOpt) => (
-                                                        <SelectItem key={indexOpt} value={item}>
-                                                            {item}
-                                                        </SelectItem>
-                                                    ))}
+                                                    {variationsOptions[index].split(',').map(
+                                                        (item, indexOpt) =>
+                                                            item && (
+                                                                <SelectItem key={indexOpt} value={item}>
+                                                                    {item}
+                                                                </SelectItem>
+                                                            ),
+                                                    )}
                                                 </SelectContent>
                                             </Select>
                                         </div>
