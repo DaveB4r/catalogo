@@ -2,6 +2,7 @@ import { useAppContext } from '@/context/AppContext';
 import { Phone, Trash2, X } from 'lucide-react';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 type Props = {
     isOpen: boolean;
@@ -15,12 +16,12 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        setTotal(0)
+        setTotal(0);
         state.map((product) => {
             setTotal((total) => {
                 const price = Number(String(product.precio).replaceAll('.', ''));
                 const quantity = Number(product.cantidad);
-                total += (price * quantity);
+                total += price * quantity;
                 return total;
             });
         });
@@ -30,8 +31,8 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         dispatch({ type: 'REMOVE_FROM_CART', productId });
     };
 
-    const handleQuantity = (productId: number, quantity: string) => {
-        dispatch({ type: 'CHANGE_QUANTITY', productId, quantity });
+    const handleQuantity = (productId: number, quantity: string, units: number) => {
+        dispatch({ type: 'CHANGE_QUANTITY', productId, quantity, units });
     };
 
     const handleSendOrder = () => {
@@ -84,15 +85,22 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                                     <div className="flex items-center gap-2">
                                         <Button
                                             className="cursor-pointer text-lg font-black hover:bg-gray-500"
-                                            onClick={() => handleQuantity(product.id, 'DECREMENT')}
+                                            onClick={() => handleQuantity(product.id, 'DECREMENT', 1)}
                                             disabled={product.cantidad === 1}
                                         >
                                             -
                                         </Button>
-                                        <span>{product.cantidad}</span>
+                                        <Input
+                                            type="number"
+                                            value={Number(product.cantidad)}
+                                            placeholder="1"
+                                            min={1}
+                                            className="w-16"
+                                            onChange={(e) => handleQuantity(product.id, 'CHANGE', Number(e.target.value))}
+                                        />
                                         <Button
                                             className="cursor-pointer text-lg font-black hover:bg-gray-500"
-                                            onClick={() => handleQuantity(product.id, 'INCREMENT')}
+                                            onClick={() => handleQuantity(product.id, 'INCREMENT', 1)}
                                         >
                                             +
                                         </Button>

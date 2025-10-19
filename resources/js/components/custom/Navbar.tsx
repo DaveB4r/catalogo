@@ -21,7 +21,7 @@ export default function Navbar({ name, logo, categorias, active, setActive }: Pr
     const getInitials = useInitials();
     return (
         <div className="sticky top-0 z-50 flex w-full flex-col bg-white items-center justify-center">
-            <NavigationMenu viewport={false} className="w-full border-b-1 border-blue-950 bg-white pt-4 pb-2">
+            <NavigationMenu viewport={false} className="w-full border-b-1 border-blue-950 bg-white p-0">
                 <NavigationMenuList className="flex w-[calc(100vw-20px)] justify-between px-5">
                     <button className="cursor-pointer rounded-2xl p-4 hover:bg-gray-200" onClick={() => setOpenFilter((openFilter) => !openFilter)}>
                         <Menu className="h-12 w-12" />
@@ -37,7 +37,7 @@ export default function Navbar({ name, logo, categorias, active, setActive }: Pr
                     <Filters isOpen={openFilter} setIsOpen={setOpenFilter} categorias={categorias} active={active} setActive={setActive} />
                 </NavigationMenuList>
             </NavigationMenu>
-             <div className="flex justify-center items-center py-2 border-b-1 border-blue-950 ">
+             <div className="flex justify-center items-center border-b-1 border-blue-950 ">
                 <Categories active={active} setActive={setActive} categorias={categorias} horizontal/>
              </div>
         </div>

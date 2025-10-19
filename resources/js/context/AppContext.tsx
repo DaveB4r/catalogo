@@ -26,7 +26,7 @@ const reducer = (state: IProducto[], action: ActionType): IProducto[] => {
             const updatedState = [...state];
             updatedState[index] = {
                 ...updatedState[index],
-                cantidad: action.quantity === 'INCREMENT' ? Number(updatedState[index].cantidad) + 1 : Number(updatedState[index].cantidad) - 1,
+                cantidad: action.quantity === 'INCREMENT' ? Number(updatedState[index].cantidad) + action.units : action.quantity === "DECREMENT" ? Number(updatedState[index].cantidad) - action.units : Number(action.units),
             };
             localStorage.setItem(`cart_${storeName}`, JSON.stringify(updatedState));
             return updatedState;
