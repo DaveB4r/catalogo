@@ -2,6 +2,7 @@ import { IVariationsData } from './IVariations';
 
 export interface IProducto {
     id: number;
+    idCarrito?: string;
     nombre: string;
     imagen?: string | null;
     precio: string;

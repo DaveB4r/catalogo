@@ -77,8 +77,13 @@ export default function CustomCard({
     }, [variations]);
 
     const addToCart = () => {
+        let idCarrito: string = String(id);
+        if(variationsData && variationsData.length > 0) {
+            idCarrito += `-${String(variationsData[0].id)}-${variationsData[0].nombre}-${variationsData[0].opciones}`
+        }
         const product: IProducto = {
             id,
+            idCarrito,
             nombre: title,
             imagen: image,
             precio: price,

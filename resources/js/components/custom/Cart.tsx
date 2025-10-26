@@ -27,11 +27,11 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
         });
     }, [state]);
 
-    const removeCart = (productId: number) => {
+    const removeCart = (productId: string) => {
         dispatch({ type: 'REMOVE_FROM_CART', productId });
     };
 
-    const handleQuantity = (productId: number, quantity: string, units: number) => {
+    const handleQuantity = (productId: string, quantity: string, units: number) => {
         dispatch({ type: 'CHANGE_QUANTITY', productId, quantity, units });
     };
 
@@ -85,7 +85,7 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                                     <div className="flex items-center gap-2">
                                         <Button
                                             className="cursor-pointer text-lg font-black hover:bg-gray-500"
-                                            onClick={() => handleQuantity(product.id, 'DECREMENT', 1)}
+                                            onClick={() => handleQuantity(product.idCarrito ?? '', 'DECREMENT', 1)}
                                             disabled={product.cantidad === 1}
                                         >
                                             -
@@ -96,16 +96,16 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                                             placeholder="1"
                                             min={1}
                                             className="w-16"
-                                            onChange={(e) => handleQuantity(product.id, 'CHANGE', Number(e.target.value))}
+                                            onChange={(e) => handleQuantity(product.idCarrito ?? '', 'CHANGE', Number(e.target.value))}
                                         />
                                         <Button
                                             className="cursor-pointer text-lg font-black hover:bg-gray-500"
-                                            onClick={() => handleQuantity(product.id, 'INCREMENT', 1)}
+                                            onClick={() => handleQuantity(product.idCarrito ?? '', 'INCREMENT', 1)}
                                         >
                                             +
                                         </Button>
                                     </div>
-                                    <Button variant="destructive" onClick={() => removeCart(product.id)} className="cursor-pointer">
+                                    <Button variant="destructive" onClick={() => removeCart(product.idCarrito ?? '')} className="cursor-pointer">
                                         <Trash2 />
                                     </Button>
                                 </div>
@@ -118,6 +118,14 @@ export default function Cart({ isOpen, setIsOpen, phone }: Props) {
                 <p className="my-2 text-right font-bold">Total: $ {Number(total).toLocaleString('es-CO')}</p>
                 <Button variant="default" className="w-full cursor-pointer" onClick={handleSendOrder} disabled={total === 0}>
                     <Phone /> Enviar Pedido
+                </Button>
+                <Button
+                    variant="destructive"
+                    className="w-full cursor-pointer"
+                    onClick={() => dispatch({ type: 'RESET_CART' })}
+                    disabled={total === 0}
+                >
+                    <Trash2 /> Vaciar Carrito
                 </Button>
             </div>
         </div>

@@ -9,7 +9,7 @@ const initialState: IProducto[] = JSON.parse(localStorage.getItem(`cart_${storeN
 const reducer = (state: IProducto[], action: ActionType): IProducto[] => {
     switch (action.type) {
         case 'ADD_TO_CART':
-            const productIndex = state.findIndex((item) => item.id === action.product.id);            
+            const productIndex = state.findIndex((item) => item.idCarrito === action.product.idCarrito);            
             if (productIndex >= 0) {
                 const updatedState = [...state];
                 updatedState[productIndex] = {
@@ -22,7 +22,7 @@ const reducer = (state: IProducto[], action: ActionType): IProducto[] => {
             localStorage.setItem(`cart_${storeName}`, JSON.stringify([...state, { ...action.product, cantidad: 1 }]));
             return JSON.parse(localStorage.getItem(`cart_${storeName}`) as string);
         case 'CHANGE_QUANTITY':
-            const index = state.findIndex((item) => item.id === action.productId);
+            const index = state.findIndex((item) => item.idCarrito === action.productId);
             const updatedState = [...state];
             updatedState[index] = {
                 ...updatedState[index],
@@ -32,7 +32,7 @@ const reducer = (state: IProducto[], action: ActionType): IProducto[] => {
             return updatedState;
         case 'REMOVE_FROM_CART':
             const storeRemove = action.store ? action.store : storeName;
-            localStorage.setItem(`cart_${storeRemove}`, JSON.stringify([...state.filter((item) => !(item.id === action.productId))]));
+            localStorage.setItem(`cart_${storeRemove}`, JSON.stringify([...state.filter((item) => !(item.idCarrito === action.productId))]));
             return JSON.parse(localStorage.getItem(`cart_${storeRemove}`) as string);
         case 'RESET_CART':
             return [];

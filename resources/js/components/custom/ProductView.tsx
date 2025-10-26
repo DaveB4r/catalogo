@@ -48,8 +48,13 @@ const ProductView = ({ producto }: Props) => {
     }, [producto.variations_ids]);
 
     const addToCart = () => {
+        let idCarrito: string = String(producto.id);
+        if(variationsData && variationsData.length > 0) {
+            idCarrito += `-${String(variationsData[0].id)}-${variationsData[0].nombre}-${variationsData[0].opciones}`
+        }
         const product: IProducto = {
             id: producto.id,
+            idCarrito,
             nombre: producto.nombre,
             imagen: producto.imagen,
             precio: producto.precio,
