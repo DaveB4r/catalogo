@@ -1,4 +1,5 @@
 import CustomPopup from '@/components/custom/CustomFormPopup';
+import ProductosTable from '@/components/custom/ProductosTable';
 import ToastDiv from '@/components/custom/ToastDiv';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/context/AppContext';
@@ -13,7 +14,6 @@ import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Cog, Share2 } from 'lucide-react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import ProductosTable from '@/components/custom/ProductosTable';
 
 type Props = {
     productos: IProducto[];
@@ -68,7 +68,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             setToastMessage('Producto elminado satisfactoriamente');
             setToastType('success');
             setShowToast(true);
-            dispatch({ type: 'REMOVE_FROM_CART', productId: flash?.deleted, store: String(user.name).replaceAll(' ', '_') });
+            dispatch({ type: 'RESET_CART' });
         }
     }, [flash]);
 
