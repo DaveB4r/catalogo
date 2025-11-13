@@ -1,10 +1,13 @@
 import BubbleBackground from '@/components/animate-ui/bubble';
+import Hero from '@/components/custom/Hero';
+import MainMenu from '@/components/custom/MainMenu';
 
 export default function HomeIndex() {
     return (
-        <div className="relative h-72 w-screen">
+        <div className="relative h-screen w-screen overflow-x-hidden bg-[#f9fdfa]">
+            <MainMenu />
             <BubbleBackground>
-                <p className="text-xl">Hop</p>
+                <Hero />
             </BubbleBackground>
         </div>
     );

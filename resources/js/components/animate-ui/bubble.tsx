@@ -108,7 +108,7 @@ export default function BubbleBackground({ children }: Props) {
     );
 
     return (
-        <div className="font-inter relative flex h-96 w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-stone-300">
+        <div className="font-inter relative flex h-10/12 w-screen overflow-hidden bg-[#f9fdfa]">
             <div className="absolute inset-0 z-0">
                 {spheres.map((sphere, index) => (
                     <motion.div
