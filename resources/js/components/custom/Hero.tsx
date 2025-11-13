@@ -38,7 +38,7 @@ const Hero = () => {
                             </span>{' '}
                             en Minutos y Vende Más
                         </h1>
-                        <p className="mx-auto mb-8 max-w-lg text-xl text-gray-500 lg:mx-0">
+                        <p className="mx-auto mb-8 max-w-lg text-xl  lg:mx-0 text-black">
                             El catálogo online más fácil de usar, con carrito de compras integrado y link propio.
                         </p>
                         <Button variant="default" className='flex gap-2 cursor-pointer' size="lg"><Phone />Contactar</Button>

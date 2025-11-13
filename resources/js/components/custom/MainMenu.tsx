@@ -37,7 +37,7 @@ const MainMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="w-full border-b bg-white shadow-sm">
+        <nav className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
             <div className="container mx-auto flex items-center justify-between p-4">
                 <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
                     {!isOpen ? <Menu className="h-6 w-6" /> : <X className='h-6 w-6'/>}
@@ -55,11 +55,11 @@ const MainMenu = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
                 <div className="flex gap-4">
-                    <Link href="login" className="hidden gap-2 rounded-xl bg-amber-300 p-3 md:flex">
+                    <Link href="login" className="hidden gap-2 rounded-xl bg-amber-300 p-3 md:flex hover:bg-yellow-500">
                         <LogIn />
                         Iniciar Sesion
                     </Link>
-                    <Link href="register" className="hidden gap-2 rounded-xl bg-cyan-300 p-3 md:flex">
+                    <Link href="register" className="hidden gap-2 rounded-xl bg-cyan-300 p-3 md:flex hover:bg-sky-500">
                         <User />
                         Registrate
                     </Link>
@@ -72,7 +72,7 @@ const MainMenu = () => {
                             {component.title}
                         </Link>
                     ))}
-                    <Link href="login" className="gap-2 rounded-xl bg-amber-300 p-2 md:hidden">
+                    <Link href="login" className="gap-2 rounded-xl bg-amber-300 p-2 md:hidden hover:bg-amber-500">
                         Iniciar Sesion
                     </Link>
                     <Link href="register" className="gap-2 rounded-xl bg-cyan-300 p-2 md:hidden">

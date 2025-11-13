@@ -1,4 +1,5 @@
 import BubbleBackground from '@/components/animate-ui/bubble';
+import Features from '@/components/custom/Features';
 import Hero from '@/components/custom/Hero';
 import MainMenu from '@/components/custom/MainMenu';
 
@@ -9,6 +10,7 @@ export default function HomeIndex() {
             <BubbleBackground>
                 <Hero />
             </BubbleBackground>
+            <Features />
         </div>
     );
 }
