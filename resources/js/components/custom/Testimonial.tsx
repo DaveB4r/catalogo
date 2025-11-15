@@ -2,6 +2,7 @@ import AutoPlay from 'embla-carousel-autoplay';
 import { useRef } from 'react';
 import { Card } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel';
+import AnimateSection from '../animate-ui/AnimateSection';
 
 const testimonials = [
     {
@@ -29,7 +30,7 @@ const testimonials = [
 const Testimonial = () => {
     const plugin = useRef(AutoPlay({ delay: 3000, stopOnInteraction: true }));
     return (
-        <section id="testimonios" className="bg-white py-10">
+        <AnimateSection id="testimonios" className="bg-white py-10" duration={5}>
             <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
                 <div className="mb-6 flex justify-center">
                     <img src="/images/logo-2.webp" alt="logo" width={150} />
@@ -55,7 +56,7 @@ const Testimonial = () => {
                     </CarouselContent>
                 </Carousel>
             </div>
-        </section>
+        </AnimateSection>
     );
 };
 

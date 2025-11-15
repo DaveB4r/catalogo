@@ -1,4 +1,5 @@
 import { Share2, ShoppingCart, Smartphone, Zap } from 'lucide-react';
+import AnimateSection from '../animate-ui/AnimateSection';
 
 const Features = () => {
     const features = [
@@ -28,7 +29,7 @@ const Features = () => {
         },
     ];
     return (
-        <section id="caracteristicas" className="bg-white py-24">
+        <AnimateSection id="caracteristicas" className="bg-white py-24" duration={2}>
             <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
                 <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Diseñado para Vender. Creado para ser Fácil.</h2>
                 <p className="mx-auto mb-16 max-w-3xl text-xl text-gray-500">
@@ -47,7 +48,7 @@ const Features = () => {
                     ))}
                 </div>
             </div>
-        </section>
+        </AnimateSection>
     );
 };
 

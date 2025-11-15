@@ -1,3 +1,5 @@
+import AnimateSection from '../animate-ui/AnimateSection';
+
 const steps = [
     {
         num: 1,
@@ -17,7 +19,7 @@ const steps = [
 ];
 const StepSection = () => {
     return (
-        <section id="como-funciona" className="bg-gray-50 py-24">
+        <AnimateSection id="como-funciona" className="bg-gray-50 py-24" duration={3.5}>
             <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
                 <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">¿Cómo funciona? Es tan fácil como 1-2-3</h2>
                 <p className="mx-auto mb-16 max-w-3xl text-xl text-gray-500">Comienza a vender en línea sin la necesidad de un desarrollador web.</p>
@@ -36,7 +38,7 @@ const StepSection = () => {
                     ))}
                 </div>
             </div>
-        </section>
+        </AnimateSection>
     );
 };
 

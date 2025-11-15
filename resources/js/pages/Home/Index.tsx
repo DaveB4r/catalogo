@@ -1,5 +1,7 @@
 import BubbleBackground from '@/components/animate-ui/bubble';
 import Features from '@/components/custom/Features';
+import FinalCTA from '@/components/custom/FinalCTA';
+import Footer from '@/components/custom/Footer';
 import Hero from '@/components/custom/Hero';
 import MainMenu from '@/components/custom/MainMenu';
 import StepSection from '@/components/custom/StepSection';
@@ -15,6 +17,8 @@ export default function HomeIndex() {
             <Features />
             <StepSection />
             <Testimonial />
+            <FinalCTA />
+            <Footer />
         </div>
     );
 }

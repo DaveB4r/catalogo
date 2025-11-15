@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 import { Phone } from 'lucide-react';
 const Hero = () => {
     return (
-        <section className="w-screen overflow-hidden">
+        <section className="w-screen overflow-hidden" id='inicio'>
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="items-center lg:grid lg:grid-cols-12 lg:gap-12">
                     {/*Image/ mockup */}

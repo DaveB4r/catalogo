@@ -11,16 +11,16 @@ const components: { title: string; href: string }[] = [
         href: '#inicio',
     },
     {
-        title: 'Nosotros',
-        href: '#nosotros',
+        title: 'Características',
+        href: '#caracteristicas',
     },
     {
-        title: 'Servicios',
-        href: '#servicios',
+        title: '¿Cómo funciona?',
+        href: '#como-funciona',
     },
     {
-        title: 'Ventajas',
-        href: '#ventajas',
+        title: 'Testimonios',
+        href: '#testimonios',
     },
     {
         title: 'Precios',
@@ -28,26 +28,36 @@ const components: { title: string; href: string }[] = [
     },
     {
         title: 'Contacto',
-        href: '#contacto',
+        href: '#final-cta',
     },
 ];
 
 const MainMenu = () => {
     const isMobile = useIsMobile();
     const [isOpen, setIsOpen] = useState(false);
+    const scrollTo = (id: string) => {
+        document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     return (
-        <nav className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
+        <nav className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
             <div className="container mx-auto flex items-center justify-between p-4">
                 <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                    {!isOpen ? <Menu className="h-6 w-6" /> : <X className='h-6 w-6'/>}
+                    {!isOpen ? <Menu className="h-6 w-6" /> : <X className="h-6 w-6" />}
                 </Button>
                 <img src="/images/logo.webp" alt="logo" width={80} height={80} />
                 <NavigationMenu viewport={isMobile} className="hidden md:flex">
                     <NavigationMenuList>
                         {components.map((component, index) => (
                             <NavigationMenuItem key={index}>
-                                <NavigationMenuLink href={component.href} className={navigationMenuTriggerStyle()}>
+                                <NavigationMenuLink
+                                    href={component.href}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        scrollTo(component.href);
+                                    }}
+                                    className={navigationMenuTriggerStyle()}
+                                >
                                     {component.title}
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
@@ -55,11 +65,11 @@ const MainMenu = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
                 <div className="flex gap-4">
-                    <Link href="login" className="hidden gap-2 rounded-xl bg-amber-300 p-3 md:flex hover:bg-yellow-500">
+                    <Link href="login" className="hidden gap-2 rounded-xl bg-amber-300 p-3 hover:bg-yellow-500 md:flex">
                         <LogIn />
                         Iniciar Sesion
                     </Link>
-                    <Link href="register" className="hidden gap-2 rounded-xl bg-cyan-300 p-3 md:flex hover:bg-sky-500">
+                    <Link href="register" className="hidden gap-2 rounded-xl bg-cyan-300 p-3 hover:bg-sky-500 md:flex">
                         <User />
                         Registrate
                     </Link>
@@ -72,7 +82,7 @@ const MainMenu = () => {
                             {component.title}
                         </Link>
                     ))}
-                    <Link href="login" className="gap-2 rounded-xl bg-amber-300 p-2 md:hidden hover:bg-amber-500">
+                    <Link href="login" className="gap-2 rounded-xl bg-amber-300 p-2 hover:bg-amber-500 md:hidden">
                         Iniciar Sesion
                     </Link>
                     <Link href="register" className="gap-2 rounded-xl bg-cyan-300 p-2 md:hidden">
