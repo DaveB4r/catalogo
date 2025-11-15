@@ -2,6 +2,8 @@ import BubbleBackground from '@/components/animate-ui/bubble';
 import Features from '@/components/custom/Features';
 import Hero from '@/components/custom/Hero';
 import MainMenu from '@/components/custom/MainMenu';
+import StepSection from '@/components/custom/StepSection';
+import Testimonial from '@/components/custom/Testimonial';
 
 export default function HomeIndex() {
     return (
@@ -11,6 +13,8 @@ export default function HomeIndex() {
                 <Hero />
             </BubbleBackground>
             <Features />
+            <StepSection />
+            <Testimonial />
         </div>
     );
 }
