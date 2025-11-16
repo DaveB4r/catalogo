@@ -3,6 +3,7 @@ import ProductosTable from '@/components/custom/ProductosTable';
 import ToastDiv from '@/components/custom/ToastDiv';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/context/AppContext';
+import { formatWithSeparator } from '@/helpers/formartted';
 import { ICategorias } from '@/interfaces/ICategorias';
 import { IFlash } from '@/interfaces/IFlash';
 import { IForm, IFormInputs } from '@/interfaces/IForm';
@@ -263,10 +264,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         window.open(url, '_blank');
     };
 
-    const formatWithSeparator = (value: string) => {
-        const cleaned = value.replace(/[^\d]/g, '');
-        return cleaned ? Number(cleaned).toLocaleString('es-CO') : '';
-    };
+    
 
     const formInputs: IFormInputs[] = [
         {

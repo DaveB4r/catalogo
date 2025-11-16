@@ -92,7 +92,7 @@ const FinalCTA = () => {
     };
 
     return (
-        <AnimateSection id="final-cta" className="bg-gray-50 py-20" duration={6.5}>
+        <AnimateSection id="final-cta" className="bg-white py-20" duration={8}>
             <div className="mx-auto flex max-w-5xl flex-col justify-center px-4 text-center sm:px-6 lg:px-8">
                 <h2 className="mb-6 text-3xl font-extrabold md:text-5xl">¡Deja de perder ventas!</h2>
                 <p className="mb-10 text-xl">
@@ -107,7 +107,7 @@ const FinalCTA = () => {
                     </Alert>
                 )}
                 <form onSubmit={handleSubmit} className="w-full space-y-4 self-center md:w-6/12">
-                    <InputGroup>
+                    <InputGroup className='border-none'>
                         <InputGroupInput
                             id="name"
                             placeholder="John Doe"
@@ -117,7 +117,7 @@ const FinalCTA = () => {
                             value={formData.name}
                         />
                         <InputGroupAddon align="block-start">
-                            <Label htmlFor="name">
+                            <Label htmlFor="name" className='font-black'>
                                 Nombre Completo <span className="text-red-700">*</span>
                             </Label>
                             <Tooltip>
@@ -132,7 +132,7 @@ const FinalCTA = () => {
                             </Tooltip>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputGroup>
+                    <InputGroup className='border-none'>
                         <InputGroupInput
                             id="email"
                             placeholder="johndoe@mail.com"
@@ -142,7 +142,7 @@ const FinalCTA = () => {
                             value={formData.email}
                         />
                         <InputGroupAddon align="block-start">
-                            <Label htmlFor="name">
+                            <Label htmlFor="email" className='font-black'>
                                 Correo <span className="text-red-700">*</span>
                             </Label>
                             <Tooltip>
@@ -157,7 +157,7 @@ const FinalCTA = () => {
                             </Tooltip>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputGroup>
+                    <InputGroup className='border-none'>
                         <InputGroupInput
                             id="phone"
                             placeholder="3014155895"
@@ -167,7 +167,7 @@ const FinalCTA = () => {
                             value={formData.phone}
                         />
                         <InputGroupAddon align="block-start">
-                            <Label htmlFor="name">
+                            <Label htmlFor="name" className='font-black'>
                                 Número de Teléfono (WhatsApp) <span className="text-red-700">*</span>
                             </Label>
                             <Tooltip>
@@ -182,7 +182,7 @@ const FinalCTA = () => {
                             </Tooltip>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputGroup>
+                    <InputGroup className='border-none'>
                         <InputGroupInput
                             id="company"
                             placeholder="Distrito F"
@@ -192,7 +192,7 @@ const FinalCTA = () => {
                             value={formData.company}
                         />
                         <InputGroupAddon align="block-start">
-                            <Label htmlFor="name">
+                            <Label htmlFor="name" className='font-black'>
                                 Nombre de la Empresa <span className="text-red-700">*</span>
                             </Label>
                             <Tooltip>
@@ -207,10 +207,10 @@ const FinalCTA = () => {
                             </Tooltip>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputGroup>
-                        <Textarea id="message" placeholder="Quiero saber mas" className="my-2" onChange={handleChange} value={formData.message} />
+                    <InputGroup className='border-none'>
+                        <Textarea id="message" placeholder="Quiero saber mas" className="my-2 border-none" onChange={handleChange} value={formData.message} />
                         <InputGroupAddon align="block-start">
-                            <Label htmlFor="name">
+                            <Label htmlFor="name" className='font-black'>
                                 Mensaje <span className="text-red-700">*</span>
                             </Label>
                             <Tooltip>
