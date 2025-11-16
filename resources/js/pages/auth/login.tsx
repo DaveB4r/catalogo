@@ -1,12 +1,12 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { Eye, EyeClosed, LoaderCircle, Lock, Mail } from 'lucide-react';
+import { FormEventHandler, useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
@@ -22,6 +22,7 @@ interface LoginProps {
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
+    const [showPassword, setShowPassword] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
@@ -43,17 +44,22 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 <div className="grid gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="email">Correo</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="correo@ejemplo.com"
-                        />
+                        <InputGroup>
+                            <InputGroupInput
+                                id="email"
+                                type="email"
+                                required
+                                autoFocus
+                                tabIndex={1}
+                                autoComplete="email"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                placeholder="correo@ejemplo.com"
+                            />
+                            <InputGroupAddon className="px-2" align="inline-start">
+                                <Mail />
+                            </InputGroupAddon>
+                        </InputGroup>
                         <InputError message={errors.email} />
                     </div>
 
@@ -66,16 +72,24 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 </TextLink>
                             )}
                         </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Contraseña"
-                        />
+                        <InputGroup>
+                            <InputGroupInput
+                                id="password"
+                                type={showPassword ? 'text' : 'password'}
+                                required
+                                tabIndex={2}
+                                autoComplete="current-password"
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                placeholder="Contraseña"
+                            />
+                            <InputGroupAddon className="px-2" align="inline-start">
+                                <Lock />
+                            </InputGroupAddon>
+                            <InputGroupAddon className="cursor-pointer px-2" align="inline-end" onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <EyeClosed /> : <Eye />}
+                            </InputGroupAddon>
+                        </InputGroup>
                         <InputError message={errors.password} />
                     </div>
 
