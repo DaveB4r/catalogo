@@ -13,10 +13,11 @@ export interface IFormInputs {
     inputType: string;
     inputId: string;
     inputValue?: string;
-    inputOnchange?: ChangeEventHandler<HTMLInputElement>;
+    inputOnchange?: ChangeEventHandler<HTMLInputElement|HTMLTextAreaElement>;
     selectOnchange?: (value: string) => void;
     selectTitle?: string;
     selectOptions?: ICategorias[];
     accept?: string;
     error?: string;
+    textarea?: boolean;
 }

@@ -12,6 +12,7 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Tooltip, TooltipContent } from '../ui/tooltip';
 import Variations from './Variations';
+import { Textarea } from '../ui/textarea';
 
 type Props = {
     isOpen: boolean;
@@ -90,6 +91,13 @@ export default function CustomPopup({
                                         ))}
                                     </SelectContent>
                                 </Select>
+                            ) : item.textarea ? (
+                                <Textarea 
+                                    id={item.inputId}
+                                    value={item.inputValue}
+                                    onChange={item.inputOnchange}
+                                    placeholder={item.placeholder}
+                                />
                             ) : (
                                 <Input
                                     type={item.inputType}

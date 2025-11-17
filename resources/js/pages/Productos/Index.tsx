@@ -106,6 +106,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         nombre: '',
         precio: '',
         categoria_id: '',
+        descripcion: '',
         variationsData: [],
     });
 
@@ -184,6 +185,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             nombre: '',
             categoria_id: '',
             precio: '',
+            descripcion: '',
             variationsData: [],
         });
         SetErrors({
@@ -202,6 +204,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setData({
             nombre: producto.nombre,
             precio: producto.precio,
+            descripcion: producto.descripcion ?? '',
             categoria_id: producto.categoria_id.toString(),
             variationsData: [],
         });
@@ -230,7 +233,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         setIdToDelete(productoId);
     };
 
-    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChangeImage = (e: ChangeEvent<any>) => {
         const file = e.target!.files![0];
         if (!file) return;
         const fileSizeinMB = file.size / (1024 * 1024);
@@ -263,8 +266,6 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         const url = `https://wa.me/?text=${encodedMessage}`;
         window.open(url, '_blank');
     };
-
-    
 
     const formInputs: IFormInputs[] = [
         {
@@ -299,6 +300,15 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             inputValue: data.precio,
             inputOnchange: (e) => setData('precio', formatWithSeparator(e.target.value)),
             error: errors.precio,
+        },
+        {
+            label: 'Descripcion',
+            placeholder: 'Drescripcion del producto',
+            inputType: 'text',
+            inputId: 'descripcion',
+            inputValue: data.descripcion,
+            inputOnchange: (e) => setData('descripcion', e.target.value),
+            textarea: true,
         },
         {
             label: 'Imagen',
