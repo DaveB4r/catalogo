@@ -27,7 +27,7 @@ const DropDownUser = ({ username }: Props) => {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link href={route('logout')} className="flex items-center gap-2 text-red-700">
+                        <Link method="post" as="button" href={route('logout')} className="flex items-center gap-2 text-red-700">
                             <LogOut /> Cerrar sesion
                         </Link>
                     </DropdownMenuItem>
