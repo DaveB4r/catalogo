@@ -3,13 +3,11 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductosController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render("Home/Index");
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('c/{id}', [CatalogoController::class, 'index'])->name("catalogo");
 

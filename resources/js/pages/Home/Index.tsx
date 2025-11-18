@@ -7,11 +7,16 @@ import MainMenu from '@/components/custom/MainMenu';
 import Pricing from '@/components/custom/Pricing';
 import StepSection from '@/components/custom/StepSection';
 import Testimonial from '@/components/custom/Testimonial';
+import { IUser } from '@/interfaces/IUser';
 
-export default function HomeIndex() {
+type Props = {
+    user: IUser | null;
+};
+
+export default function HomeIndex({ user }: Props) {
     return (
         <div className="relative h-screen w-screen overflow-x-hidden bg-[#f9fdfa]">
-            <MainMenu />
+            <MainMenu user={user} />
             <BubbleBackground>
                 <Hero />
             </BubbleBackground>
