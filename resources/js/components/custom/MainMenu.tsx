@@ -47,11 +47,11 @@ const MainMenu = ({ user }: Props) => {
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
-            <div className="container mx-auto flex items-center justify-between p-4">
+            <div className="container mx-auto flex items-center md:justify-between p-4">
                 <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
                     {!isOpen ? <Menu className="h-6 w-6" /> : <X className="h-6 w-6" />}
                 </Button>
-                <img src="/images/logo.webp" alt="logo" width={80} height={80} />
+                <img src="/images/logo.webp" alt="logo" width={80} height={80} className='mx-auto md:mx-0'/>
                 <NavigationMenu viewport={isMobile} className="hidden md:flex">
                     <NavigationMenuList>
                         {components.map((component, index) => (
@@ -71,7 +71,9 @@ const MainMenu = ({ user }: Props) => {
                     </NavigationMenuList>
                 </NavigationMenu>
                 {user ? (
-                    <DropDownUser username={user.name} />
+                    <div className="hidden md:flex">
+                        <DropDownUser username={user.name} />
+                    </div>
                 ) : (
                     <div className="flex gap-4">
                         <Link href="login" className="hidden gap-2 rounded-xl bg-amber-300 p-3 hover:bg-yellow-500 md:flex">
@@ -86,9 +88,9 @@ const MainMenu = ({ user }: Props) => {
                 )}
             </div>
             {isOpen && (
-                <div className="flex flex-wrap items-center justify-center gap-3 p-4 md:hidden">
+                <div className="flex flex-col flex-wrap items-center justify-center gap-3 p-4 md:hidden">
                     {components.map((component, index) => (
-                        <Link key={index} href={component.href} className="text-gray-700 hover:text-black">
+                        <Link key={index} href={component.href} className="text-gray-700 hover:text-black border-b w-full text-center">
                             {component.title}
                         </Link>
                     ))}
