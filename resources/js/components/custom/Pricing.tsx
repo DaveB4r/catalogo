@@ -9,7 +9,7 @@ const Pricing = () => {
     const monthlyPlans: IMonthPlan[] = [
         {
             name: 'Simple',
-            price: 59000,
+            price: 5900,
             products: '1 a 150',
             icon: <DollarSign className="h-6 w-6 text-green-500" />,
             features: ['Acceso básico a funciones', 'Hasta 150 productos', 'Soporte estándar'],
@@ -18,7 +18,7 @@ const Pricing = () => {
         },
         {
             name: 'Profesional',
-            price: 79000,
+            price: 7900,
             products: '151 a 300',
             icon: <Zap className="h-6 w-6 text-cyan-500" />,
             features: ['Todas las funciones básicas', 'Hasta 300 productos', 'Prioridad en el soporte', 'Analíticas avanzadas'],
@@ -27,7 +27,7 @@ const Pricing = () => {
         },
         {
             name: 'Avanzado',
-            price: 99000,
+            price: 9900,
             products: '301 a 600',
             icon: <Rocket className="h-6 w-6 text-indigo-500" />,
             features: ['Todas las funciones Pro', 'Hasta 600 productos', 'Integraciones premium', 'Consultoría mensual'],

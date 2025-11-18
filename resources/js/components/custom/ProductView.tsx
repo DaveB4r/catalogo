@@ -57,6 +57,7 @@ const ProductView = ({ producto }: Props) => {
             idCarrito,
             nombre: producto.nombre,
             imagen: producto.imagen,
+            descripcion: producto.descripcion,
             precio: producto.precio,
             categoria_id: Number(producto.categoria_id),
             categoria: producto.categoria as string,
@@ -82,6 +83,7 @@ const ProductView = ({ producto }: Props) => {
                     <div className="px-4 md:flex-1">
                         <h2 className="mb-2 text-2xl font-bold text-gray-800">{producto.nombre}</h2>
                         <p className="mb-4 text-lg font-bold text-gray-600">{producto.categoria}</p>
+                        <p className="mb-4 text-base font-thin text-gray-600">{producto.descripcion}</p>
                         <h3 className="text-3xl font-bold text-gray-900">$ {producto.precio}</h3>
                         <div>
                             <div>

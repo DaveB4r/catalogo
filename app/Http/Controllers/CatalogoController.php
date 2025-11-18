@@ -25,6 +25,7 @@ class CatalogoController extends Controller
                 'productos.id',
                 'productos.nombre',
                 'productos.imagen',
+                'productos.descripcion',
                 'productos.precio',
                 'productos.categoria_id',
                 'categorias.nombre as categoria',
