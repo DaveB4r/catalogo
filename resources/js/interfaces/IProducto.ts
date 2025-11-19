@@ -13,5 +13,5 @@ export interface IProducto {
     variations_ids?: string;
     variations_nombres?: string;
     variations_opciones?: string;
-    descripcion?: string;
+    descripcion?: TrustedHTML;
 }

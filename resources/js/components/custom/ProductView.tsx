@@ -49,8 +49,8 @@ const ProductView = ({ producto }: Props) => {
 
     const addToCart = () => {
         let idCarrito: string = String(producto.id);
-        if(variationsData && variationsData.length > 0) {
-            idCarrito += `-${String(variationsData[0].id)}-${variationsData[0].nombre}-${variationsData[0].opciones}`
+        if (variationsData && variationsData.length > 0) {
+            idCarrito += `-${String(variationsData[0].id)}-${variationsData[0].nombre}-${variationsData[0].opciones}`;
         }
         const product: IProducto = {
             id: producto.id,
@@ -83,7 +83,7 @@ const ProductView = ({ producto }: Props) => {
                     <div className="px-4 md:flex-1">
                         <h2 className="mb-2 text-2xl font-bold text-gray-800">{producto.nombre}</h2>
                         <p className="mb-4 text-lg font-bold text-gray-600">{producto.categoria}</p>
-                        <p className="mb-4 text-base font-thin text-gray-600">{producto.descripcion}</p>
+                        {producto.descripcion && <div dangerouslySetInnerHTML={{ __html: producto.descripcion }} />}
                         <h3 className="text-3xl font-bold text-gray-900">$ {producto.precio}</h3>
                         <div>
                             <div>
