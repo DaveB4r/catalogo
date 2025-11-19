@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Tooltip, TooltipContent } from '../ui/tooltip';
 import Variations from './Variations';
 import { Textarea } from '../ui/textarea';
+import TextEditor from './TextEditor';
 
 type Props = {
     isOpen: boolean;
@@ -29,6 +30,8 @@ type Props = {
     isEditing?: boolean;
     categoriesLength?: number;
     variationsError?: string;
+    descripcion?: string;
+    setDescripcion?: Dispatch<SetStateAction<string>>;
 };
 
 export default function CustomPopup({
@@ -46,6 +49,8 @@ export default function CustomPopup({
     isEditing,
     categoriesLength,
     variationsError,
+    descripcion,
+    setDescripcion,
 }: Props) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -92,12 +97,13 @@ export default function CustomPopup({
                                     </SelectContent>
                                 </Select>
                             ) : item.textarea ? (
-                                <Textarea 
-                                    id={item.inputId}
-                                    value={item.inputValue}
-                                    onChange={item.inputOnchange}
-                                    placeholder={item.placeholder}
-                                />
+                                // <Textarea 
+                                //     id={item.inputId}
+                                //     value={item.inputValue}
+                                //     onChange={item.inputOnchange}
+                                //     placeholder={item.placeholder}
+                                // />
+                                <TextEditor placeholder={item.placeholder} value={descripcion} setValue={setDescripcion}/>
                             ) : (
                                 <Input
                                     type={item.inputType}

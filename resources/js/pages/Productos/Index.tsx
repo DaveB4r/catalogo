@@ -50,6 +50,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         imagen: '',
     });
     const [variationsError, setVariationsError] = useState('');
+    const [descripcion, setDescripcion] = useState('');
 
     useEffect(() => {
         if (flash?.success) {
@@ -112,6 +113,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        data.descripcion = descripcion;
         SetErrors({
             nombre: '',
             categoria: '',
@@ -201,6 +203,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleEdit = (producto: IProducto) => {
         setEditingProducto(producto);
+        setDescripcion(producto.descripcion ?? '');
         setData({
             nombre: producto.nombre,
             precio: producto.precio,
@@ -373,6 +376,8 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
                         isEditing={editingProducto ? true : false}
                         categoriesLength={categorias.length}
                         variationsError={variationsError}
+                        descripcion={descripcion}
+                        setDescripcion={setDescripcion}
                     />
                 </div>
                 <div className="w-full p-4">
