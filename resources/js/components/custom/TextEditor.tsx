@@ -4,10 +4,10 @@ import 'react-quill-new/dist/quill.snow.css';
 
 type Props = {
     placeholder: string;
-    value?: string;
+    value?: string | TrustedHTML;
     setValue?: Dispatch<SetStateAction<string>>;
 };
 
 export default function TextEditor({ placeholder, value, setValue }: Props) {
-    return <ReactQuill theme="snow" value={value} onChange={setValue} placeholder={placeholder} />;
+    return <ReactQuill theme="snow" value={value as string} onChange={setValue} placeholder={placeholder} />;
 }

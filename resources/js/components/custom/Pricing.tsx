@@ -1,11 +1,20 @@
 import { IMonthPlan } from '@/interfaces/IPlanes';
-import { DollarSign, Rocket, User, Zap } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { BadgePercent, DollarSign, Rocket, User, Zap } from 'lucide-react';
 import AnimateSection from '../animate-ui/AnimateSection';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import PricingCard from './PricingCard';
-import { Link } from '@inertiajs/react';
 
 const Pricing = () => {
+    const freePlan: IMonthPlan = {
+        name: 'Gratis',
+        price: 0,
+        products: '1 a 20',
+        icon: <BadgePercent className="h-6 w-6 text-yellow-500" />,
+        features: ['Acceso por un mes', 'Hasta 20 productos'],
+        isPopular: false,
+        color: 'text-yellow-500',
+    };
     const monthlyPlans: IMonthPlan[] = [
         {
             name: 'Simple',
@@ -62,7 +71,8 @@ const Pricing = () => {
                             <TabsTrigger value="anual">Planes Anuales</TabsTrigger>
                         </TabsList>
                         <TabsContent value="mensual">
-                            <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-3">
+                            <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-4">
+                                <PricingCard plan={freePlan} duration="Mensual" />
                                 {plans('Mensual').map((plan) => (
                                     <div key={`${plan.name}-mensual`} className="flex">
                                         <PricingCard plan={plan} duration="Mensual" />
@@ -80,7 +90,10 @@ const Pricing = () => {
                             </div>
                         </TabsContent>
                     </Tabs>
-                    <Link href='/register' className="flex justify-center items-center gap-2 my-20 w-full cursor-pointer rounded-lg border-2 border-amber-300 bg-amber-300 p-4 text-xl font-black hover:bg-amber-500 hover:text-white md:w-6/12">
+                    <Link
+                        href="/register"
+                        className="my-20 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-amber-300 bg-amber-300 p-4 text-xl font-black hover:bg-amber-500 hover:text-white md:w-6/12"
+                    >
                         <User /> Registrate
                     </Link>
                 </div>

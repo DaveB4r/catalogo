@@ -7,10 +7,12 @@ import MainMenu from '@/components/custom/MainMenu';
 import Pricing from '@/components/custom/Pricing';
 import StepSection from '@/components/custom/StepSection';
 import Testimonial from '@/components/custom/Testimonial';
+import { ICatalogo } from '@/interfaces/ICatalogo';
 import { IUser } from '@/interfaces/IUser';
 
 type Props = {
     user: IUser | null;
+    catalogos: ICatalogo[] | null;
 };
 
 export default function HomeIndex({ user }: Props) {

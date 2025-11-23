@@ -30,7 +30,7 @@ type Props = {
     isEditing?: boolean;
     categoriesLength?: number;
     variationsError?: string;
-    descripcion?: string;
+    descripcion?: string | TrustedHTML;
     setDescripcion?: Dispatch<SetStateAction<string>>;
 };
 
@@ -97,12 +97,6 @@ export default function CustomPopup({
                                     </SelectContent>
                                 </Select>
                             ) : item.textarea ? (
-                                // <Textarea 
-                                //     id={item.inputId}
-                                //     value={item.inputValue}
-                                //     onChange={item.inputOnchange}
-                                //     placeholder={item.placeholder}
-                                // />
                                 <TextEditor placeholder={item.placeholder} value={descripcion} setValue={setDescripcion}/>
                             ) : (
                                 <Input

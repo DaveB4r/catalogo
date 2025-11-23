@@ -50,7 +50,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
         imagen: '',
     });
     const [variationsError, setVariationsError] = useState('');
-    const [descripcion, setDescripcion] = useState('');
+    const [descripcion, setDescripcion] = useState<string | TrustedHTML | undefined>('');
 
     useEffect(() => {
         if (flash?.success) {
@@ -113,7 +113,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        data.descripcion = descripcion;
+        data.descripcion = descripcion as string;
         SetErrors({
             nombre: '',
             categoria: '',
@@ -196,6 +196,7 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
             precio: '',
             imagen: '',
         });
+        setDescripcion('');
         setVariationsError('');
         setPreview('');
         setIsOpen(true);
@@ -203,11 +204,11 @@ export default function ProductosIndex({ productos, categorias, user, flash }: P
 
     const handleEdit = (producto: IProducto) => {
         setEditingProducto(producto);
-        setDescripcion(producto.descripcion ?? '');
+        setDescripcion((producto.descripcion ?? '') as unknown as TrustedHTML);
         setData({
             nombre: producto.nombre,
             precio: producto.precio,
-            descripcion: producto.descripcion ?? '',
+            descripcion: (producto.descripcion as string) ?? '',
             categoria_id: producto.categoria_id.toString(),
             variationsData: [],
         });

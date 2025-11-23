@@ -20,11 +20,11 @@ const PricingCard = ({ plan, duration }: Props) => {
         <Card
             className={`my-6 flex h-full w-full transform flex-col items-start p-6 text-left transition-transform duration-500 ease-out ${isPremium && 'scale-[1.03] ring-4 ring-amber-300/60'}`}
         >
-            {(plan.isPopular || isAnnualDiscount) && (
+            {(plan.isPopular || isAnnualDiscount || plan.name === 'Gratis') && (
                 <div
                     className={`absolute -top-3 right-4 rounded-full px-3 py-1 text-xs font-bold uppercase ${isPremium ? 'bg-amber-300 text-white shadow-md shadow-amber-300/50' : 'bg-green-500 text-white'}`}
                 >
-                    {plan.isPopular ? 'Más Popular' : '2 Meses Gratis'}
+                    {plan.isPopular ? 'Más Popular' : plan.name === 'Gratis' ? '1 Mes Gratis' : '2 Meses Gratis'}
                 </div>
             )}
 
@@ -58,10 +58,10 @@ const PricingCard = ({ plan, duration }: Props) => {
                     </li>
                 ))}
                 {plan.features.length > 3 && (
-                  <li className="flex items-center text-sm font-medium text-gray-500 italic">
-                    <Check className={`w-4 h-4 mr-2 flex-shrink-0 opacity-50`} />
-                    {plan.features[3]} y más...
-                  </li>
+                    <li className="flex items-center text-sm font-medium text-gray-500 italic">
+                        <Check className={`mr-2 h-4 w-4 flex-shrink-0 opacity-50`} />
+                        {plan.features[3]} y más...
+                    </li>
                 )}
             </ul>
         </Card>
