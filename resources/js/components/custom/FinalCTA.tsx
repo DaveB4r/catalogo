@@ -92,7 +92,7 @@ const FinalCTA = () => {
     };
 
     return (
-        <AnimateSection id="final-cta" className="bg-white py-20" duration={8}>
+        <AnimateSection id="final-cta" className="bg-gray-50 py-20" duration={8}>
             <div className="mx-auto flex max-w-5xl flex-col justify-center px-4 text-center sm:px-6 lg:px-8">
                 <h2 className="mb-6 text-3xl font-extrabold md:text-5xl">¡Deja de perder ventas!</h2>
                 <p className="mb-10 text-xl">

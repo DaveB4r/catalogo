@@ -1,4 +1,5 @@
 import BubbleBackground from '@/components/animate-ui/bubble';
+import Brands from '@/components/custom/Brands';
 import Features from '@/components/custom/Features';
 import FinalCTA from '@/components/custom/FinalCTA';
 import Footer from '@/components/custom/Footer';
@@ -15,7 +16,7 @@ type Props = {
     catalogos: ICatalogo[] | null;
 };
 
-export default function HomeIndex({ user }: Props) {
+export default function HomeIndex({ user, catalogos }: Props) {
     return (
         <div className="relative h-screen w-screen overflow-x-hidden bg-[#f9fdfa]">
             <MainMenu user={user} />
@@ -26,6 +27,7 @@ export default function HomeIndex({ user }: Props) {
             <StepSection />
             <Testimonial />
             <Pricing />
+            <Brands catalogos={catalogos} />
             <FinalCTA />
             <Footer />
         </div>
