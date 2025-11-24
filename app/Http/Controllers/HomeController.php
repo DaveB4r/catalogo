@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $catalogos = DB::table("users")->select("name", "avatar")->limit(7)->get();
+        $catalogos = DB::table("users")->select("name", "avatar")->limit(7)->orderBy("id", "Desc")->get();
         return Inertia::render("Home/Index", [
             "user" => $user,
             "catalogos" => $catalogos

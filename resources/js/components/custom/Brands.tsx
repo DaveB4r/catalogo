@@ -34,7 +34,7 @@ const Brands = ({ catalogos }: Props) => {
                                 <div className="p1">
                                     <a href={`/c/${String(catalogo.name).replaceAll(' ', '_')}`} target="_blank" rel="noopener noreferrer">
                                         <Card className="flex cursor-pointer flex-col items-center justify-center border-none">
-                                            <Avatar className="transform transition-transform duration-300 hover:scale-150">
+                                            <Avatar className="transform transition-transform duration-300 hover:scale-150 w-28 h-28">
                                                 <AvatarImage src={`${host}/${catalogo.avatar}`} alt={catalogo.name} />
                                                 <AvatarFallback>{getInitials(catalogo.name)}</AvatarFallback>
                                             </Avatar>
