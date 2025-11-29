@@ -1,6 +1,10 @@
+import { translateDate } from '@/helpers/dates';
 import { IUser } from '@/interfaces/IUser';
+import { router } from '@inertiajs/react';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
+import { Switch } from '../ui/switch';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 type Props = {
@@ -10,6 +14,20 @@ type Props = {
 };
 
 const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
+    const [userStatus, setUserStatus] = useState<{ id: number | undefined; status: boolean | undefined }[]>([]);
+
+    useEffect(() => {
+        const initialStatuses = usuarios.map((usuario) => ({
+            id: usuario.id,
+            status: usuario.activo === 1,
+        }));
+        setUserStatus(initialStatuses);
+    }, [usuarios]);
+
+    const sendStatus = (id: number, status: number) => {
+        router.put(`/admin_catalogo/${id}`, { status });
+    };
+
     return (
         <Table>
             <TableCaption>Lista de catalogos creados</TableCaption>
@@ -20,6 +38,8 @@ const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
                     <TableHead className="hidden md:table-cell">Correo</TableHead>
                     <TableHead className="hidden md:table-cell">Telefono</TableHead>
                     <TableHead>N° Productos</TableHead>
+                    <TableHead>Fecha Creacion</TableHead>
+                    <TableHead>Activo</TableHead>
                     <TableHead>Acciones</TableHead>
                 </TableRow>
             </TableHeader>
@@ -31,6 +51,24 @@ const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
                         <TableCell className="hidden md:table-cell">{catalogo.email}</TableCell>
                         <TableCell className="hidden md:table-cell">{catalogo.phone}</TableCell>
                         <TableCell>{catalogo.cantidad_productos}</TableCell>
+                        <TableCell>{translateDate(catalogo.date_creation ?? '', true)}</TableCell>
+                        <TableCell>
+                            <Switch
+                                id="activo"
+                                checked={userStatus.find((status) => status.id === catalogo.id)?.status ?? false}
+                                onCheckedChange={(e) => {
+                                    setUserStatus((prev) =>
+                                        prev.map((statusObj) => {
+                                            if (statusObj.id === catalogo.id) {
+                                                sendStatus(statusObj.id ?? 0, e ? 1 : 0);
+                                                return { ...statusObj, status: e };
+                                            }
+                                            return statusObj;
+                                        }),
+                                    );
+                                }}
+                            />
+                        </TableCell>
                         {catalogo.id !== 1 && (
                             <TableCell>
                                 <Button

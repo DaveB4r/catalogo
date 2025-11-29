@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
         $id = Auth::id();
         if ($id !== 1)
             return redirect()->route("productos.index");
-        $usuarios = DB::table("users")->leftJoin("productos", "productos.user_id", "=", "users.id")->select("users.id", "name", "email", "phone", DB::raw("Count(productos.id) as cantidad_productos"))->groupBy("users.id")->orderBy("cantidad_productos", "desc")->get();
+        $usuarios = DB::table("users")->leftJoin("productos", "productos.user_id", "=", "users.id")->select("users.id", "name", "email", "phone", "users.created_at as date_creation", "activo", DB::raw("Count(productos.id) as cantidad_productos"))->groupBy("users.id")->orderBy("cantidad_productos", "desc")->get();
         return Inertia::render('auth/admin', [
             "usuarios" => $usuarios,
             "flash" => [
@@ -82,10 +82,19 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
             'phone' => 'nullable|string|max:255'
         ]);
-        
+
         User::where("id", $id)->update($validated);
 
         return redirect()->route("admin_catalogo")->with("success_user", "Catalogo editado satisfactoriamente");
+    }
+
+    /**
+     * Handle user status
+     */
+
+    public function updateStatus(Request $request, Int $id)
+    {
+        User::where('id', $id)->update(['activo' => $request->status]);
     }
 
     /**
@@ -133,6 +142,5 @@ class RegisteredUserController extends Controller
         Categorias::where("user_id", $user->id)->delete();
         $user->delete();
         return redirect()->route("admin_catalogo")->with("success_user", "Catalogo Eliminado satisfactoriamente");
-        exit();
     }
 }

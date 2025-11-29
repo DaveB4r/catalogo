@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('admin_catalogo', [RegisteredUserController::class, 'index'])->name("admin_catalogo");
 
+    Route::put('admin_catalogo/{id}', [RegisteredUserController::class, 'updateStatus'])->name("status_update");
+
     Route::delete('user_destroy/{id}', [RegisteredUserController::class, 'destroy'])->name('user_destroy');
 
     Route::put('user_update/{id}', [RegisteredUserController::class, 'update'])->name("user_update");

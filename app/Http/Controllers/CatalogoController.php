@@ -15,6 +15,9 @@ class CatalogoController extends Controller
     public function index(string $id)
     {
         $user = User::where("name", str_replace("_", " ", $id))->first();
+        if(!(bool) $user->activo){
+            return Inertia::render("Errors/NotFound")->toResponse(request())->setStatusCode(404);
+        }
         if (!isset($user) || $user->name !== str_replace("_", " ", $id)) {
             return redirect()->route("login");
         }

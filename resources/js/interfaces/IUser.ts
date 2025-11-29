@@ -7,4 +7,6 @@ export interface IUser {
     phone?: string;
     avatar?: File | null;
     cantidad_productos?: number;
+    date_creation?: string;
+    activo?: number;
 }
