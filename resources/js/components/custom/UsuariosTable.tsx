@@ -38,7 +38,7 @@ const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
                     <TableHead className="hidden md:table-cell">Correo</TableHead>
                     <TableHead className="hidden md:table-cell">Telefono</TableHead>
                     <TableHead>N° Productos</TableHead>
-                    <TableHead>Fecha Creacion</TableHead>
+                    <TableHead className="hidden md:table-cell">Fecha Creacion</TableHead>
                     <TableHead>Activo</TableHead>
                     <TableHead>Acciones</TableHead>
                 </TableRow>
@@ -51,7 +51,7 @@ const UsuariosTable = ({ usuarios, onClickDelete, onClickEdit }: Props) => {
                         <TableCell className="hidden md:table-cell">{catalogo.email}</TableCell>
                         <TableCell className="hidden md:table-cell">{catalogo.phone}</TableCell>
                         <TableCell>{catalogo.cantidad_productos}</TableCell>
-                        <TableCell>{translateDate(catalogo.date_creation ?? '', true)}</TableCell>
+                        <TableCell className="hidden md:table-cell">{translateDate(catalogo.date_creation ?? '', true)}</TableCell>
                         <TableCell>
                             <Switch
                                 id="activo"

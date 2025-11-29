@@ -37,6 +37,7 @@ class CatalogoController extends Controller
                 DB::raw("GROUP_CONCAT(variations.opciones SEPARATOR '|-|') as variations_opciones")
             )
             ->where('productos.user_id', $user->id)
+            ->where('productos.disponible', 1)
             ->groupBy(
                 'productos.id',
                 'productos.nombre',

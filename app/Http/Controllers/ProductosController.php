@@ -31,6 +31,7 @@ class ProductosController extends Controller
                 "productos.descripcion",
                 "productos.precio",
                 "productos.categoria_id",
+                "productos.disponible",
                 "categorias.nombre AS categoria",
                 DB::raw("GROUP_CONCAT(variations.id SEPARATOR \"|-|\") as variations_ids"),
                 DB::raw("GROUP_CONCAT(variations.nombre SEPARATOR \"|-|\") as variations_nombres"),
@@ -78,6 +79,15 @@ class ProductosController extends Controller
         }
 
         return redirect()->route("productos.index")->with("id", $producto->id);
+    }
+
+    /**
+     * Update availability from product
+     */
+
+    public function updateAvailability(Request $request, Int $id)
+    {
+        Productos::where('id', $id)->update(['disponible' => $request->status]);
     }
 
     /**

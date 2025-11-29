@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('productos', ProductosController::class);
     Route::post('producto_image/{id}', [ProductosController::class, 'image'])->name('producto_image');
     Route::post('avatar/{id}', [RegisteredUserController::class, 'avatar'])->name("avatar");
+    Route::put('producto_disponible/{id}', [ProductosController::class, 'updateAvailability'])->name('update_availability');
 });
 
 Route::fallback(function () {

@@ -1,16 +1,33 @@
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { IProducto } from '@/interfaces/IProducto';
+import { router } from '@inertiajs/react';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Switch } from '../ui/switch';
 
 type Props = {
     productos: IProducto[];
     onClickEdit: (producto: IProducto) => void;
-    onClickDelete:  (productoId: number) => void;
+    onClickDelete: (productoId: number) => void;
 };
 
 const ProductosTable = ({ productos, onClickEdit, onClickDelete }: Props) => {
     const host = window.location.origin;
+    const [productAvailable, setProductAvailable] = useState<{ id: number | undefined; available: boolean | undefined }[]>([]);
+
+    useEffect(() => {
+        const initialAvailable = productos.map((producto) => ({
+            id: producto.id,
+            available: producto.disponible === 1,
+        }));
+        setProductAvailable(initialAvailable);
+    }, [productos]);
+
+    const sendAvailable = (id: number, status: number) => {
+        router.put(`/producto_disponible/${id}`, { status });
+    };
+
     return (
         <Table>
             <TableCaption>Lista de productos agregados</TableCaption>
@@ -20,6 +37,7 @@ const ProductosTable = ({ productos, onClickEdit, onClickDelete }: Props) => {
                     <TableHead className="w-[10%] font-black md:text-lg">Nombre</TableHead>
                     <TableHead className="hidden w-[10%] font-black md:table-cell md:text-lg">Categoria</TableHead>
                     <TableHead className="hidden w-[10%] font-black md:table-cell md:text-lg">Precio</TableHead>
+                    <TableHead className="w-[10%] font-black md:text-lg">Disponible</TableHead>
                     <TableHead className="w-[20%] font-black md:text-lg">Acciones</TableHead>
                 </TableRow>
             </TableHeader>
@@ -34,6 +52,23 @@ const ProductosTable = ({ productos, onClickEdit, onClickDelete }: Props) => {
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{producto.categoria}</TableCell>
                         <TableCell className="hidden md:table-cell">${producto.precio}</TableCell>
+                        <TableCell>
+                            <Switch
+                                id="disponible"
+                                checked={productAvailable.find((available) => available.id === producto.id)?.available ?? false}
+                                onCheckedChange={(e) => {
+                                    setProductAvailable((prev) =>
+                                        prev.map((availableObj) => {
+                                            if (availableObj.id === producto.id) {
+                                                sendAvailable(availableObj.id ?? 0, e ? 1 : 0);
+                                                return { ...availableObj, available: e };
+                                            }
+                                            return availableObj;
+                                        }),
+                                    );
+                                }}
+                            />
+                        </TableCell>
                         <TableCell>
                             <Button
                                 variant="ghost"
