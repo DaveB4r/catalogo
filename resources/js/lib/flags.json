@@ -1,0 +1,116 @@
+[
+    {
+        "name": "Colombia",
+        "code": "+57",
+        "value": "57",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjMwMCIgc3R5bGU9ImZpbGw6I0ZGRkQwMCIvPjxyZWN0IHk9IjMwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIxNTAiIHN0eWxlPSJmaWxsOiMwMDQ1OTkiLz48cmVjdCB5PSI0NTAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMTUwIiBzdHlsZT0iZmlsbDojRDMxMTEyIi8+PC9zdmc+"
+    },
+    {
+        "name": "Argentina",
+        "code": "+54",
+        "value": "54",
+        "svgBase64": "PHN2ZyB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDkgNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iOSIgaGVpZ2h0PSI2IiBmaWxsPSIjN2NiZGYyIiAvPgogIDxyZWN0IHk9IjIiIHdpZHRoPSI5IiBoZWlnaHQ9IjIiIGZpbGw9IndoaXRlIiAvPgo8L3N2Zz4="
+    },
+    {
+        "name": "Bolivia",
+        "code": "+591",
+        "value": "591",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIj4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxNjAiIHk9IjAiIGZpbGw9IiNkMjBmMTMiLz4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxNjAiIHk9IjE2MCIgZmlsbD0iI2YxZDIwNCIvPgo8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjE2MCIgeT0iMzIwIiBmaWxsPSIjMDA3OTM0Ii8+Cjwvc3ZnPg=="
+    },
+    {
+        "name": "Brasil",
+        "code": "+55",
+        "value": "55",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIj48cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iIzAwOWIzYSIvPjxwb2x5Z29uIHBvaW50cz0iMzIwLDgwIDU2MCwyNDAgMzIwLDQwMCA4MCwyNDAiIGZpbGw9IiNmZmRmMDAiLz48Y2lyY2xlIGN4PSIzMjAiIGN5PSIyNDAiIHI9IjEyMCIgZmlsbD0iIzAwMjc3NiIvPjwvc3ZnPg=="
+    },
+    {
+        "name": "Chile",
+        "code": "+56",
+        "value": "56",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgc3R5bGU9ImZpbGw6I0ZmZiIvPjxyZWN0IHk9IjMwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIzMDAiIHN0eWxlPSJmaWxsOiNjYzAwMDAiLz48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgc3R5bGU9ImZpbGw6IzAwMDBmZiIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDkwIDE4NS4zLDYxLjggMTQzLjYsODMuMyAxMDcuMiwyOS40IDE1MCwxMjQuMiAyNTAsNjguMSIgc3R5bGU9ImZpbGw6I2ZmZGEzNSIvPjwvc3ZnPg=="
+    },
+    {
+        "name": "Costa Rica",
+        "code": "+506",
+        "value": "506",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIj4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI5NiIgZmlsbD0iIzAwMjc3NiIvPgo8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9Ijk2IiB5PSI5NiIgZmlsbD0iI2ZmZiIvPgo8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjkyIiB5PSIxOTIiIGZpbGw9IiNkMjBmMTMiLz4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI5NiIgeT0iMjg0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iOTYiIHk9IjM4MCIgZmlsbD0iIzAwMjc3NiIvPgo8L3N2Zz4="
+    },
+    {
+        "name": "Cuba",
+        "code": "+53",
+        "value": "53",
+        "svgBase64": "PHN2ZyB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDkgNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iOSIgaGVpZ2h0PSI2IiBmaWxsPSIjMDAzOGIwIiAvPgogIDxyZWN0IHk9IjEiIHdpZHRoPSI5IiBoZWlnaHQ9IjEiIGZpbGw9IndoaXRlIiAvPgogIDxyZWN0IHk9IjMiIHdpZHRoPSI5IiBoZWlnaHQ9IjEiIGZpbGw9IndoaXRlIiAvPgogIDxyZWN0IHk9IjUiIHdpZHRoPSI5IiBoZWlnaHQ9IjEiIGZpbGw9IndoaXRlIiAvPgogIDxwb2x5Z29uIHBvaW50cz0iMCAwIDMgMyAwIDYiIGZpbGw9IiNkYTAwMjQiIC8+CiAgPHBhdGggZD0iTSAxLjIgMi4yIEwgMS41IDMgTCAxLjIgMy44IEwgMiAzLjIgWiIgZmlsbD0id2hpdGUiIC8+Cjwvc3ZnPg=="
+    },
+    {
+        "name": "Republica Dominicana",
+        "code": "+1",
+        "value": "1",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik00NjIgMGgzOThjMi43NiAwIDUtMi4yNCA1LTUgMFY1SDQ3NWMtMi43NiAwLTUtMi4yNC01LTV6IiBmaWxsPSIjMDAzMzkyIi8+PHBhdGggZD0iTTAgNWMwLTIuNzYgMi4yNC01IDUtNWg0MDd2NjAwaC00MTJjLTIuNzYgMC01LTIuMjQtNS01di01OTB6IiBmaWxsPSIjMDAzMzkyIi8+PHBhdGggZD0iTTUgNjAwaDg5MGwtNTAtMjUwLTEwMCAwLTUwLTUwLTEwMC0xMDAtMTc1LTI1LTV6IiBmaWxsPSIjY2MyMjI2Ii8+PC9zdmc+"
+    },
+    {
+        "name": "Ecuador",
+        "code": "+593",
+        "value": "593",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjMwMCIgc3R5bGU9ImZpbGw6I0ZGRkQwMCIvPjxyZWN0IHk9IjMwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIxNTAiIHN0eWxlPSJmaWxsOiMwMDQ1OTkiLz48cmVjdCB5PSI0NTAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMTUwIiBzdHlsZT0iZmlsbDojRDMxMTEyIi8+PC9zdmc+"
+    },
+    {
+        "name": "El Salvador",
+        "code": "+503",
+        "value": "503",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgc3R5bGU9ImZpbGw6IzAwNTZhZSIvPjxyZWN0IHk9IjIwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIyMDAiIHN0eWxlPSJmaWxsOiNmZmYiLz48L3N2Zz4="
+    },
+    {
+        "name": "Guatemala",
+        "code": "+502",
+        "value": "502",
+        "svgBase64": "PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIxMyIgaGVpZ2h0PSI0ODAiIGZpbGw9IiM5M2NmZTAiLz4KPHJlY3QgeD0iMjEzIiB3aWR0aD0iMjE0IiBoZWlnaHQ9IjQ4MCIgZmlsbD0iI2ZmZiIvPgo8cmVjdCB4PSI0MjciIHdpZHRoPSIyMTMiIGhlaWdodD0iNDgwIiBmaWxsPSIjOTNjZmUwIi8+Cjwvc3ZnPg=="
+    },
+    {
+        "name": "Honduras",
+        "code": "+504",
+        "value": "504",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjIwMCIgc3R5bGU9ImZpbGw6IzAwNTZhZSIvPjxyZWN0IHk9IjIwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIyMDAiIHN0eWxlPSJmaWxsOiNmZmYiLz48cmVjdCB5PSI0MDAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMjAwIiBzdHlsZT0iZmlsbDojMDA1NmFlIi8+PC9zdmc+"
+    },
+    {
+        "name": "Mexico",
+        "code": "+52",
+        "value": "52",
+        "svgBase64": "PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIxMyIgaGVpZ2h0PSI0ODAiIGZpbGw9IiMwMDgwMzAiLz4KPHJlY3QgeD0iMjEzIiB3aWR0aD0iMjE0IiBoZWlnaHQ9IjQ4MCIgZmlsbD0iI2ZmZiIvPgo8cmVjdCB4PSI0MjciIHdpZHRoPSIyMTMiIGhlaWdodD0iNDgwIiBmaWxsPSIjYTAwMDAwIi8+Cjwvc3ZnPg=="
+    },
+    {
+        "name": "Nicaragua",
+        "code": "+505",
+        "value": "505",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjIwMCIgc3R5bGU9ImZpbGw6IzAwNTZhZSIvPjxyZWN0IHk9IjIwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIyMDAiIHN0eWxlPSJmaWxsOiNmZmYiLz48cmVjdCB5PSI0MDAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMjAwIiBzdHlsZT0iZmlsbDojMDA1NmFlIi8+PC9zdmc+"
+    },
+    {
+        "name": "Panama",
+        "code": "+507",
+        "value": "507",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgc3R5bGU9ImZpbGw6I2ZmZiIvPjxyZWN0IHk9IjMwMCIgd2lkdGg9IjQ1MCIgaGVpZ2h0PSIzMDAiIHN0eWxlPSJmaWxsOiMwMDQ1OTkiLz48cmVjdCByZWdpb249IjAiIHg9IjQ1MCIgd2lkdGg9IjQ1MCIgaGVpZ2h0PSIzMDAiIHN0eWxlPSJmaWxsOiNDQzIyMjYiLz48L3N2Zz4="
+    },
+    {
+        "name": "Paraguay",
+        "code": "+595",
+        "value": "595",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjIwMCIgc3R5bGU9ImZpbGw6I0NDMjIyNiIvPjxyZWN0IHk9IjIwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIyMDAiIHN0eWxlPSJmaWxsOiNmZmYiLz48cmVjdCB5PSI0MDAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMjAwIiBzdHlsZT0iZmlsbDojMDAzMzkyIi8+PC9zdmc+"
+    },
+    {
+        "name": "Peru",
+        "code": "+51",
+        "value": "51",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgc3R5bGU9ImZpbGw6I0NDMjIyNiIvPjxyZWN0IHg9IjYwMCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2MDAiIHN0eWxlPSJmaWxsOiNDQzIyMjYiLz48cmVjdCByZWdpb249IjAiIHg9IjMwMCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2MDAiIHN0eWxlPSJmaWxsOiNmZmYiLz48L3N2Zz4="
+    },
+    {
+        "name": "Uruguay",
+        "code": "+598",
+        "value": "598",
+        "svgBase64": "PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiNmZmYiLz4KPGcgaWQ9InN0cmlwZXMiIGZpbGw9IiMwMDI3NzYiPgogIDxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iNjAiIHk9IjYwIi8+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI2MCIgeT0iMTgwIi8+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI2MCIgeT0iMzAwIi8+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI2MCIgeT0iNDIwIi8+CjwvZz4KPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiByPSI3MCIgZmlsbD0iI2ZmZDAwMCIvPgo8cG9seWdvbiBwb2ludHM9IjEyMCwzNSA5MCwxMjAgMTIwLDIwNSA3MCwxMjAgMTIwLDM1IiBmaWxsPSIjZmZkMDAwIi8+Cjwvc3ZnPg=="
+    },
+    {
+        "name": "Venezuela",
+        "code": "+58",
+        "value": "58",
+        "svgBase64": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjMwMCIgc3R5bGU9ImZpbGw6I0ZGRkQwMCIvPjxyZWN0IHk9IjMwMCIgd2lkdGg9IjkwMCIgaGVpZ2h0PSIxNTAiIHN0eWxlPSJmaWxsOiMwMDQ1OTkiLz48cmVjdCB5PSI0NTAiIHdpZHRoPSI5MDAiIGhlaWdodD0iMTUwIiBzdHlsZT0iZmlsbDojRDMxMTEyIi8+PC9zdmc+"
+    }
+]

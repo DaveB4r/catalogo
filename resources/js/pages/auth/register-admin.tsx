@@ -6,7 +6,9 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
+import flags from '@/lib/flags.json';
 import { BreadcrumbItem } from '@/types';
 
 type RegisterForm = {
@@ -19,6 +21,7 @@ type RegisterForm = {
 };
 
 export default function Register() {
+    const [indicative, setIndicative] = useState('');
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
@@ -31,6 +34,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        data.phone = `${indicative}${data.phone}`;
         post(route('register_admin'), {
             forceFormData: true,
             onFinish: () => {
@@ -107,18 +111,38 @@ export default function Register() {
 
                     <div className="grid gap-2">
                         <Label htmlFor="phone">Celular</Label>
-                        <small className="text-destructive">(prefijo pais) seguido de Numero de celular sin espacios: 573001234567</small>
-                        <Input
-                            id="phone"
-                            type="text"
-                            required
-                            tabIndex={3}
-                            autoComplete="phone"
-                            value={data.phone}
-                            onChange={(e) => setData('phone', e.target.value)}
-                            disabled={processing}
-                            placeholder="573129774545"
-                        />
+                        <div className="join flex">
+                            <div className="w-4/12">
+                                <Select onValueChange={(value) => setIndicative(value)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Pais" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Pais</SelectLabel>
+                                            {flags.map((flag) => (
+                                                <SelectItem key={flag.code} value={flag.value}>
+                                                    {flag.code}{' '}
+                                                    <img src={`data:image/svg+xml;base64,${flag.svgBase64}`} alt={flag.name} className="h-6 w-6" />{' '}
+                                                    {flag.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <Input
+                                id="phone"
+                                type="text"
+                                required
+                                tabIndex={3}
+                                autoComplete="phone"
+                                value={data.phone}
+                                onChange={(e) => setData('phone', e.target.value)}
+                                disabled={processing || !indicative}
+                                placeholder="3129774545"
+                            />
+                        </div>
                         <InputError message={errors.email} />
                     </div>
 
