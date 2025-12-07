@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { Eye, EyeClosed, LoaderCircle, Lock, Mail } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
@@ -108,6 +108,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Iniciar sesion
                     </Button>
+                    <Link href='/register' className="text-center text-teal-500 hover:text-blue-500 hover:underline">Aun no tienes una cuenta? Registrate</Link>
                 </div>
             </form>
 

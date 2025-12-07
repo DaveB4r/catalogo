@@ -41,10 +41,20 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        // $id = Auth::id();
+        // if ($id !== 1)
+        //     return redirect()->route("productos.index");
+        return Inertia::render('auth/register');
+    }
+    /**
+     * Show the registration page as admin.
+     */
+    public function create_admin()
+    {
         $id = Auth::id();
         if ($id !== 1)
             return redirect()->route("productos.index");
-        return Inertia::render('auth/register');
+        return Inertia::render('auth/register-admin');
     }
 
     /**

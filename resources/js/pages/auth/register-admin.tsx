@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 
@@ -6,7 +6,7 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 
 type RegisterForm = {
@@ -31,7 +31,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('register'), {
+        post(route('register_admin'), {
             forceFormData: true,
             onFinish: () => {
                 reset();
@@ -48,7 +48,7 @@ export default function Register() {
         },
         {
             title: 'Registrar Catalogo',
-            href: '/register',
+            href: '/register-admin',
         },
     ];
 
@@ -68,10 +68,10 @@ export default function Register() {
     };
 
     return (
-        <AuthLayout title="Crea tu cuenta" description="Para disfrutar de todos nuestros beneficios">
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Registrar" />
-            <form className="flex flex-col items-center justify-center gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
+            <form className="mt-24 flex flex-col items-center justify-center gap-6" onSubmit={submit}>
+                <div className="grid w-96 gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="name">Nombre</Label>
                         <Input
@@ -175,11 +175,8 @@ export default function Register() {
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Crear Usuario
                     </Button>
-                    <Link href="/login" className="text-center text-teal-500 hover:text-blue-500 hover:underline">
-                        Ya tienes una cuenta? Inicia Sesion
-                    </Link>
                 </div>
             </form>
-        </AuthLayout>
+        </AppLayout>
     );
 }

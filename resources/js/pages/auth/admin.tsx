@@ -158,7 +158,7 @@ export default function Admin({ usuarios, flash }: Props) {
                 )}
                 <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                     <h1 className="text-2xl font-bold">Catalogos</h1>
-                    <Link href="/register">
+                    <Link href="/register-admin">
                         <Button className="cursor-pointer">
                             <Plus className="m-2 h-4 w-4" /> Registrar Catalogo
                         </Button>
